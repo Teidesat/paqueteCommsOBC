@@ -1,0 +1,12 @@
+[
+{
+  "directory": "C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/build",
+  "command": "C:\\msys64\\mingw64\\bin\\mingw64\\bin\\g++.exe   -g -std=gnu++20 -o CMakeFiles\\paqueteCnCLibrary.dir\\src\\packet.cpp.obj -c \"C:\\Users\\Marcos\\Desktop\\Cosas\\Educacion\\ULL\\2022_2023\\Practicas Externas\\paqueteCnC\\src\\packet.cpp\"",
+  "file": "C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/src/packet.cpp"
+},
+{
+  "directory": "C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/build",
+  "command": "C:\\msys64\\mingw64\\bin\\mingw64\\bin\\g++.exe   -g -std=gnu++20 -o CMakeFiles\\paqueteCnC.dir\\src\\main.cpp.obj -c \"C:\\Users\\Marcos\\Desktop\\Cosas\\Educacion\\ULL\\2022_2023\\Practicas Externas\\paqueteCnC\\src\\main.cpp\"",
+  "file": "C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/src/main.cpp"
+}
+]

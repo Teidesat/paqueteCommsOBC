@@ -1,0 +1,2 @@
+C:\msys64\mingw64\bin\mingw64\bin\ar.exe qc libpaqueteCnCLibrary.a CMakeFiles/paqueteCnCLibrary.dir/src/packet.cpp.obj
+C:\msys64\mingw64\bin\mingw64\bin\ranlib.exe libpaqueteCnCLibrary.a
