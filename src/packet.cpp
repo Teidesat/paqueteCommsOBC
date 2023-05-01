@@ -24,39 +24,39 @@ Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber,
         packetErrorControl_(packetErrorControl)
 {}
 
-std::bitset<3> Packet::getVersionNumber() const {
+std::bitset<Packet::VERSION_NUMBER_SIZE> Packet::getVersionNumber() const {
   return versionNumber_;
 }
 
-std::bitset<1> Packet::getDataFieldHeader() const {
+std::bitset<Packet::DATA_FIELD_HEADER_SIZE> Packet::getDataFieldHeader() const {
   return dataFieldHeader_;
 }
 
-std::bitset<5> Packet::getAppIdSource() const {
+std::bitset<Packet::APP_ID_SOURCE_SIZE> Packet::getAppIdSource() const {
   return appIdSource_;
 }
 
-std::bitset<5> Packet::getAppIdDestination() const {
+std::bitset<Packet::APP_ID_DESTINATION_SIZE> Packet::getAppIdDestination() const {
   return appIdDestination_;
 }
 
-std::bitset<16> Packet::getSequenceControl() const {
+std::bitset<Packet::SEQUENCE_CONTROL_SIZE> Packet::getSequenceControl() const {
   return sequenceControl_;
 }
 
-std::bitset<16> Packet::getLength() const {
+std::bitset<Packet::LENGTH_SIZE> Packet::getLength() const {
   return length_;
 }
 
-std::bitset<4> Packet::getAck() const {
+std::bitset<Packet::ACK_SIZE> Packet::getAck() const {
   return ack_;
 }
 
-std::bitset<8> Packet::getServiceType() const {
+std::bitset<Packet::SERVICE_TYPE_SIZE> Packet::getServiceType() const {
   return serviceType_;
 }
 
-std::bitset<8> Packet::getServiceSubtype() const {
+std::bitset<Packet::SERVICE_SUBTYPE_SIZE> Packet::getServiceSubtype() const {
   return serviceSubtype_;
 }
 
@@ -64,6 +64,6 @@ std::vector<std::byte> Packet::getAppData() const {
   return appData_;
 }
 
-std::bitset<3> Packet::getPacketErrorControl() const {
+std::bitset<Packet::PACKET_ERROR_CONTROL_SIZE> Packet::getPacketErrorControl() const {
   return packetErrorControl_;
 }
