@@ -44,17 +44,7 @@ public:
       SERVICE_TYPE_SIZE +
       SERVICE_SUBTYPE_SIZE;
 
-  // *** constructors ***
-  // without data field header
-  Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
-      std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
-      std::bitset<APP_ID_SOURCE_SIZE> appIdSource,
-      std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination,
-      std::bitset<SEQUENCE_CONTROL_SIZE> sequenceControl,
-      std::bitset<LENGTH_SIZE> length,
-      std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl);
-
-  // with data field header
+  // *** constructor ***
   Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
       std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
       std::bitset<APP_ID_SOURCE_SIZE> appIdSource,

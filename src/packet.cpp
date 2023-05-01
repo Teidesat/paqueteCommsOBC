@@ -1,25 +1,5 @@
 #include "../include/packet.h"
 
-#include <cstring>
-
-// without data field header
-Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
-    std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
-    std::bitset<APP_ID_SOURCE_SIZE> appIdSource,
-    std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination,
-    std::bitset<SEQUENCE_CONTROL_SIZE> sequenceControl,
-    std::bitset<LENGTH_SIZE> length,
-    std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl) :
-        versionNumber_(versionNumber),
-        dataFieldHeader_(dataFieldHeader),
-        appIdSource_(appIdSource),
-        appIdDestination_(appIdDestination),
-        sequenceControl_(sequenceControl),
-        length_(length),
-        packetErrorControl_(packetErrorControl)
-{}
-
-// with data field header
 Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
     std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
     std::bitset<APP_ID_SOURCE_SIZE> appIdSource,
