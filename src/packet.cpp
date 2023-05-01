@@ -1,16 +1,16 @@
 #include "../include/packet.h"
 
-Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
-    std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
-    std::bitset<APP_ID_SOURCE_SIZE> appIdSource,
-    std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination,
-    std::bitset<SEQUENCE_CONTROL_SIZE> sequenceControl,
-    std::bitset<LENGTH_SIZE> length,
-    std::bitset<ACK_SIZE> ack,
-    std::bitset<SERVICE_TYPE_SIZE> serviceType,
-    std::bitset<SERVICE_SUBTYPE_SIZE> serviceSubtype,
-    std::vector<std::byte> appData,
-    std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl) :
+Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber,
+    std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
+    std::bitset<APP_ID_SOURCE_SIZE> const& appIdSource,
+    std::bitset<APP_ID_DESTINATION_SIZE> const& appIdDestination,
+    std::bitset<SEQUENCE_CONTROL_SIZE> const& sequenceControl,
+    std::bitset<LENGTH_SIZE> const& length,
+    std::bitset<ACK_SIZE> const& ack,
+    std::bitset<SERVICE_TYPE_SIZE> const& serviceType,
+    std::bitset<SERVICE_SUBTYPE_SIZE> const& serviceSubtype,
+    std::vector<std::byte> const& appData,
+    std::bitset<PACKET_ERROR_CONTROL_SIZE> const& packetErrorControl) :
         versionNumber_(versionNumber),
         dataFieldHeader_(dataFieldHeader),
         appIdSource_(appIdSource),
