@@ -1,15 +1,13 @@
-#include "../include/packet_buffer.h"
+#include "../include/packet_operations.h"
 
 #include <cassert>
 #include <cstring>
 
-PacketBuffer::PacketBuffer() {
+PacketOperations::PacketOperations() {}
 
-}
+PacketOperations::~PacketOperations() {}
 
-PacketBuffer::~PacketBuffer() {}
-
-Packet PacketBuffer::readPacket(const std::byte* buffer, std::size_t size) {
+Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   assert(sizeof(buffer) < Packet::PACKET_HEADER_SIZE);
   
   std::bitset<Packet::VERSION_NUMBER_SIZE> versionNumber;
@@ -81,7 +79,54 @@ Packet PacketBuffer::readPacket(const std::byte* buffer, std::size_t size) {
       packetErrorControl);
 }
 
-void PacketBuffer::writePacket(std::byte* buffer, const Packet& packet) {
+void PacketOperations::writePacket(std::byte* buffer, const Packet& packet) {
+  const auto& versionNumber = packet.getVersionNumber();
+  const auto& dataFieldHeader = packet.getDataFieldHeader();
+  const auto& appIdSource = packet.getAppIdSource();
+  const auto& appIdDestination = packet.getAppIdDestination();
+  const auto& sequenceControl = packet.getSequenceControl();
+  const auto& length = packet.getLength();
+
+  const auto& ack = packet.getAck();
+  const auto& serviceType = packet.getServiceType();
+  const auto& serviceSubtype = packet.getServiceSubtype();
+
+  std::vector<std::byte> appData = packet.getAppData();
+
+  const auto& packetErrorControl = packet.getPacketErrorControl();
+
+  std::memcpy(buffer, &versionNumber, sizeof(versionNumber));
+  buffer += sizeof(versionNumber);
+
+  std::memcpy(buffer, &dataFieldHeader, sizeof(dataFieldHeader));
+  buffer += sizeof(dataFieldHeader);
+
+  std::memcpy(buffer, &appIdSource, sizeof(appIdSource));
+  buffer += sizeof(appIdSource);
+
+  std::memcpy(buffer, &appIdDestination, sizeof(appIdDestination));
+  buffer += sizeof(appIdDestination);
+
+  std::memcpy(buffer, &sequenceControl, sizeof(sequenceControl));
+  buffer += sizeof(sequenceControl);
+
+  std::memcpy(buffer, &length, sizeof(length));
+  buffer += sizeof(length);
   
+  if (dataFieldHeader == 1) {
+    std::memcpy(buffer, &ack, sizeof(ack));
+    buffer += sizeof(ack);
+
+    std::memcpy(buffer, &serviceType, sizeof(serviceType));
+    buffer += sizeof(serviceType);
+
+    std::memcpy(buffer, &serviceSubtype, sizeof(serviceSubtype));
+    buffer += sizeof(serviceSubtype);
+
+    std::copy(appData.begin(), appData.end(), buffer);
+  }
+
+  std::memcpy(buffer, &packetErrorControl, sizeof(packetErrorControl));
+  buffer += sizeof(packetErrorControl);
 }
 

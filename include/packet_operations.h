@@ -15,10 +15,10 @@
 
 #include "packet.h"
 
-class PacketBuffer {
+class PacketOperations {
 public:
-  PacketBuffer();
-  ~PacketBuffer();
+  PacketOperations();
+  ~PacketOperations();
 
   Packet readPacket(const std::byte* buffer, std::size_t size);
   void writePacket(std::byte* buffer, const Packet& packet);
