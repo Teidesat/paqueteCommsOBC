@@ -3,48 +3,86 @@
 #include <cstring>
 
 Packet::Packet(const std::byte* buffer, std::size_t size) {
-  std::memcpy(&versionNumber_, buffer, 3);
-  buffer += 3;
-  size -= 3;
+  std::memcpy(&versionNumber_, buffer, sizeof(versionNumber_));
+  buffer += sizeof(versionNumber_);
+  size -= sizeof(versionNumber_);
 
-  std::memcpy(&dataFieldHeader_, buffer, 1);
-  buffer += 1;
-  size -= 1;
+  std::memcpy(&dataFieldHeader_, buffer, sizeof(dataFieldHeader_));
+  buffer += sizeof(dataFieldHeader_);
+  size -= sizeof(dataFieldHeader_);
 
-  std::memcpy(&appIdSource_, buffer, 5);
-  buffer += 5;
-  size -= 5;
+  std::memcpy(&appIdSource_, buffer, sizeof(appIdSource_));
+  buffer += sizeof(appIdSource_);
+  size -= sizeof(appIdSource_);
 
-  std::memcpy(&appIdDestination_, buffer, 5);
-  buffer += 5;
-  size -= 5;
+  std::memcpy(&appIdDestination_, buffer, sizeof(appIdDestination_));
+  buffer += sizeof(appIdDestination_);
+  size -= sizeof(appIdDestination_);
 
-  std::memcpy(&length_, buffer, 16);
-  buffer += 16;
-  size -= 16;
+  std::memcpy(&length_, buffer, sizeof(length_));
+  buffer += sizeof(appIdDestination_);
+  size -= sizeof(appIdDestination_);
   
-  /* 0x01u (unsigned) is required due to c++ promoting 0x01 to int by default */
-  if (dataFieldHeader_[0] == std::byte(0x01u)) {
-    std::memcpy(&ack_, buffer, 4);
-    buffer += 4;
-    size -= 4;
+  if (dataFieldHeader_[0] == true) {
+    std::memcpy(&ack_, buffer, sizeof(ack_));
+    buffer += sizeof(ack_);
+    size -= sizeof(ack_);
 
-    std::memcpy(&serviceType_, buffer, 8);
-    buffer += 8;
-    size -= 8;
+    std::memcpy(&serviceType_, buffer, sizeof(serviceType_));
+    buffer += sizeof(serviceType_);
+    size -= sizeof(serviceType_);
 
-    std::memcpy(&serviceType_, buffer, 8);
-    buffer += 8;
-    size -= 8;
+    std::memcpy(&serviceSubtype_, buffer, sizeof(serviceSubtype_));
+    buffer += sizeof(serviceSubtype_);
+    size -= sizeof(serviceSubtype_);
 
     appData_.reserve(size);
-    // insert the rest of the buffer but not the last 16
-    // due to it being packetErrorControl
-    appData_.insert(appData_.begin(), buffer, buffer + size - 16);
+    appData_.insert(appData_.begin(), buffer, buffer + size - sizeof(packetErrorControl_));
   }
-  std::memcpy(&packetErrorControl_, buffer, 16);
-  buffer += 16; // invalid pointer address from now on
-  size -= 16;
+
+  std::memcpy(&packetErrorControl_, buffer, sizeof(packetErrorControl_));
+  buffer += sizeof(packetErrorControl_);
+  size -= sizeof(packetErrorControl_);
 }
 
 Packet::~Packet() {}
+
+std::bitset<3> Packet::getVersionNumber() {
+  return versionNumber_;
+}
+
+std::bitset<1> Packet::getDataFieldHeader() {
+  return dataFieldHeader_;
+}
+
+std::bitset<5> Packet::getAppIdSource() {
+  return appIdSource_;
+}
+
+std::bitset<5> Packet::getAppIdDestination() {
+  return appIdDestination_;
+}
+
+std::bitset<16> Packet::getSequenceControl() {
+  return sequenceControl_;
+}
+
+std::bitset<16> Packet::getLength() {
+  return length_;
+}
+
+std::bitset<4> Packet::getAck() {
+  return ack_;
+}
+
+std::bitset<8> Packet::getServiceType() {
+  return serviceType_;
+}
+
+std::bitset<8> Packet::getServiceSubtype() {
+  return serviceSubtype_;
+}
+
+std::bitset<3> Packet::getPacketErrorControl() {
+  return packetErrorControl_;
+}
