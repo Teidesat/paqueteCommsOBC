@@ -10,6 +10,7 @@
  * To read and write packets from the buffer
  * 
  */
+
 #pragma once
 
 #include "packet.h"
@@ -19,7 +20,7 @@ public:
   PacketBuffer();
   ~PacketBuffer();
 
-  Packet readPacket(std::byte* buffer, std::size_t size);
-  void writePacket(Packet packet);
+  Packet readPacket(const std::byte* buffer, std::size_t size);
+  void writePacket(const std::byte* buffer, Packet packet);
 private:
 };

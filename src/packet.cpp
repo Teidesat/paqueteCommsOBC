@@ -2,50 +2,47 @@
 
 #include <cstring>
 
-Packet::Packet(const std::byte* buffer, std::size_t size) {
-  std::memcpy(&versionNumber_, buffer, sizeof(versionNumber_));
-  buffer += sizeof(versionNumber_);
-  size -= sizeof(versionNumber_);
+// without data field header
+Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
+    std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
+    std::bitset<APP_ID_SOURCE_SIZE> appIdSource,
+    std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination,
+    std::bitset<SEQUENCE_CONTROL_SIZE> sequenceControl,
+    std::bitset<LENGTH_SIZE> length,
+    std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl) :
+        versionNumber_(versionNumber),
+        dataFieldHeader_(dataFieldHeader),
+        appIdSource_(appIdSource),
+        appIdDestination_(appIdDestination),
+        sequenceControl_(sequenceControl),
+        length_(length),
+        packetErrorControl_(packetErrorControl)
+{}
 
-  std::memcpy(&dataFieldHeader_, buffer, sizeof(dataFieldHeader_));
-  buffer += sizeof(dataFieldHeader_);
-  size -= sizeof(dataFieldHeader_);
-
-  std::memcpy(&appIdSource_, buffer, sizeof(appIdSource_));
-  buffer += sizeof(appIdSource_);
-  size -= sizeof(appIdSource_);
-
-  std::memcpy(&appIdDestination_, buffer, sizeof(appIdDestination_));
-  buffer += sizeof(appIdDestination_);
-  size -= sizeof(appIdDestination_);
-
-  std::memcpy(&length_, buffer, sizeof(length_));
-  buffer += sizeof(appIdDestination_);
-  size -= sizeof(appIdDestination_);
-  
-  if (dataFieldHeader_[0] == true) {
-    std::memcpy(&ack_, buffer, sizeof(ack_));
-    buffer += sizeof(ack_);
-    size -= sizeof(ack_);
-
-    std::memcpy(&serviceType_, buffer, sizeof(serviceType_));
-    buffer += sizeof(serviceType_);
-    size -= sizeof(serviceType_);
-
-    std::memcpy(&serviceSubtype_, buffer, sizeof(serviceSubtype_));
-    buffer += sizeof(serviceSubtype_);
-    size -= sizeof(serviceSubtype_);
-
-    appData_.reserve(size);
-    appData_.insert(appData_.begin(), buffer, buffer + size - sizeof(packetErrorControl_));
-  }
-
-  std::memcpy(&packetErrorControl_, buffer, sizeof(packetErrorControl_));
-  buffer += sizeof(packetErrorControl_);
-  size -= sizeof(packetErrorControl_);
-}
-
-Packet::~Packet() {}
+// with data field header
+Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> versionNumber,
+    std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader,
+    std::bitset<APP_ID_SOURCE_SIZE> appIdSource,
+    std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination,
+    std::bitset<SEQUENCE_CONTROL_SIZE> sequenceControl,
+    std::bitset<LENGTH_SIZE> length,
+    std::bitset<ACK_SIZE> ack,
+    std::bitset<SERVICE_TYPE_SIZE> serviceType,
+    std::bitset<SERVICE_SUBTYPE_SIZE> serviceSubtype,
+    std::vector<std::byte> appData,
+    std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl) :
+        versionNumber_(versionNumber),
+        dataFieldHeader_(dataFieldHeader),
+        appIdSource_(appIdSource),
+        appIdDestination_(appIdDestination),
+        sequenceControl_(sequenceControl),
+        length_(length),
+        ack_(ack),
+        serviceType_(serviceType),
+        serviceSubtype_(serviceSubtype),
+        appData_(appData.begin(), appData.end()),
+        packetErrorControl_(packetErrorControl)
+{}
 
 std::bitset<3> Packet::getVersionNumber() const {
   return versionNumber_;
