@@ -19,27 +19,29 @@
 class Packet {
 public:
   // *** constants ***
-  static constexpr std::size_t VERSION_NUMBER_SIZE = 3;
-  static constexpr std::size_t DATA_FIELD_HEADER_SIZE = 1;
-  static constexpr std::size_t APP_ID_SOURCE_SIZE = 5;
-  static constexpr std::size_t APP_ID_DESTINATION_SIZE = 5;
-  static constexpr std::size_t SEQUENCE_CONTROL_SIZE = 16;
-  static constexpr std::size_t LENGTH_SIZE = 16;
-  static constexpr std::size_t ACK_SIZE = 4;
-  static constexpr std::size_t SERVICE_TYPE_SIZE = 8;
-  static constexpr std::size_t SERVICE_SUBTYPE_SIZE = 8;
-  static constexpr std::size_t PACKET_ERROR_CONTROL_SIZE = 3;
+  static constexpr uint8_t VERSION_NUMBER_SIZE = 3;
+  static constexpr uint8_t DATA_FIELD_HEADER_SIZE = 1;
+  static constexpr uint8_t APP_ID_SOURCE_SIZE = 5;
+  static constexpr uint8_t APP_ID_DESTINATION_SIZE = 5;
+  static constexpr uint8_t SEQUENCE_CONTROL_FLAGS_SIZE = 2;
+  static constexpr uint8_t SEQUENCE_CONTROL_COUNT_SIZE = 14;
+  static constexpr uint8_t LENGTH_SIZE = 16;
+  static constexpr uint8_t ACK_SIZE = 4;
+  static constexpr uint8_t SERVICE_TYPE_SIZE = 8;
+  static constexpr uint8_t SERVICE_SUBTYPE_SIZE = 8;
+  static constexpr uint8_t PACKET_ERROR_CONTROL_SIZE = 3;
 
-  static constexpr std::size_t PACKET_HEADER_SIZE =
+  static constexpr uint8_t PACKET_HEADER_SIZE =
       VERSION_NUMBER_SIZE +
       DATA_FIELD_HEADER_SIZE +
       APP_ID_SOURCE_SIZE +
       APP_ID_DESTINATION_SIZE +
-      SEQUENCE_CONTROL_SIZE +
+      SEQUENCE_CONTROL_FLAGS_SIZE +
+      SEQUENCE_CONTROL_COUNT_SIZE +
       LENGTH_SIZE +
       PACKET_ERROR_CONTROL_SIZE;
 
-  static constexpr std::size_t PACKET_DATA_HEADER_SIZE =
+  static constexpr uint8_t PACKET_DATA_HEADER_SIZE =
       ACK_SIZE +
       SERVICE_TYPE_SIZE +
       SERVICE_SUBTYPE_SIZE;
@@ -56,7 +58,8 @@ public:
       std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
       std::bitset<APP_ID_SOURCE_SIZE> const& appIdSource,
       std::bitset<APP_ID_DESTINATION_SIZE> const& appIdDestination,
-      std::bitset<SEQUENCE_CONTROL_SIZE> const& sequenceControl,
+      std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> const& sequenceControlFlags,
+      std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> const& sequenceControlCount,
       std::bitset<LENGTH_SIZE> const& length,
       std::bitset<ACK_SIZE> const& ack,
       std::bitset<SERVICE_TYPE_SIZE> const& serviceType,
@@ -71,7 +74,8 @@ public:
   std::bitset<DATA_FIELD_HEADER_SIZE> getDataFieldHeader() const;
   std::bitset<APP_ID_SOURCE_SIZE> getAppIdSource() const;
   std::bitset<APP_ID_DESTINATION_SIZE> getAppIdDestination() const;
-  std::bitset<SEQUENCE_CONTROL_SIZE> getSequenceControl() const;
+  std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> getSequenceControlFlags() const;
+  std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> getSequenceControlCount() const;
   std::bitset<LENGTH_SIZE> getLength() const;
 
   std::bitset<ACK_SIZE> getAck() const;
@@ -83,7 +87,8 @@ public:
   std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
 
   // *** setters ***
-  void setACK(AckState newState);
+  void setACK(const AckState newState);
+  
 
 private:
   // main header
@@ -91,7 +96,8 @@ private:
   std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader_;
   std::bitset<APP_ID_SOURCE_SIZE> appIdSource_;
   std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination_;
-  std::bitset<SEQUENCE_CONTROL_SIZE> sequenceControl_;
+  std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> sequenceControlFlags_;
+  std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> sequenceControlCount_;
   std::bitset<LENGTH_SIZE> length_;
 
   // data field header (optional)
@@ -102,6 +108,6 @@ private:
   // data
   std::vector<std::byte> appData_;
 
-  // main header
+  // main header too
   std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl_;
 };

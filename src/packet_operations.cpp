@@ -14,7 +14,8 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   std::bitset<Packet::DATA_FIELD_HEADER_SIZE> dataFieldHeader;
   std::bitset<Packet::APP_ID_SOURCE_SIZE> appIdSource;
   std::bitset<Packet::APP_ID_DESTINATION_SIZE> appIdDestination;
-  std::bitset<Packet::SEQUENCE_CONTROL_SIZE> sequenceControl;
+  std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE> sequenceControlFlags;
+  std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE> sequenceControlCount;
   std::bitset<Packet::LENGTH_SIZE> length;
 
   std::bitset<Packet::ACK_SIZE> ack;
@@ -41,9 +42,13 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   buffer += sizeof(appIdDestination);
   size -= sizeof(appIdDestination);
 
-  std::memcpy(&sequenceControl, buffer, sizeof(sequenceControl));
-  buffer += sizeof(sequenceControl);
-  size -= sizeof(sequenceControl);
+  std::memcpy(&sequenceControlFlags, buffer, sizeof(sequenceControlFlags));
+  buffer += sizeof(sequenceControlFlags);
+  size -= sizeof(sequenceControlFlags);
+
+  std::memcpy(&sequenceControlCount, buffer, sizeof(sequenceControlCount));
+  buffer += sizeof(sequenceControlCount);
+  size -= sizeof(sequenceControlCount);
 
   std::memcpy(&length, buffer, sizeof(length));
   buffer += sizeof(length);
@@ -75,8 +80,8 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   size -= sizeof(packetErrorControl);
 
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
-      sequenceControl, length, ack, serviceType, serviceSubtype, appData,
-      packetErrorControl);
+      sequenceControlFlags, sequenceControlCount, length, ack, serviceType,
+      serviceSubtype, appData, packetErrorControl);
 }
 
 void PacketOperations::writePacket(std::byte* buffer, const Packet& packet) {
@@ -84,7 +89,8 @@ void PacketOperations::writePacket(std::byte* buffer, const Packet& packet) {
   const auto& dataFieldHeader = packet.getDataFieldHeader();
   const auto& appIdSource = packet.getAppIdSource();
   const auto& appIdDestination = packet.getAppIdDestination();
-  const auto& sequenceControl = packet.getSequenceControl();
+  const auto& sequenceControlFlags = packet.getSequenceControlFlags();
+  const auto& sequenceControlCount = packet.getSequenceControlCount();
   const auto& length = packet.getLength();
 
   const auto& ack = packet.getAck();
@@ -107,8 +113,11 @@ void PacketOperations::writePacket(std::byte* buffer, const Packet& packet) {
   std::memcpy(buffer, &appIdDestination, sizeof(appIdDestination));
   buffer += sizeof(appIdDestination);
 
-  std::memcpy(buffer, &sequenceControl, sizeof(sequenceControl));
-  buffer += sizeof(sequenceControl);
+  std::memcpy(buffer, &sequenceControlFlags, sizeof(sequenceControlFlags));
+  buffer += sizeof(sequenceControlFlags);
+
+  std::memcpy(buffer, &sequenceControlCount, sizeof(sequenceControlCount));
+  buffer += sizeof(sequenceControlCount);
 
   std::memcpy(buffer, &length, sizeof(length));
   buffer += sizeof(length);

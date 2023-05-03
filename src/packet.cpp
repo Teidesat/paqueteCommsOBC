@@ -4,7 +4,8 @@ Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber,
     std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
     std::bitset<APP_ID_SOURCE_SIZE> const& appIdSource,
     std::bitset<APP_ID_DESTINATION_SIZE> const& appIdDestination,
-    std::bitset<SEQUENCE_CONTROL_SIZE> const& sequenceControl,
+    std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> const& sequenceControlFlags,
+    std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> const& sequenceControlCount,
     std::bitset<LENGTH_SIZE> const& length,
     std::bitset<ACK_SIZE> const& ack,
     std::bitset<SERVICE_TYPE_SIZE> const& serviceType,
@@ -15,7 +16,8 @@ Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber,
         dataFieldHeader_(dataFieldHeader),
         appIdSource_(appIdSource),
         appIdDestination_(appIdDestination),
-        sequenceControl_(sequenceControl),
+        sequenceControlFlags_(sequenceControlFlags),
+        sequenceControlCount_(sequenceControlCount),
         length_(length),
         ack_(ack),
         serviceType_(serviceType),
@@ -40,8 +42,12 @@ std::bitset<Packet::APP_ID_DESTINATION_SIZE> Packet::getAppIdDestination() const
   return appIdDestination_;
 }
 
-std::bitset<Packet::SEQUENCE_CONTROL_SIZE> Packet::getSequenceControl() const {
-  return sequenceControl_;
+std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE> Packet::getSequenceControlFlags() const {
+  return sequenceControlFlags_;
+}
+
+std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE> Packet::getSequenceControlCount() const {
+  return sequenceControlCount_;
 }
 
 std::bitset<Packet::LENGTH_SIZE> Packet::getLength() const {
