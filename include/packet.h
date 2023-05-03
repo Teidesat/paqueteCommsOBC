@@ -44,6 +44,13 @@ public:
       SERVICE_TYPE_SIZE +
       SERVICE_SUBTYPE_SIZE;
 
+  enum class AckState : uint8_t {
+    PACKET_ACCEPTED = 1,
+    EXECUTION_STARTED = 2,
+    EXECUTION_PROGRESSED = 3,
+    EXECUTION_COMPLETED = 4
+  };
+
   // *** constructor ***
   Packet(std::bitset<VERSION_NUMBER_SIZE>  const& versionNumber,
       std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
@@ -74,6 +81,9 @@ public:
   std::vector<std::byte> getAppData() const;
 
   std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
+
+  // *** setters ***
+  void setACK(AckState newState);
 
 private:
   // main header
