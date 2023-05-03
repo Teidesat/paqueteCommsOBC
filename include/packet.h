@@ -8,6 +8,9 @@
  * @copyright Copyright (c) 2023
  * 
  *  Packet representation, holds the data a packet has.
+ * 
+ *  Follows the ECSS-E-70-41A packet structure, but only one packet and some
+ *  fields are not included.
  *
  */
 
@@ -46,11 +49,11 @@ public:
       SERVICE_TYPE_SIZE +
       SERVICE_SUBTYPE_SIZE;
 
-  enum class AckState : uint8_t {
-    PACKET_ACCEPTED = 1,
-    EXECUTION_STARTED = 2,
-    EXECUTION_PROGRESSED = 3,
-    EXECUTION_COMPLETED = 4
+  enum class SequenceFlags : uint8_t {
+    INITIAL = 0b01,
+    IMBETWEEN = 0b00,
+    FINAL = 0b10,
+    STAND_ALONE = 0b11
   };
 
   // *** constructor ***
@@ -87,9 +90,9 @@ public:
   std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
 
   // *** setters ***
-  void setACK(const AckState newState);
+  void setACK(const bool newValue);
+  void setSequenceFlags(const SequenceFlags newSequenceFlags);
   
-
 private:
   // main header
   std::bitset<VERSION_NUMBER_SIZE> versionNumber_;
