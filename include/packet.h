@@ -51,7 +51,7 @@ public:
 
   enum class SequenceFlags : uint8_t {
     INITIAL = 0b01,
-    IMBETWEEN = 0b00,
+    INBETWEEN = 0b00,
     FINAL = 0b10,
     STAND_ALONE = 0b11
   };
@@ -72,27 +72,42 @@ public:
 
   ~Packet();
 
-  // *** getters ***
   std::bitset<VERSION_NUMBER_SIZE> getVersionNumber() const;
+  void setVersionNumber(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber);
+
   std::bitset<DATA_FIELD_HEADER_SIZE> getDataFieldHeader() const;
+  void setDataFieldHeader(bool const newValue);
+
   std::bitset<APP_ID_SOURCE_SIZE> getAppIdSource() const;
+  void setAppIdSource(std::byte const newAddress);
+
   std::bitset<APP_ID_DESTINATION_SIZE> getAppIdDestination() const;
+  void setAppIdDestination(std::byte const newAddress);
+
   std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> getSequenceControlFlags() const;
+  void setSequenceControlFlags(SequenceFlags const newFlags);
+
   std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> getSequenceControlCount() const;
+  void setSequenceControlCount(uint16_t const newCount);
+
   std::bitset<LENGTH_SIZE> getLength() const;
+  void setLength(uint16_t const amountOfBytes);
 
   std::bitset<ACK_SIZE> getAck() const;
-  std::bitset<SERVICE_TYPE_SIZE> getServiceType() const;
-  std::bitset<SERVICE_SUBTYPE_SIZE> getServiceSubtype() const;
+  void setACK(bool const newValue);
 
-  std::vector<std::byte> getAppData() const;
+  std::bitset<SERVICE_TYPE_SIZE> getServiceType() const;
+  void setServiceType(uint8_t const typeId);
+
+  std::bitset<SERVICE_SUBTYPE_SIZE> getServiceSubtype() const;
+  void setServiceSubtype(uint8_t const subtypeId);
 
   std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
+  void setPacketErrorControl(uint8_t const crc);
 
-  // *** setters ***
-  void setACK(const bool newValue);
-  void setSequenceFlags(const SequenceFlags newSequenceFlags);
-  
+  std::vector<std::byte> getAppData() const;
+  void setAppData(std::vector<std::byte> const& newAppData);
+
 private:
   // main header
   std::bitset<VERSION_NUMBER_SIZE> versionNumber_;

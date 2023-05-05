@@ -73,3 +73,75 @@ std::vector<std::byte> Packet::getAppData() const {
 std::bitset<Packet::PACKET_ERROR_CONTROL_SIZE> Packet::getPacketErrorControl() const {
   return packetErrorControl_;
 }
+
+void Packet::setVersionNumber(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber) {
+  versionNumber_ = versionNumber;
+}
+
+void Packet::setACK(const bool newValue) {
+  ack_.set(ACK_SIZE - 1, newValue);
+}
+
+void Packet::setDataFieldHeader(const bool newValue) {
+  dataFieldHeader_.set(DATA_FIELD_HEADER_SIZE - 1, newValue);
+}
+
+void Packet::setAppIdSource(const std::byte newAddress) {
+  std::bitset<APP_ID_SOURCE_SIZE> addressBits(std::to_integer<int>(newAddress));
+  appIdSource_ = addressBits;
+}
+
+void Packet::setAppIdDestination(const std::byte newAddress) {
+  std::bitset<APP_ID_DESTINATION_SIZE> addressBits(std::to_integer<int>(newAddress));
+  appIdDestination_ = addressBits;
+}
+
+void Packet::setLength(const uint16_t amountOfBytes) {
+  std::bitset<LENGTH_SIZE> lengthBits(amountOfBytes);
+  length_ = lengthBits;
+}
+
+void Packet::setSequenceControlFlags(SequenceFlags const newFlags) {
+  sequenceControlFlags_ = std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE>(static_cast<uint8_t>(newFlags));
+  switch (newFlags) {
+    case SequenceFlags::INITIAL:
+      sequenceControlFlags_.set(0, 0);
+      sequenceControlFlags_.set(1, 1);
+      break;
+    case SequenceFlags::INBETWEEN:
+      sequenceControlFlags_.set(0, 1);
+      sequenceControlFlags_.set(1, 0);
+      break;
+    case SequenceFlags::FINAL:
+      sequenceControlFlags_.set(0, 1);
+      sequenceControlFlags_.set(1, 1);
+      break;
+    case SequenceFlags::STAND_ALONE:
+      sequenceControlFlags_.reset();
+      break;
+  }
+}
+
+void Packet::setSequenceControlCount(const uint16_t newCount) {
+  std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> countBits(newCount);
+  sequenceControlCount_ = countBits;
+}
+
+void Packet::setServiceType(const uint8_t typeId) {
+  std::bitset<SERVICE_TYPE_SIZE> typeBits(typeId);
+  serviceType_ = typeBits;
+}
+
+void Packet::setServiceSubtype(const uint8_t subtypeId) {
+  std::bitset<SERVICE_SUBTYPE_SIZE> subtypeBits(subtypeId);
+  serviceSubtype_ = subtypeBits;
+}
+
+void Packet::setPacketErrorControl(const uint8_t crc) {
+  std::bitset<PACKET_ERROR_CONTROL_SIZE> crcBits(crc);
+  packetErrorControl_ = crcBits;
+}
+
+void Packet::setAppData(const std::vector<std::byte>& newAppData) {
+    appData_.assign(newAppData.begin(), newAppData.end());
+}
