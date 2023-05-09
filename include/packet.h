@@ -44,10 +44,10 @@ public:
       LENGTH_SIZE +
       PACKET_ERROR_CONTROL_SIZE;
 
-  static constexpr uint8_t PACKET_DATA_HEADER_SIZE =
-      ACK_SIZE +
-      SERVICE_TYPE_SIZE +
-      SERVICE_SUBTYPE_SIZE;
+  // static constexpr uint8_t PACKET_DATA_HEADER_SIZE =
+  //     ACK_SIZE +
+  //     SERVICE_TYPE_SIZE +
+  //     SERVICE_SUBTYPE_SIZE;
 
   enum class SequenceFlags : uint8_t {
     INITIAL = 0b01,
@@ -57,56 +57,56 @@ public:
   };
 
   Packet() = default;  
-  Packet(std::bitset<VERSION_NUMBER_SIZE>  const& versionNumber,
-      std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
-      std::bitset<APP_ID_SOURCE_SIZE> const& appIdSource,
-      std::bitset<APP_ID_DESTINATION_SIZE> const& appIdDestination,
-      std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> const& sequenceControlFlags,
-      std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> const& sequenceControlCount,
-      std::bitset<LENGTH_SIZE> const& length,
-      std::bitset<ACK_SIZE> const& ack,
-      std::bitset<SERVICE_TYPE_SIZE> const& serviceType,
-      std::bitset<SERVICE_SUBTYPE_SIZE> const& serviceSubtype,
-      std::vector<std::byte> const& appData,
-      std::bitset<PACKET_ERROR_CONTROL_SIZE> const& packetErrorControl);
+  Packet(const std::bitset<VERSION_NUMBER_SIZE>&  versionNumber,
+      const std::bitset<DATA_FIELD_HEADER_SIZE>& dataFieldHeader,
+      const std::bitset<APP_ID_SOURCE_SIZE>& appIdSource,
+      const std::bitset<APP_ID_DESTINATION_SIZE>& appIdDestination,
+      const std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceControlFlags,
+      const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount,
+      const std::bitset<LENGTH_SIZE>& length,
+      const std::bitset<ACK_SIZE>& ack,
+      const std::bitset<SERVICE_TYPE_SIZE>& serviceType,
+      const std::bitset<SERVICE_SUBTYPE_SIZE>& serviceSubtype,
+      const std::vector<std::byte>& appData,
+      const std::bitset<PACKET_ERROR_CONTROL_SIZE>& packetErrorControl);
 
   ~Packet();
 
   std::bitset<VERSION_NUMBER_SIZE> getVersionNumber() const;
-  void setVersionNumber(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber);
+  void setVersionNumber(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber);
 
   std::bitset<DATA_FIELD_HEADER_SIZE> getDataFieldHeader() const;
-  void setDataFieldHeader(bool const newValue);
+  void setDataFieldHeader(const bool newValue);
 
   std::bitset<APP_ID_SOURCE_SIZE> getAppIdSource() const;
-  void setAppIdSource(std::byte const newAddress);
+  void setAppIdSource(const std::bitset<APP_ID_SOURCE_SIZE>&  newAddress);
 
   std::bitset<APP_ID_DESTINATION_SIZE> getAppIdDestination() const;
-  void setAppIdDestination(std::byte const newAddress);
+  void setAppIdDestination(const std::bitset<APP_ID_DESTINATION_SIZE>& const newAddress);
 
   std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> getSequenceControlFlags() const;
-  void setSequenceControlFlags(SequenceFlags const newFlags);
+  void setSequenceControlFlags(const SequenceFlags newFlags);
 
   std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> getSequenceControlCount() const;
-  void setSequenceControlCount(uint16_t const newCount);
+  void setSequenceControlCount(const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& newCount);
 
   std::bitset<LENGTH_SIZE> getLength() const;
-  void setLength(uint16_t const amountOfBytes);
+  void setLength(const std::bitset<LENGTH_SIZE>& amountOfBytes);
 
   std::bitset<ACK_SIZE> getAck() const;
-  void setACK(bool const newValue);
+  void setACK(const bool newValue);
 
   std::bitset<SERVICE_TYPE_SIZE> getServiceType() const;
-  void setServiceType(uint8_t const typeId);
+  void setServiceType(const std::bitset<SERVICE_TYPE_SIZE>& typeId);
 
   std::bitset<SERVICE_SUBTYPE_SIZE> getServiceSubtype() const;
-  void setServiceSubtype(uint8_t const subtypeId);
+  void setServiceSubtype(const std::bitset<SERVICE_SUBTYPE_SIZE>& subtypeId);
 
   std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
-  void setPacketErrorControl(uint8_t const crc);
+  void setPacketErrorControl(const std::bitset<PACKET_ERROR_CONTROL_SIZE>& crc);
 
   std::vector<std::byte> getAppData() const;
-  void setAppData(std::vector<std::byte> const& newAppData);
+  void setAppData(const std::vector<std::byte>& newAppData);
 
 private:
   // main header

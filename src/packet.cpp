@@ -1,17 +1,17 @@
 #include "../include/packet.h"
 
-Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber,
-    std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
-    std::bitset<APP_ID_SOURCE_SIZE> const& appIdSource,
-    std::bitset<APP_ID_DESTINATION_SIZE> const& appIdDestination,
-    std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> const& sequenceControlFlags,
-    std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> const& sequenceControlCount,
-    std::bitset<LENGTH_SIZE> const& length,
-    std::bitset<ACK_SIZE> const& ack,
-    std::bitset<SERVICE_TYPE_SIZE> const& serviceType,
-    std::bitset<SERVICE_SUBTYPE_SIZE> const& serviceSubtype,
-    std::vector<std::byte> const& appData,
-    std::bitset<PACKET_ERROR_CONTROL_SIZE> const& packetErrorControl) :
+Packet::Packet(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber,
+    const std::bitset<DATA_FIELD_HEADER_SIZE>& dataFieldHeader,
+    const std::bitset<APP_ID_SOURCE_SIZE>& appIdSource,
+    const std::bitset<APP_ID_DESTINATION_SIZE>& appIdDestination,
+    const std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceControlFlags,
+    const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount,
+    const std::bitset<LENGTH_SIZE>& length,
+    const std::bitset<ACK_SIZE>& ack,
+    const std::bitset<SERVICE_TYPE_SIZE>& serviceType,
+    const std::bitset<SERVICE_SUBTYPE_SIZE>& serviceSubtype,
+    const std::vector<std::byte>& appData,
+    const std::bitset<PACKET_ERROR_CONTROL_SIZE>& packetErrorControl) :
         versionNumber_(versionNumber),
         dataFieldHeader_(dataFieldHeader),
         appIdSource_(appIdSource),
@@ -76,7 +76,7 @@ std::bitset<Packet::PACKET_ERROR_CONTROL_SIZE> Packet::getPacketErrorControl() c
   return packetErrorControl_;
 }
 
-void Packet::setVersionNumber(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber) {
+void Packet::setVersionNumber(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber) {
   versionNumber_ = versionNumber;
 }
 
@@ -88,17 +88,15 @@ void Packet::setDataFieldHeader(const bool newValue) {
   dataFieldHeader_.set(DATA_FIELD_HEADER_SIZE - 1, newValue);
 }
 
-void Packet::setAppIdSource(const std::byte newAddress) {
-  std::bitset<APP_ID_SOURCE_SIZE> addressBits(std::to_integer<int>(newAddress));
-  appIdSource_ = addressBits;
+void Packet::setAppIdSource(const std::bitset<APP_ID_SOURCE_SIZE>& newAddress) {
+  appIdSource_ = newAddress;
 }
 
-void Packet::setAppIdDestination(const std::byte newAddress) {
-  std::bitset<APP_ID_DESTINATION_SIZE> addressBits(std::to_integer<int>(newAddress));
-  appIdDestination_ = addressBits;
+void Packet::setAppIdDestination(const std::bitset<APP_ID_DESTINATION_SIZE>& newAddress) {
+  appIdDestination_ = newAddress;
 }
 
-void Packet::setLength(const uint16_t amountOfBytes) {
+void Packet::setLength(const std::bitset<LENGTH_SIZE>& amountOfBytes) {
   std::bitset<LENGTH_SIZE> lengthBits(amountOfBytes);
   length_ = lengthBits;
 }
@@ -124,22 +122,22 @@ void Packet::setSequenceControlFlags(SequenceFlags const newFlags) {
   }
 }
 
-void Packet::setSequenceControlCount(const uint16_t newCount) {
+void Packet::setSequenceControlCount(const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& newCount) {
   std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> countBits(newCount);
   sequenceControlCount_ = countBits;
 }
 
-void Packet::setServiceType(const uint8_t typeId) {
+void Packet::setServiceType(const std::bitset<SERVICE_TYPE_SIZE>& typeId) {
   std::bitset<SERVICE_TYPE_SIZE> typeBits(typeId);
   serviceType_ = typeBits;
 }
 
-void Packet::setServiceSubtype(const uint8_t subtypeId) {
+void Packet::setServiceSubtype(const std::bitset<SERVICE_SUBTYPE_SIZE>& subtypeId) {
   std::bitset<SERVICE_SUBTYPE_SIZE> subtypeBits(subtypeId);
   serviceSubtype_ = subtypeBits;
 }
 
-void Packet::setPacketErrorControl(const uint8_t crc) {
+void Packet::setPacketErrorControl(const std::bitset<PACKET_ERROR_CONTROL_SIZE>& crc) {
   std::bitset<PACKET_ERROR_CONTROL_SIZE> crcBits(crc);
   packetErrorControl_ = crcBits;
 }
