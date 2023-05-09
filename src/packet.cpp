@@ -26,6 +26,8 @@ Packet::Packet(std::bitset<VERSION_NUMBER_SIZE> const& versionNumber,
         packetErrorControl_(packetErrorControl)
 {}
 
+Packet::~Packet() {}
+
 std::bitset<Packet::VERSION_NUMBER_SIZE> Packet::getVersionNumber() const {
   return versionNumber_;
 }

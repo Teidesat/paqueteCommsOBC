@@ -56,7 +56,7 @@ public:
     STAND_ALONE = 0b11
   };
 
-  // *** constructor ***
+  Packet() = default;  
   Packet(std::bitset<VERSION_NUMBER_SIZE>  const& versionNumber,
       std::bitset<DATA_FIELD_HEADER_SIZE> const& dataFieldHeader,
       std::bitset<APP_ID_SOURCE_SIZE> const& appIdSource,
