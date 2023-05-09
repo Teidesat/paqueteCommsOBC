@@ -1,4 +1,0 @@
-C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/build/CMakeFiles/paqueteCnCLibrary.dir
-C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/build/CMakeFiles/paqueteCnC.dir
-C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Marcos/Desktop/Cosas/Educacion/ULL/2022_2023/Practicas Externas/paqueteCnC/build/CMakeFiles/ZERO_CHECK.dir
