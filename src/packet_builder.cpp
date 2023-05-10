@@ -21,7 +21,7 @@ void PacketBuilder::addMainHeader(const std::bitset<Packet::VERSION_NUMBER_SIZE>
               const std::bitset<Packet::APP_ID_DESTINATION_SIZE>& appIdDestination,
               const Packet::SequenceFlags sequenceControlFlags,
               const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount) {
-  
+
   packet_.setVersionNumber(versionNumber);
   packet_.setAppIdSource(appIdSource);
   packet_.setAppIdDestination(appIdDestination);

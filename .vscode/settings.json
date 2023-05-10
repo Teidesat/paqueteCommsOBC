@@ -51,6 +51,7 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "bitset": "cpp",
-    "xstring": "cpp"
+    "xstring": "cpp",
+    "ctime": "cpp"
   }
 }

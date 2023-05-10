@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <vector>
+#include <array>
 #include <bitset>
 
 class Packet {
@@ -33,6 +33,7 @@ public:
   static constexpr uint8_t SERVICE_TYPE_SIZE = 8;
   static constexpr uint8_t SERVICE_SUBTYPE_SIZE = 8;
   static constexpr uint8_t PACKET_ERROR_CONTROL_SIZE = 3;
+  inline static constexpr uint16_t APP_DATA_SIZE = 256; // inline for appdata array size
 
   static constexpr uint8_t PACKET_HEADER_SIZE =
       VERSION_NUMBER_SIZE +
@@ -56,7 +57,7 @@ public:
     STAND_ALONE = 0b11
   };
 
-  Packet() = default;  
+  Packet() = default; // inicializa los bitset a 0
   Packet(const std::bitset<VERSION_NUMBER_SIZE>&  versionNumber,
       const std::bitset<DATA_FIELD_HEADER_SIZE>& dataFieldHeader,
       const std::bitset<APP_ID_SOURCE_SIZE>& appIdSource,
@@ -67,7 +68,7 @@ public:
       const std::bitset<ACK_SIZE>& ack,
       const std::bitset<SERVICE_TYPE_SIZE>& serviceType,
       const std::bitset<SERVICE_SUBTYPE_SIZE>& serviceSubtype,
-      const std::vector<std::byte>& appData,
+      const std::array<std::byte, APP_DATA_SIZE>& appData,
       const std::bitset<PACKET_ERROR_CONTROL_SIZE>& packetErrorControl);
 
   ~Packet();
@@ -82,7 +83,7 @@ public:
   void setAppIdSource(const std::bitset<APP_ID_SOURCE_SIZE>&  newAddress);
 
   std::bitset<APP_ID_DESTINATION_SIZE> getAppIdDestination() const;
-  void setAppIdDestination(const std::bitset<APP_ID_DESTINATION_SIZE>& const newAddress);
+  void setAppIdDestination(const std::bitset<APP_ID_DESTINATION_SIZE>& newAddress);
 
   std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> getSequenceControlFlags() const;
   void setSequenceControlFlags(const SequenceFlags newFlags);
@@ -105,8 +106,10 @@ public:
   std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
   void setPacketErrorControl(const std::bitset<PACKET_ERROR_CONTROL_SIZE>& crc);
 
-  std::vector<std::byte> getAppData() const;
-  void setAppData(const std::vector<std::byte>& newAppData);
+  // It sets the object pointed to by ptrAppData to the value of appData_ .
+  // The receptor array must be of size APP_DATA_SIZE
+  std::array<std::byte, APP_DATA_SIZE> getAppData();
+  void setAppData(const std::array<std::byte, APP_DATA_SIZE>& ptrNewAppData);
 
 private:
   // main header
@@ -124,7 +127,7 @@ private:
   std::bitset<SERVICE_SUBTYPE_SIZE> serviceSubtype_;
 
   // data
-  std::vector<std::byte> appData_;
+  std::array<std::byte, APP_DATA_SIZE> appData_;
 
   // main header too
   std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl_;

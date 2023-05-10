@@ -21,6 +21,6 @@ public:
   ~PacketOperations();
 
   Packet readPacket(const std::byte* buffer, std::size_t size);
-  void writePacket(std::byte* buffer, const Packet& packet);
+  void writePacket(std::byte* buffer, Packet& packet);
 private:
 };

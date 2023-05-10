@@ -22,7 +22,7 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   std::bitset<Packet::SERVICE_TYPE_SIZE> serviceType;
   std::bitset<Packet::SERVICE_SUBTYPE_SIZE> serviceSubtype;
 
-  std::vector<std::byte> appData;
+  std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
   std::bitset<Packet::PACKET_ERROR_CONTROL_SIZE> packetErrorControl;
 
@@ -67,8 +67,9 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
     buffer += sizeof(serviceSubtype);
     size -= sizeof(serviceSubtype);
 
-    appData.reserve(size);
-    appData.insert(appData.begin(), buffer, buffer + size - sizeof(packetErrorControl));
+    std::memcpy(&appData, buffer, sizeof(appData));
+    buffer += sizeof(appData);
+    size -= sizeof(appData);
   } else {
     ack = 0;
     serviceType = 0;
@@ -84,7 +85,7 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
       serviceSubtype, appData, packetErrorControl);
 }
 
-void PacketOperations::writePacket(std::byte* buffer, const Packet& packet) {
+void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
   const auto& versionNumber = packet.getVersionNumber();
   const auto& dataFieldHeader = packet.getDataFieldHeader();
   const auto& appIdSource = packet.getAppIdSource();
@@ -97,7 +98,7 @@ void PacketOperations::writePacket(std::byte* buffer, const Packet& packet) {
   const auto& serviceType = packet.getServiceType();
   const auto& serviceSubtype = packet.getServiceSubtype();
 
-  std::vector<std::byte> appData = packet.getAppData();
+  const auto& appData = packet.getAppData();
 
   const auto& packetErrorControl = packet.getPacketErrorControl();
 

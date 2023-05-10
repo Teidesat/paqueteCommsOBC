@@ -1,5 +1,7 @@
 #include "../include/packet.h"
 
+#include <cassert>
+
 Packet::Packet(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber,
     const std::bitset<DATA_FIELD_HEADER_SIZE>& dataFieldHeader,
     const std::bitset<APP_ID_SOURCE_SIZE>& appIdSource,
@@ -10,7 +12,7 @@ Packet::Packet(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber,
     const std::bitset<ACK_SIZE>& ack,
     const std::bitset<SERVICE_TYPE_SIZE>& serviceType,
     const std::bitset<SERVICE_SUBTYPE_SIZE>& serviceSubtype,
-    const std::vector<std::byte>& appData,
+    const std::array<std::byte, APP_DATA_SIZE>& appData,
     const std::bitset<PACKET_ERROR_CONTROL_SIZE>& packetErrorControl) :
         versionNumber_(versionNumber),
         dataFieldHeader_(dataFieldHeader),
@@ -22,7 +24,7 @@ Packet::Packet(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber,
         ack_(ack),
         serviceType_(serviceType),
         serviceSubtype_(serviceSubtype),
-        appData_(appData.begin(), appData.end()),
+        appData_(appData),
         packetErrorControl_(packetErrorControl)
 {}
 
@@ -68,8 +70,12 @@ std::bitset<Packet::SERVICE_SUBTYPE_SIZE> Packet::getServiceSubtype() const {
   return serviceSubtype_;
 }
 
-std::vector<std::byte> Packet::getAppData() const {
+std::array<std::byte, Packet::APP_DATA_SIZE> Packet::getAppData() {
   return appData_;
+}
+
+void Packet::setAppData(const std::array<std::byte, APP_DATA_SIZE>& newAppData) {
+  appData_ = newAppData;
 }
 
 std::bitset<Packet::PACKET_ERROR_CONTROL_SIZE> Packet::getPacketErrorControl() const {
@@ -140,8 +146,4 @@ void Packet::setServiceSubtype(const std::bitset<SERVICE_SUBTYPE_SIZE>& subtypeI
 void Packet::setPacketErrorControl(const std::bitset<PACKET_ERROR_CONTROL_SIZE>& crc) {
   std::bitset<PACKET_ERROR_CONTROL_SIZE> crcBits(crc);
   packetErrorControl_ = crcBits;
-}
-
-void Packet::setAppData(const std::vector<std::byte>& newAppData) {
-    appData_.assign(newAppData.begin(), newAppData.end());
 }
