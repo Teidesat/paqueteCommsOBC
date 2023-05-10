@@ -23,12 +23,15 @@ class Packet {
 public:
   // *** constants ***
   static constexpr uint8_t VERSION_NUMBER_SIZE = 3;
+  static constexpr uint8_t TYPE_SIZE = 1;
   static constexpr uint8_t DATA_FIELD_HEADER_SIZE = 1;
   static constexpr uint8_t APP_ID_SOURCE_SIZE = 5;
   static constexpr uint8_t APP_ID_DESTINATION_SIZE = 5;
   static constexpr uint8_t SEQUENCE_CONTROL_FLAGS_SIZE = 2;
   static constexpr uint8_t SEQUENCE_CONTROL_COUNT_SIZE = 14;
   static constexpr uint8_t LENGTH_SIZE = 16;
+  static constexpr uint8_t CCSDS_SIZE = 1;
+  static constexpr uint8_t PUS_VERSION_SIZE = 3;
   static constexpr uint8_t ACK_SIZE = 4;
   static constexpr uint8_t SERVICE_TYPE_SIZE = 8;
   static constexpr uint8_t SERVICE_SUBTYPE_SIZE = 8;
@@ -37,6 +40,7 @@ public:
 
   static constexpr uint8_t PACKET_HEADER_SIZE =
       VERSION_NUMBER_SIZE +
+      TYPE_SIZE +
       DATA_FIELD_HEADER_SIZE +
       APP_ID_SOURCE_SIZE +
       APP_ID_DESTINATION_SIZE +
@@ -46,6 +50,8 @@ public:
       PACKET_ERROR_CONTROL_SIZE;
 
   // static constexpr uint8_t PACKET_DATA_HEADER_SIZE =
+  //     CCSDS_SIZE
+  //     PUS_VERSION_SIZE
   //     ACK_SIZE +
   //     SERVICE_TYPE_SIZE +
   //     SERVICE_SUBTYPE_SIZE;
@@ -57,14 +63,17 @@ public:
     STAND_ALONE = 0b11
   };
 
-  Packet() = default; // inicializa los bitset a 0
-  Packet(const std::bitset<VERSION_NUMBER_SIZE>&  versionNumber,
+  Packet();
+  Packet(
+      const std::bitset<VERSION_NUMBER_SIZE>&  versionNumber,
       const std::bitset<DATA_FIELD_HEADER_SIZE>& dataFieldHeader,
       const std::bitset<APP_ID_SOURCE_SIZE>& appIdSource,
       const std::bitset<APP_ID_DESTINATION_SIZE>& appIdDestination,
       const std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceControlFlags,
       const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount,
       const std::bitset<LENGTH_SIZE>& length,
+      const std::bitset<CCSDS_SIZE>& ccsds,
+      const std::bitset<PUS_VERSION_SIZE>& pusVersion,
       const std::bitset<ACK_SIZE>& ack,
       const std::bitset<SERVICE_TYPE_SIZE>& serviceType,
       const std::bitset<SERVICE_SUBTYPE_SIZE>& serviceSubtype,
@@ -94,6 +103,12 @@ public:
   std::bitset<LENGTH_SIZE> getLength() const;
   void setLength(const std::bitset<LENGTH_SIZE>& amountOfBytes);
 
+  std::bitset<CCSDS_SIZE> getCCSDS() const;
+  void setCCSDS(const std::bitset<CCSDS_SIZE> ccsds);
+
+  std::bitset<PUS_VERSION_SIZE> getPUSVersion() const;
+  void setPUSVersion(const std::bitset<PUS_VERSION_SIZE> pusVersion);
+
   std::bitset<ACK_SIZE> getAck() const;
   void setACK(const bool newValue);
 
@@ -114,14 +129,17 @@ public:
 private:
   // main header
   std::bitset<VERSION_NUMBER_SIZE> versionNumber_;
+  std::bitset<TYPE_SIZE> type_; // always 0, only one packet type
   std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader_;
   std::bitset<APP_ID_SOURCE_SIZE> appIdSource_;
   std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination_;
   std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> sequenceControlFlags_;
   std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> sequenceControlCount_;
-  std::bitset<LENGTH_SIZE> length_;
+  std::bitset<LENGTH_SIZE> length_; // amount of octets within app. data
 
   // data field header (optional)
+  std::bitset<CCSDS_SIZE> ccsds_;
+  std::bitset<PUS_VERSION_SIZE> pusVersion_;
   std::bitset<ACK_SIZE> ack_;
   std::bitset<SERVICE_TYPE_SIZE> serviceType_;
   std::bitset<SERVICE_SUBTYPE_SIZE> serviceSubtype_;
@@ -129,6 +147,6 @@ private:
   // data
   std::array<std::byte, APP_DATA_SIZE> appData_;
 
-  // main header too
+  // special field at the end of the packet
   std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl_;
 };

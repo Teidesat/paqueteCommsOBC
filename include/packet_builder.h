@@ -9,7 +9,8 @@
  *    - main header only + app data
  *    - main header + data field header + app data
  * 
- * Then, the app data can be of many different kinds depending on the service.
+ * Then, the app data can contain many different units depending on
+ *    the service.
  * 
  * @copyright Copyright (c) 2023
  * 
@@ -32,25 +33,32 @@ public:
   /****** other ******/
 
   // reset current construction
-  void newPacket();
+  // dataFieldHeader is left implicit.
+  // sequece control flags is set to default 11 independent
+  void newPacket(
+    const std::bitset<Packet::VERSION_NUMBER_SIZE>& versionNumber,
+    const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
+    const std::bitset<Packet::APP_ID_DESTINATION_SIZE>& appIdDestination,
+    const Packet::SequenceFlags sequenceControlFlags,
+    const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount
+  );
+
+  void setDataFieldHeader(
+    const bool ack,
+    const std::bitset<Packet::SERVICE_TYPE_SIZE>& serviceType,
+    const std::bitset<Packet::SERVICE_SUBTYPE_SIZE>& serviceSubtype
+  );
+
+  // TODO: Headers in app data for the different ECSS services.
 
   /*
-   * It's the mandatory packet header.
-   * dataFielHeader is left implicit.
-   */
-  void addMainHeader(const std::bitset<Packet::VERSION_NUMBER_SIZE>& versionNumber,
-                const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
-                const std::bitset<Packet::APP_ID_DESTINATION_SIZE>& appIdDestination,
-                const Packet::SequenceFlags sequenceControlFlags,
-                const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount);
-
-  void addDataFieldHeader(const bool ack,
-              const std::bitset<Packet::SERVICE_TYPE_SIZE>& serviceType,
-              const std::bitset<Packet::SERVICE_SUBTYPE_SIZE>& serviceSubtype);
+   * Telecommand Verification Service header.
+   *    
+  */
+  void addVerificationHeader();
 
 private:
   Packet packet_;
-  bool hasAddedMainHeader_;
 };
 
 #endif

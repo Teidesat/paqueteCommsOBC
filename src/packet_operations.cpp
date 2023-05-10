@@ -8,8 +8,6 @@ PacketOperations::PacketOperations() {}
 PacketOperations::~PacketOperations() {}
 
 Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
-  assert(sizeof(buffer) < Packet::PACKET_HEADER_SIZE);
-  
   std::bitset<Packet::VERSION_NUMBER_SIZE> versionNumber;
   std::bitset<Packet::DATA_FIELD_HEADER_SIZE> dataFieldHeader;
   std::bitset<Packet::APP_ID_SOURCE_SIZE> appIdSource;
@@ -18,6 +16,8 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE> sequenceControlCount;
   std::bitset<Packet::LENGTH_SIZE> length;
 
+  std::bitset<Packet::CCSDS_SIZE> ccsds;
+  std::bitset<Packet::PUS_VERSION_SIZE> pusVersion;
   std::bitset<Packet::ACK_SIZE> ack;
   std::bitset<Packet::SERVICE_TYPE_SIZE> serviceType;
   std::bitset<Packet::SERVICE_SUBTYPE_SIZE> serviceSubtype;
@@ -55,6 +55,14 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   size -= sizeof(length);
   
   if (dataFieldHeader == 1) {
+    std::memcpy(&ccsds, buffer, sizeof(ccsds));
+    buffer += sizeof(ccsds);
+    size -= sizeof(ccsds);
+
+    std::memcpy(&pusVersion, buffer, sizeof(pusVersion));
+    buffer += sizeof(pusVersion);
+    size -= sizeof(pusVersion);
+
     std::memcpy(&ack, buffer, sizeof(ack));
     buffer += sizeof(ack);
     size -= sizeof(ack);
@@ -81,8 +89,8 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   size -= sizeof(packetErrorControl);
 
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
-      sequenceControlFlags, sequenceControlCount, length, ack, serviceType,
-      serviceSubtype, appData, packetErrorControl);
+      sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
+      ack, serviceType, serviceSubtype, appData, packetErrorControl);
 }
 
 void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
@@ -94,6 +102,8 @@ void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
   const auto& sequenceControlCount = packet.getSequenceControlCount();
   const auto& length = packet.getLength();
 
+  const auto& ccsds = packet.getCCSDS();
+  const auto& pusVersion = packet.getPUSVersion();
   const auto& ack = packet.getAck();
   const auto& serviceType = packet.getServiceType();
   const auto& serviceSubtype = packet.getServiceSubtype();
@@ -124,6 +134,12 @@ void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
   buffer += sizeof(length);
   
   if (dataFieldHeader == 1) {
+    std::memcpy(buffer, &ccsds, sizeof(ccsds));
+    buffer += sizeof(ccsds);
+
+    std::memcpy(buffer, &pusVersion, sizeof(pusVersion));
+    buffer += sizeof(pusVersion);
+
     std::memcpy(buffer, &ack, sizeof(ack));
     buffer += sizeof(ack);
 
