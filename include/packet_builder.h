@@ -47,32 +47,32 @@ public:
     const uint8_t serviceSubtype
   );
 
-  // TODO: Headers in app data for the different ECSS services.
+  // TODO: Declare headers in app data for the different ECSS services.
 
   /*
    * Telecommand Verification Service header.
    *    
   */
-  // void addVerificationHeader(
-  //   const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
-  //   const std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceFlags,
-  //   const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceCount
-  // );
+  void addCommandVerificationHeader(
+    const uint8_t appIdSource,
+    const uint8_t sequenceFlags,
+    const uint16_t sequenceCount
+  );
 
-  // void addVerificationHeader(
-  //   const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
-  //   const std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceFlags,
-  //   const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceCount,
-  //   const std::bitset<4>& code
-  // );
+  void addCommandVerificationHeader(
+    const uint8_t appIdSource,
+    const uint8_t sequenceFlags,
+    const uint8_t sequenceCount,
+    const uint8_t code
+  );
 
-  // void addVerificationHeader(
-  //   const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
-  //   const std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceFlags,
-  //   const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceCount,
-  //   const std::bitset<4>& code,
-  //   const std::vector<std::byte>& parameters
-  // );
+  void addCommandVerificationHeader(
+    const uint8_t appIdSource,
+    const uint8_t sequenceFlags,
+    const uint8_t sequenceCount,
+    const uint8_t code,
+    const std::vector<uint8_t>& parameters
+  );
 
 private:
   Packet packet_;

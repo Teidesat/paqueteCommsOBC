@@ -4,7 +4,8 @@
 
 Packet::Packet() :
   sequenceControlFlags_(0b11), // standalone by default
-  pusVersion_(0b1) // currentStandard requires =1
+  pusVersion_(0b1), // currentStandard requires =1
+  appDataIndex_(0)
 {}
 
 Packet::Packet(
@@ -36,7 +37,8 @@ Packet::Packet(
   serviceType_(serviceType),
   serviceSubtype_(serviceSubtype),
   appData_(appData),
-  packetErrorControl_(packetErrorControl)
+  packetErrorControl_(packetErrorControl),
+  appDataIndex_(0)
 {}
 
 Packet::~Packet() {}

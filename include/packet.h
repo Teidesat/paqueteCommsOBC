@@ -13,6 +13,7 @@
 
 #include <array>
 #include <bitset>
+#include <memory>
 
 class Packet {
 public:
@@ -142,6 +143,7 @@ private:
 
   // data
   std::array<uint8_t, APP_DATA_SIZE> appData_;
+  uint8_t appDataIndex_; // for app. data appending
 
   // special field at the end of the packet
   uint16_t packetErrorControl_;

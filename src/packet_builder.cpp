@@ -33,3 +33,50 @@ void PacketBuilder::setDataFieldHeader(
   packet_.setServiceType(serviceType);
   packet_.setServiceSubtype(serviceSubtype);
 }
+
+/*
+  * Telecommand Verification Service headers.
+  *    
+*/
+
+void PacketBuilder::addCommandVerificationHeader(
+  const uint8_t appIdSource,
+  const uint8_t sequenceFlags,
+  const uint16_t sequenceCount
+) {
+  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{}; // default initialize
+  std::memcpy(&appData, &appIdSource, sizeof(appIdSource));
+  std::memcpy(&appData, &sequenceFlags, sizeof(sequenceFlags));
+  std::memcpy(&appData, &sequenceCount, sizeof(sequenceCount));
+  packet_.setAppData(appData);
+}
+
+void PacketBuilder::addCommandVerificationHeader(
+  const uint8_t appIdSource,
+  const uint8_t sequenceFlags,
+  const uint8_t sequenceCount,
+  const uint8_t code
+) {
+  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{}; // default initialize
+  std::memcpy(&appData, &appIdSource, sizeof(appIdSource));
+  std::memcpy(&appData, &sequenceFlags, sizeof(sequenceFlags));
+  std::memcpy(&appData, &sequenceCount, sizeof(sequenceCount));
+  std::memcpy(&appData, &code, sizeof(code));
+  packet_.setAppData(appData);
+}
+
+void PacketBuilder::addCommandVerificationHeader(
+  const uint8_t appIdSource,
+  const uint8_t sequenceFlags,
+  const uint8_t sequenceCount,
+  const uint8_t code,
+  const std::vector<uint8_t>& parameters
+) {
+  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{}; // default initialize
+  std::memcpy(&appData, &appIdSource, sizeof(appIdSource));
+  std::memcpy(&appData, &sequenceFlags, sizeof(sequenceFlags));
+  std::memcpy(&appData, &sequenceCount, sizeof(sequenceCount));
+  std::memcpy(&appData, &code, sizeof(code));
+  std::copy(parameters.begin(), parameters.end(), appData.begin());
+  packet_.setAppData(appData);
+}
