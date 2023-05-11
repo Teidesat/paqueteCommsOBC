@@ -60,89 +60,89 @@ public:
 
   Packet();
   Packet(
-      const std::bitset<VERSION_NUMBER_SIZE>&  versionNumber,
-      const std::bitset<DATA_FIELD_HEADER_SIZE>& dataFieldHeader,
-      const std::bitset<APP_ID_SOURCE_SIZE>& appIdSource,
-      const std::bitset<APP_ID_DESTINATION_SIZE>& appIdDestination,
-      const std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceControlFlags,
-      const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount,
-      const std::bitset<LENGTH_SIZE>& length,
-      const std::bitset<CCSDS_SIZE>& ccsds,
-      const std::bitset<PUS_VERSION_SIZE>& pusVersion,
-      const std::bitset<ACK_SIZE>& ack,
-      const std::bitset<SERVICE_TYPE_SIZE>& serviceType,
-      const std::bitset<SERVICE_SUBTYPE_SIZE>& serviceSubtype,
-      const std::array<std::byte, APP_DATA_SIZE>& appData,
-      const std::bitset<PACKET_ERROR_CONTROL_SIZE>& packetErrorControl);
+    const uint8_t versionNumber,
+    const uint8_t dataFieldHeader,
+    const uint8_t appIdSource,
+    const uint8_t appIdDestination,
+    const uint8_t sequenceControlFlags,
+    const uint8_t sequenceControlCount,
+    const uint8_t length,
+    const uint8_t ccsds,
+    const uint8_t pusVersion,
+    const uint8_t ack,
+    const uint8_t serviceType,
+    const uint8_t serviceSubtype,
+    const std::array<uint8_t, APP_DATA_SIZE>& appData,
+    const uint8_t packetErrorControl
+  );
 
   ~Packet();
 
-  std::bitset<VERSION_NUMBER_SIZE> getVersionNumber() const;
-  void setVersionNumber(const std::bitset<VERSION_NUMBER_SIZE>& versionNumber);
+  uint8_t getVersionNumber() const;
+  void setVersionNumber(const uint8_t versionNumber);
 
-  std::bitset<DATA_FIELD_HEADER_SIZE> getDataFieldHeader() const;
-  void setDataFieldHeader(const bool newValue);
+  uint8_t getDataFieldHeader() const;
+  void setDataFieldHeader(const uint8_t newValue);
 
-  std::bitset<APP_ID_SOURCE_SIZE> getAppIdSource() const;
-  void setAppIdSource(const std::bitset<APP_ID_SOURCE_SIZE>&  newAddress);
+  uint8_t getAppIdSource() const;
+  void setAppIdSource(const uint8_t newAddress);
 
-  std::bitset<APP_ID_DESTINATION_SIZE> getAppIdDestination() const;
-  void setAppIdDestination(const std::bitset<APP_ID_DESTINATION_SIZE>& newAddress);
+  uint8_t getAppIdDestination() const;
+  void setAppIdDestination(const uint8_t newAddress);
 
-  std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> getSequenceControlFlags() const;
+  uint8_t getSequenceControlFlags() const;
   void setSequenceControlFlags(const SequenceFlags newFlags);
 
-  std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> getSequenceControlCount() const;
-  void setSequenceControlCount(const std::bitset<SEQUENCE_CONTROL_COUNT_SIZE>& newCount);
+  uint16_t getSequenceControlCount() const;
+  void setSequenceControlCount(const uint16_t newCount);
 
-  std::bitset<LENGTH_SIZE> getLength() const;
-  void setLength(const std::bitset<LENGTH_SIZE>& amountOfBytes);
+  uint16_t getLength() const;
+  void setLength(const uint16_t amountOfBytes);
 
-  std::bitset<CCSDS_SIZE> getCCSDS() const;
-  void setCCSDS(const std::bitset<CCSDS_SIZE> ccsds);
+  uint8_t getCCSDS() const;
+  void setCCSDS(const uint8_t ccsds);
 
-  std::bitset<PUS_VERSION_SIZE> getPUSVersion() const;
-  void setPUSVersion(const std::bitset<PUS_VERSION_SIZE> pusVersion);
+  uint8_t getPUSVersion() const;
+  void setPUSVersion(const uint8_t pusVersion);
 
-  std::bitset<ACK_SIZE> getAck() const;
+  uint8_t getAck() const;
   void setACK(const bool newValue);
 
-  std::bitset<SERVICE_TYPE_SIZE> getServiceType() const;
-  void setServiceType(const std::bitset<SERVICE_TYPE_SIZE>& typeId);
+  uint8_t getServiceType() const;
+  void setServiceType(const uint8_t typeId);
 
-  std::bitset<SERVICE_SUBTYPE_SIZE> getServiceSubtype() const;
-  void setServiceSubtype(const std::bitset<SERVICE_SUBTYPE_SIZE>& subtypeId);
+  uint8_t getServiceSubtype() const;
+  void setServiceSubtype(const uint8_t subtypeId);
 
-  std::bitset<PACKET_ERROR_CONTROL_SIZE> getPacketErrorControl() const;
-  void setPacketErrorControl(const std::bitset<PACKET_ERROR_CONTROL_SIZE>& crc);
+  uint16_t getPacketErrorControl() const;
+  void setPacketErrorControl(const uint16_t crc);
 
   // It sets the object pointed to by ptrAppData to the value of appData_ .
   // The receptor array must be of size APP_DATA_SIZE
-  std::array<std::byte, APP_DATA_SIZE> getAppData();
-  void setAppData(const std::array<std::byte, APP_DATA_SIZE>& ptrNewAppData);
+  std::array<uint8_t, APP_DATA_SIZE> getAppData();
+  void setAppData(const std::array<uint8_t, APP_DATA_SIZE>& ptrNewAppData);
 
 private:
   // main header
-  std::bitset<VERSION_NUMBER_SIZE> versionNumber_;
-  std::bitset<TYPE_SIZE> type_; // always 0, only one packet type
-  std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader_;
-  std::bitset<1> empty;
-  std::bitset<APP_ID_SOURCE_SIZE> appIdSource_;
-  std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination_;
-  std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> sequenceControlFlags_;
-  std::bitset<SEQUENCE_CONTROL_COUNT_SIZE> sequenceControlCount_;
-  std::bitset<LENGTH_SIZE> length_; // amount of octets within app. data
+  uint8_t versionNumber_;
+  uint8_t type_; // always 0, only one packet type
+  uint8_t dataFieldHeader_;
+  uint8_t appIdSource_;
+  uint8_t appIdDestination_;
+  uint8_t sequenceControlFlags_;
+  uint16_t sequenceControlCount_;
+  uint16_t length_; // amount of octets within app. data
 
   // data field header (optional)
-  std::bitset<CCSDS_SIZE> ccsds_;
-  std::bitset<PUS_VERSION_SIZE> pusVersion_;
-  std::bitset<ACK_SIZE> ack_;
-  std::bitset<SERVICE_TYPE_SIZE> serviceType_;
-  std::bitset<SERVICE_SUBTYPE_SIZE> serviceSubtype_;
+  uint8_t ccsds_;
+  uint8_t pusVersion_;
+  uint8_t ack_;
+  uint8_t serviceType_;
+  uint8_t serviceSubtype_;
 
   // data
-  std::array<std::byte, APP_DATA_SIZE> appData_;
+  std::array<uint8_t, APP_DATA_SIZE> appData_;
 
   // special field at the end of the packet
-  std::bitset<PACKET_ERROR_CONTROL_SIZE> packetErrorControl_;
+  uint16_t packetErrorControl_;
 };

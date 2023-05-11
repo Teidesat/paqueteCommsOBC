@@ -7,24 +7,24 @@ PacketOperations::PacketOperations() {}
 
 PacketOperations::~PacketOperations() {}
 
-Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
-  std::bitset<Packet::VERSION_NUMBER_SIZE> versionNumber;
-  std::bitset<Packet::DATA_FIELD_HEADER_SIZE> dataFieldHeader;
-  std::bitset<Packet::APP_ID_SOURCE_SIZE> appIdSource;
-  std::bitset<Packet::APP_ID_DESTINATION_SIZE> appIdDestination;
-  std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE> sequenceControlFlags;
-  std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE> sequenceControlCount;
-  std::bitset<Packet::LENGTH_SIZE> length;
+Packet PacketOperations::readPacket(const uint8_t* buffer, std::size_t size) {
+  uint8_t versionNumber;
+  uint8_t dataFieldHeader;
+  uint8_t appIdSource;
+  uint8_t appIdDestination;
+  uint8_t sequenceControlFlags;
+  uint8_t sequenceControlCount;
+  uint8_t length;
 
-  std::bitset<Packet::CCSDS_SIZE> ccsds;
-  std::bitset<Packet::PUS_VERSION_SIZE> pusVersion;
-  std::bitset<Packet::ACK_SIZE> ack;
-  std::bitset<Packet::SERVICE_TYPE_SIZE> serviceType;
-  std::bitset<Packet::SERVICE_SUBTYPE_SIZE> serviceSubtype;
+  uint8_t ccsds;
+  uint8_t pusVersion;
+  uint8_t ack;
+  uint8_t serviceType;
+  uint8_t serviceSubtype;
 
-  std::array<std::byte, Packet::APP_DATA_SIZE> appData;
+  std::array<uint8_t, Packet::APP_DATA_SIZE> appData;
 
-  std::bitset<Packet::PACKET_ERROR_CONTROL_SIZE> packetErrorControl;
+  uint8_t packetErrorControl;
 
   std::memcpy(&versionNumber, buffer, sizeof(versionNumber));
   buffer += sizeof(versionNumber);
@@ -93,7 +93,7 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
       ack, serviceType, serviceSubtype, appData, packetErrorControl);
 }
 
-void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
+void PacketOperations::writePacket(uint8_t* buffer, Packet& packet) {
   const auto& versionNumber = packet.getVersionNumber();
   const auto& dataFieldHeader = packet.getDataFieldHeader();
   const auto& appIdSource = packet.getAppIdSource();

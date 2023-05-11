@@ -9,11 +9,11 @@ Packet PacketBuilder::getPacket() const {
 }
 
 void PacketBuilder::newPacket(
-  const std::bitset<Packet::VERSION_NUMBER_SIZE>& versionNumber,
-  const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
-  const std::bitset<Packet::APP_ID_DESTINATION_SIZE>& appIdDestination,
+  const uint8_t versionNumber,
+  const uint8_t appIdSource,
+  const uint8_t appIdDestination,
   const Packet::SequenceFlags sequenceControlFlags,
-  const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceControlCount
+  const uint16_t sequenceControlCount
 ) {
   packet_ = Packet();
   packet_.setVersionNumber(versionNumber);
@@ -25,8 +25,8 @@ void PacketBuilder::newPacket(
 
 void PacketBuilder::setDataFieldHeader(
     const bool ack,
-    const std::bitset<Packet::SERVICE_TYPE_SIZE>& serviceType,
-    const std::bitset<Packet::SERVICE_SUBTYPE_SIZE>& serviceSubtype
+    const uint8_t serviceType,
+    const uint8_t serviceSubtype
 ) {
   packet_.setDataFieldHeader(true);
   packet_.setACK(ack);
