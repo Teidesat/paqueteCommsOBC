@@ -14,43 +14,12 @@
 #include <array>
 #include <bitset>
 #include <memory>
+#include <array>
 
 class Packet {
 public:
   // *** constants ***
-  static constexpr uint8_t VERSION_NUMBER_SIZE = 3;
-  static constexpr uint8_t TYPE_SIZE = 1;
-  static constexpr uint8_t DATA_FIELD_HEADER_SIZE = 1;
-  static constexpr uint8_t APP_ID_SOURCE_SIZE = 5;
-  static constexpr uint8_t APP_ID_DESTINATION_SIZE = 5;
-  static constexpr uint8_t SEQUENCE_CONTROL_FLAGS_SIZE = 2;
-  static constexpr uint8_t SEQUENCE_CONTROL_COUNT_SIZE = 14;
-  static constexpr uint8_t LENGTH_SIZE = 16;
-  static constexpr uint8_t CCSDS_SIZE = 1;
-  static constexpr uint8_t PUS_VERSION_SIZE = 3;
-  static constexpr uint8_t ACK_SIZE = 4;
-  static constexpr uint8_t SERVICE_TYPE_SIZE = 8;
-  static constexpr uint8_t SERVICE_SUBTYPE_SIZE = 8;
-  static constexpr uint8_t PACKET_ERROR_CONTROL_SIZE = 3;
   inline static constexpr uint16_t APP_DATA_SIZE = 256; // inline for appdata array size
-
-  static constexpr uint8_t PACKET_HEADER_SIZE =
-      VERSION_NUMBER_SIZE +
-      TYPE_SIZE +
-      DATA_FIELD_HEADER_SIZE +
-      APP_ID_SOURCE_SIZE +
-      APP_ID_DESTINATION_SIZE +
-      SEQUENCE_CONTROL_FLAGS_SIZE +
-      SEQUENCE_CONTROL_COUNT_SIZE +
-      LENGTH_SIZE +
-      PACKET_ERROR_CONTROL_SIZE;
-
-  // static constexpr uint8_t PACKET_DATA_HEADER_SIZE =
-  //     CCSDS_SIZE
-  //     PUS_VERSION_SIZE
-  //     ACK_SIZE +
-  //     SERVICE_TYPE_SIZE +
-  //     SERVICE_SUBTYPE_SIZE;
 
   enum class SequenceFlags : uint8_t {
     INITIAL = 0b01,
@@ -61,90 +30,90 @@ public:
 
   Packet();
   Packet(
-    const uint8_t versionNumber,
-    const uint8_t dataFieldHeader,
-    const uint8_t appIdSource,
-    const uint8_t appIdDestination,
-    const uint8_t sequenceControlFlags,
-    const uint8_t sequenceControlCount,
-    const uint8_t length,
-    const uint8_t ccsds,
-    const uint8_t pusVersion,
-    const uint8_t ack,
-    const uint8_t serviceType,
-    const uint8_t serviceSubtype,
-    const std::array<uint8_t, APP_DATA_SIZE>& appData,
-    const uint8_t packetErrorControl
+    const std::byte versionNumber,
+    const std::byte dataFieldHeader,
+    const std::byte appIdSource,
+    const std::byte appIdDestination,
+    const std::byte sequenceControlFlags,
+    const std::array<std::byte, 2> sequenceControlCount,
+    const std::array<std::byte, 2> length,
+    const std::byte ccsds,
+    const std::byte pusVersion,
+    const std::byte ack,
+    const std::byte serviceType,
+    const std::byte serviceSubtype,
+    const std::array<std::byte, APP_DATA_SIZE>& appData,
+    const std::array<std::byte, 2> packetErrorControl
   );
 
   ~Packet();
 
-  uint8_t getVersionNumber() const;
-  void setVersionNumber(const uint8_t versionNumber);
+  std::byte getVersionNumber() const;
+  void setVersionNumber(const std::byte versionNumber);
 
-  uint8_t getDataFieldHeader() const;
-  void setDataFieldHeader(const uint8_t newValue);
+  std::byte getDataFieldHeader() const;
+  void setDataFieldHeader(const std::byte newValue);
 
-  uint8_t getAppIdSource() const;
-  void setAppIdSource(const uint8_t newAddress);
+  std::byte getAppIdSource() const;
+  void setAppIdSource(const std::byte newAddress);
 
-  uint8_t getAppIdDestination() const;
-  void setAppIdDestination(const uint8_t newAddress);
+  std::byte getAppIdDestination() const;
+  void setAppIdDestination(const std::byte newAddress);
 
-  uint8_t getSequenceControlFlags() const;
+  std::byte getSequenceControlFlags() const;
   void setSequenceControlFlags(const SequenceFlags newFlags);
 
-  uint16_t getSequenceControlCount() const;
-  void setSequenceControlCount(const uint16_t newCount);
+  std::array<std::byte, 2> getSequenceControlCount() const;
+  void setSequenceControlCount(const std::array<std::byte, 2> newCount);
 
-  uint16_t getLength() const;
-  void setLength(const uint16_t amountOfBytes);
+  std::array<std::byte, 2> getLength() const;
+  void setLength(const std::array<std::byte, 2> amountOfBytes);
 
-  uint8_t getCCSDS() const;
-  void setCCSDS(const uint8_t ccsds);
+  std::byte getCCSDS() const;
+  void setCCSDS(const std::byte ccsds);
 
-  uint8_t getPUSVersion() const;
-  void setPUSVersion(const uint8_t pusVersion);
+  std::byte getPUSVersion() const;
+  void setPUSVersion(const std::byte pusVersion);
 
-  uint8_t getAck() const;
-  void setACK(const bool newValue);
+  std::byte getAck() const;
+  void setACK(const std::byte newValue);
 
-  uint8_t getServiceType() const;
-  void setServiceType(const uint8_t typeId);
+  std::byte getServiceType() const;
+  void setServiceType(const std::byte typeId);
 
-  uint8_t getServiceSubtype() const;
-  void setServiceSubtype(const uint8_t subtypeId);
+  std::byte getServiceSubtype() const;
+  void setServiceSubtype(const std::byte subtypeId);
 
-  uint16_t getPacketErrorControl() const;
-  void setPacketErrorControl(const uint16_t crc);
+  std::array<std::byte, 2> getPacketErrorControl() const;
+  void setPacketErrorControl(const std::array<std::byte, 2> crc);
 
   // It sets the object pointed to by ptrAppData to the value of appData_ .
   // The receptor array must be of size APP_DATA_SIZE
-  std::array<uint8_t, APP_DATA_SIZE> getAppData();
-  void setAppData(const std::array<uint8_t, APP_DATA_SIZE>& ptrNewAppData);
+  std::array<std::byte, APP_DATA_SIZE> getAppData();
+  void setAppData(const std::array<std::byte, APP_DATA_SIZE>& ptrNewAppData);
 
 private:
   // main header
-  uint8_t versionNumber_;
-  uint8_t type_; // always 0, only one packet type
-  uint8_t dataFieldHeader_;
-  uint8_t appIdSource_;
-  uint8_t appIdDestination_;
-  uint8_t sequenceControlFlags_;
-  uint16_t sequenceControlCount_;
-  uint16_t length_; // amount of octets within app. data
+  std::byte versionNumber_;
+  std::byte type_; // always 0, only one packet type
+  std::byte dataFieldHeader_;
+  std::byte appIdSource_;
+  std::byte appIdDestination_;
+  std::byte sequenceControlFlags_;
+  std::array<std::byte, 2> sequenceControlCount_;
+  std::array<std::byte, 2> length_; // amount of octets within app. data
 
   // data field header (optional)
-  uint8_t ccsds_;
-  uint8_t pusVersion_;
-  uint8_t ack_;
-  uint8_t serviceType_;
-  uint8_t serviceSubtype_;
+  std::byte ccsds_;
+  std::byte pusVersion_;
+  std::byte ack_;
+  std::byte serviceType_;
+  std::byte serviceSubtype_;
 
   // data
-  std::array<uint8_t, APP_DATA_SIZE> appData_;
+  std::array<std::byte, APP_DATA_SIZE> appData_;
   uint8_t appDataIndex_; // for app. data appending
 
   // special field at the end of the packet
-  uint16_t packetErrorControl_;
+  std::array<std::byte, 2> packetErrorControl_;
 };

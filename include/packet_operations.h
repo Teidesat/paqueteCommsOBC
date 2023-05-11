@@ -14,7 +14,7 @@ public:
   PacketOperations();
   ~PacketOperations();
 
-  Packet readPacket(const uint8_t* buffer, std::size_t size);
-  void writePacket(uint8_t* buffer, Packet& packet);
+  Packet readPacket(const std::byte* buffer, std::size_t size);
+  void writePacket(std::byte* buffer, Packet& packet);
 private:
 };

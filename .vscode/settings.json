@@ -52,6 +52,14 @@
     "typeinfo": "cpp",
     "bitset": "cpp",
     "xstring": "cpp",
-    "ctime": "cpp"
+    "ctime": "cpp",
+    "ios": "cpp",
+    "iostream": "cpp",
+    "istream": "cpp",
+    "xfacet": "cpp",
+    "xiosbase": "cpp",
+    "xlocale": "cpp",
+    "xlocinfo": "cpp",
+    "xlocnum": "cpp"
   }
 }

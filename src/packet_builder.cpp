@@ -9,11 +9,11 @@ Packet PacketBuilder::getPacket() const {
 }
 
 void PacketBuilder::newPacket(
-  const uint8_t versionNumber,
-  const uint8_t appIdSource,
-  const uint8_t appIdDestination,
+  const std::byte versionNumber,
+  const std::byte appIdSource,
+  const std::byte appIdDestination,
   const Packet::SequenceFlags sequenceControlFlags,
-  const uint16_t sequenceControlCount
+  const std::array<std::byte, 2> sequenceControlCount
 ) {
   packet_ = Packet();
   packet_.setVersionNumber(versionNumber);
@@ -24,27 +24,22 @@ void PacketBuilder::newPacket(
 }
 
 void PacketBuilder::setDataFieldHeader(
-    const bool ack,
-    const uint8_t serviceType,
-    const uint8_t serviceSubtype
+    const std::byte ack,
+    const std::byte serviceType,
+    const std::byte serviceSubtype
 ) {
-  packet_.setDataFieldHeader(true);
+  packet_.setDataFieldHeader(std::byte{0b1});
   packet_.setACK(ack);
   packet_.setServiceType(serviceType);
   packet_.setServiceSubtype(serviceSubtype);
 }
 
-/*
-  * Telecommand Verification Service headers.
-  *    
-*/
-
 void PacketBuilder::addCommandVerificationHeader(
-  const uint8_t appIdSource,
-  const uint8_t sequenceFlags,
-  const uint16_t sequenceCount
+  const std::byte appIdSource,
+  const std::byte sequenceFlags,
+  const std::array<std::byte, 2> sequenceCount
 ) {
-  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{}; // default initialize
+  std::array<std::byte, Packet::APP_DATA_SIZE> appData{}; // default initialize
   std::memcpy(&appData, &appIdSource, sizeof(appIdSource));
   std::memcpy(&appData, &sequenceFlags, sizeof(sequenceFlags));
   std::memcpy(&appData, &sequenceCount, sizeof(sequenceCount));
@@ -52,12 +47,12 @@ void PacketBuilder::addCommandVerificationHeader(
 }
 
 void PacketBuilder::addCommandVerificationHeader(
-  const uint8_t appIdSource,
-  const uint8_t sequenceFlags,
-  const uint8_t sequenceCount,
-  const uint8_t code
+  const std::byte appIdSource,
+  const std::byte sequenceFlags,
+  const std::byte sequenceCount,
+  const std::byte code
 ) {
-  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{}; // default initialize
+  std::array<std::byte, Packet::APP_DATA_SIZE> appData{}; // default initialize
   std::memcpy(&appData, &appIdSource, sizeof(appIdSource));
   std::memcpy(&appData, &sequenceFlags, sizeof(sequenceFlags));
   std::memcpy(&appData, &sequenceCount, sizeof(sequenceCount));
@@ -66,13 +61,13 @@ void PacketBuilder::addCommandVerificationHeader(
 }
 
 void PacketBuilder::addCommandVerificationHeader(
-  const uint8_t appIdSource,
-  const uint8_t sequenceFlags,
-  const uint8_t sequenceCount,
-  const uint8_t code,
-  const std::vector<uint8_t>& parameters
+  const std::byte appIdSource,
+  const std::byte sequenceFlags,
+  const std::byte sequenceCount,
+  const std::byte code,
+  const std::vector<std::byte>& parameters
 ) {
-  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{}; // default initialize
+  std::array<std::byte, Packet::APP_DATA_SIZE> appData{}; // default initialize
   std::memcpy(&appData, &appIdSource, sizeof(appIdSource));
   std::memcpy(&appData, &sequenceFlags, sizeof(sequenceFlags));
   std::memcpy(&appData, &sequenceCount, sizeof(sequenceCount));
