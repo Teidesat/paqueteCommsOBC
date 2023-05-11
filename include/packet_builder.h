@@ -2,8 +2,6 @@
  * @file packet_builder.h
  * @author Marcos Barrios
  * @brief Builder for different kinds of packets
- * @version 0.1
- * @date 2023-05-09
  * 
  * A packet can be either:
  *    - main header only + app data
@@ -12,12 +10,12 @@
  * Then, the app data can contain many different units depending on
  *    the service.
  * 
- * @copyright Copyright (c) 2023
- * 
  */
 
 #ifndef PACKET_BUILDER_H
 #define PACKET_BUILDER_H
+
+#include <vector>
 
 #include "packet.h"
 
@@ -55,7 +53,26 @@ public:
    * Telecommand Verification Service header.
    *    
   */
-  void addVerificationHeader();
+  // void addVerificationHeader(
+  //   const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
+  //   const std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceFlags,
+  //   const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceCount
+  // );
+
+  // void addVerificationHeader(
+  //   const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
+  //   const std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceFlags,
+  //   const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceCount,
+  //   const std::bitset<4>& code
+  // );
+
+  // void addVerificationHeader(
+  //   const std::bitset<Packet::APP_ID_SOURCE_SIZE>& appIdSource,
+  //   const std::bitset<Packet::SEQUENCE_CONTROL_FLAGS_SIZE>& sequenceFlags,
+  //   const std::bitset<Packet::SEQUENCE_CONTROL_COUNT_SIZE>& sequenceCount,
+  //   const std::bitset<4>& code,
+  //   const std::vector<std::byte>& parameters
+  // );
 
 private:
   Packet packet_;

@@ -1,11 +1,6 @@
 /**
  * @file packet.h
  * @author Marcos Barrios
- * @brief 
- * @version 0.1
- * @date 2023-05-01
- * 
- * @copyright Copyright (c) 2023
  * 
  *  Packet representation, holds the data a packet has.
  * 
@@ -131,6 +126,7 @@ private:
   std::bitset<VERSION_NUMBER_SIZE> versionNumber_;
   std::bitset<TYPE_SIZE> type_; // always 0, only one packet type
   std::bitset<DATA_FIELD_HEADER_SIZE> dataFieldHeader_;
+  std::bitset<1> empty;
   std::bitset<APP_ID_SOURCE_SIZE> appIdSource_;
   std::bitset<APP_ID_DESTINATION_SIZE> appIdDestination_;
   std::bitset<SEQUENCE_CONTROL_FLAGS_SIZE> sequenceControlFlags_;
