@@ -4,6 +4,7 @@ add_library(paqueteCnCLibrary
   src/packet.cpp
   src/packet_operations.cpp
   src/packet_extended/packet_extended_basic.cpp
+  src/packet_extended/packet_extended_verification.cpp
   src/packet_builder.cpp)
 
 add_executable(paqueteCnC src/main.cpp)

@@ -3,8 +3,8 @@
 PacketExtendedBasic::PacketExtendedBasic(const Packet& packet) :
     packet_(packet) {}
 
-PacketExtendedBasic::PacketExtendedBasic(Packet&& packet):
-    packet_(std::move(packet)) {}
+PacketExtendedBasic::PacketExtendedBasic(const PacketExtendedBasic& other) :
+  packet_(other.packet_) {}
 
 PacketExtendedBasic::~PacketExtendedBasic() {}
 
@@ -52,7 +52,7 @@ int PacketExtendedBasic::getServiceSubtype() {
 }
 
 PacketExtendedBasic PacketExtendedBasic::getInstance() {
-  return PacketExtendedBasic(packet_);  
+  return PacketExtendedBasic(*this);  
 }
 
 PacketExtendedBasic PacketExtendedBasic::getAcknowledgedVersion() {
@@ -73,7 +73,6 @@ void PacketExtendedBasic::incrementSequenceCounter() {
   }
 }
 
-// When replying to something, source becomes destination and viceversa.
 PacketExtendedBasic PacketExtendedBasic::swapApplicationIdFields() {
   PacketExtendedBasic&& copy = this->getInstance();
   copy.getPacket().setAppIdSource(packet_.getAppIdDestination());

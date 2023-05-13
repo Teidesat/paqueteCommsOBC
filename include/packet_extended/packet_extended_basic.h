@@ -13,7 +13,7 @@
 class PacketExtendedBasic {
 public:
   PacketExtendedBasic(const Packet& packet);
-  PacketExtendedBasic(Packet&& packet);
+  PacketExtendedBasic(const PacketExtendedBasic& other);
   ~PacketExtendedBasic();
 
   // low level packet 

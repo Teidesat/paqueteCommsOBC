@@ -41,6 +41,23 @@ Packet::Packet(
   appDataIndex_(0)
 {}
 
+Packet::Packet(const Packet& other) :
+  versionNumber_(other.versionNumber_),
+  dataFieldHeader_(other.dataFieldHeader_),
+  appIdSource_(other.appIdSource_),
+  appIdDestination_(other.appIdDestination_),
+  sequenceControlFlags_(other.sequenceControlFlags_),
+  sequenceControlCount_(other.sequenceControlCount_),
+  length_(other.length_),
+  ccsds_(other.ccsds_),
+  pusVersion_(other.pusVersion_),
+  ack_(other.ack_),
+  serviceType_(other.serviceType_),
+  serviceSubtype_(other.serviceSubtype_),
+  appData_(other.appData_),
+  packetErrorControl_(other.packetErrorControl_),
+  appDataIndex_(other.appDataIndex_) {}
+
 Packet::~Packet() {}
 
 std::byte Packet::getVersionNumber() const {

@@ -46,6 +46,7 @@ public:
     const std::array<std::byte, APP_DATA_SIZE>& appData,
     const std::array<std::byte, 2> packetErrorControl
   );
+  Packet(const Packet& other);
 
   ~Packet();
 
@@ -98,7 +99,7 @@ public:
   void pushData(const std::byte bytesToPush);
   void pushData(const std::array<std::byte, 2>& bytesToPush);
   void pushData(const std::vector<std::byte>& bytesToPush);
-  
+
 private:
   // main header
   std::byte versionNumber_;

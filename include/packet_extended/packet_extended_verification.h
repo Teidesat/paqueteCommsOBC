@@ -11,10 +11,22 @@
 #include <vector>
 
 #include "../packet.h"
+#include "packet_extended_basic.h"
 
 class PacketExtendedVerification {
 public:
   PacketExtendedVerification(const Packet& packet);
+
+  // constructors with error code
+  PacketExtendedVerification(const Packet& packet, uint8_t errorCode,
+      const std::vector<uint8_t>& parameters);
+  PacketExtendedVerification(const Packet& packet, uint8_t errorCode,
+      std::vector<uint8_t>&& parameters);
+  
+  // copy and move constructors
+  PacketExtendedVerification(const PacketExtendedVerification& other);
+  PacketExtendedVerification(PacketExtendedVerification&& other);
+
   ~PacketExtendedVerification();
 
   // low level packet 
@@ -26,7 +38,7 @@ public:
   int getSequenceCount();
   int getLength();
 
-  int getPusVersion();
+  int getPUSVersion();
   int getServiceType();
   int getServiceSubtype();
 
@@ -44,7 +56,7 @@ public:
 
   const std::vector<uint8_t>& getParameters();
 private:
-  Packet packet_;
+  PacketExtendedBasic packetBasic_;
   uint8_t errorCode_;
   std::vector<uint8_t> parameters_;
 };
