@@ -81,9 +81,9 @@ void PacketBuilder::addCommandDistributionHeader(const pairs_t<T>& addressAndDat
 }
 
 void PacketBuilder::addCommandDistributionHeader(
-    const pairs_t<std::byte>& outLineIDAndDuration) {
-  for (uint8_t i = 0; i < outLineIDAndDuration.size(); ++i) {
-    packet_.pushData(outLineIDAndDuration[i].first);
-    packet_.pushData(outLineIDAndDuration[i].second);
+    const pairs_t<std::byte>& lineIDAndDuration) {
+  for (uint8_t i = 0; i < lineIDAndDuration.size(); ++i) {
+    packet_.pushData(lineIDAndDuration[i].first);
+    packet_.pushData(lineIDAndDuration[i].second);
   }
 }

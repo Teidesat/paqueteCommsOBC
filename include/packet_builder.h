@@ -92,9 +92,9 @@ public:
   /** CPDU
    * It represents a sequence of pulses on certain output line.
    *
-   * @pre outLineIDAndDuration.size() <= Packet::APP_DATA_SIZE
+   * @pre lineIDAndDuration.size() <= Packet::APP_DATA_SIZE
    */
-  void addCommandDistributionHeader(const pairs_t<std::byte>& outLineIDAndDuration);
+  void addCommandDistributionHeader(const pairs_t<std::byte>& lineIDAndDuration);
 
 private:
   Packet packet_;
