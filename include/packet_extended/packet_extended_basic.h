@@ -13,6 +13,7 @@
 class PacketExtendedBasic {
 public:
   PacketExtendedBasic(const Packet& packet);
+  PacketExtendedBasic(Packet&& packet);
   ~PacketExtendedBasic();
 
   // low level packet 
@@ -24,13 +25,30 @@ public:
   int getSequenceCount();
   int getLength();
 
-  int getPusVersion();
+  int getPUSVersion();
   int getServiceType();
   int getServiceSubtype();
 
+  /**
+   * @brief Get a new instance of this very same object.
+   * Copies are probably gonna be a frequent task so this method is for it.
+   * 
+   * @return PacketExtendedBasic duplicate of this
+   */
   PacketExtendedBasic getInstance();
+
+  /**
+   * @brief Answer to a packet means getting the acknowledged byte on true (0b1)
+   * 
+   * @return PacketExtendedBasic 
+   */
   PacketExtendedBasic getAcknowledgedVersion();
 
+  /**
+   * @brief Counter typically goes up until it reaches a limit and resets back
+   *    to zero
+   * 
+   */
   void incrementSequenceCounter();
   
   // When replying to something, source becomes destination and viceversa.
