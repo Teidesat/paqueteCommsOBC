@@ -15,6 +15,7 @@
 #include <bitset>
 #include <memory>
 #include <array>
+#include <vector>
 
 class Packet {
 public:
@@ -92,6 +93,12 @@ public:
   std::array<std::byte, APP_DATA_SIZE> getAppData();
   void setAppData(const std::array<std::byte, APP_DATA_SIZE>& ptrNewAppData);
 
+  // To avoid the client making copies of app data to substitute old app data.
+  // It modifies the index for appending.
+  void pushData(const std::byte bytesToPush);
+  void pushData(const std::array<std::byte, 2>& bytesToPush);
+  void pushData(const std::vector<std::byte>& bytesToPush);
+  
 private:
   // main header
   std::byte versionNumber_;

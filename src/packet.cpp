@@ -100,7 +100,7 @@ std::array<std::byte, 2> Packet::getSequenceControlCount() const {
   return sequenceControlCount_;
 }
 
-void Packet::setSequenceControlCount(std::array<std::byte, 2> newCount) {
+void Packet::setSequenceControlCount(const std::array<std::byte, 2> newCount) {
   sequenceControlCount_ = newCount;
 }
 
@@ -108,7 +108,7 @@ std::array<std::byte, 2> Packet::getLength() const {
   return length_;
 }
 
-void Packet::setLength(std::array<std::byte, 2> amountOfBytes) {
+void Packet::setLength(const std::array<std::byte, 2> amountOfBytes) {
   length_ = amountOfBytes;
 }
 
@@ -116,7 +116,7 @@ std::byte Packet::getCCSDS() const {
   return ccsds_;
 }
 
-void Packet::setCCSDS(std::byte ccsds) {
+void Packet::setCCSDS(const std::byte ccsds) {
   ccsds_ = ccsds;
 }
 
@@ -124,7 +124,7 @@ std::byte Packet::getPUSVersion() const {
   return pusVersion_;
 }
 
-void Packet::setPUSVersion(std::byte pusVersion) {
+void Packet::setPUSVersion(const std::byte pusVersion) {
   pusVersion_ = pusVersion;
 }
 
@@ -140,7 +140,7 @@ std::byte Packet::getServiceType() const {
   return serviceType_;
 }
 
-void Packet::setServiceType(std::byte typeId) {
+void Packet::setServiceType(const std::byte typeId) {
   serviceType_ = typeId;
 }
 
@@ -148,7 +148,7 @@ std::byte Packet::getServiceSubtype() const {
   return serviceSubtype_;
 }
 
-void Packet::setServiceSubtype(std::byte subtypeId) {
+void Packet::setServiceSubtype(const std::byte subtypeId) {
   serviceSubtype_ = subtypeId;
 }
 
@@ -158,6 +158,21 @@ std::array<std::byte, Packet::APP_DATA_SIZE> Packet::getAppData() {
 
 void Packet::setAppData(const std::array<std::byte, APP_DATA_SIZE>& newAppData) {
   appData_ = newAppData;
+}
+
+void Packet::pushData(const std::byte byteToPush) {
+  appData_[appDataIndex_] = byteToPush;
+  ++appDataIndex_;
+}
+
+void Packet::pushData(const std::array<std::byte, 2>& bytesToPush) {
+  pushData(bytesToPush[0]);
+  pushData(bytesToPush[1]);
+}
+
+void Packet::pushData(const std::vector<std::byte>& bytesToPush) {
+  std::copy(bytesToPush.begin(), bytesToPush.end(), appData_.begin() + appDataIndex_);
+  appDataIndex_ += bytesToPush.size();
 }
 
 std::array<std::byte, 2> Packet::getPacketErrorControl() const {
