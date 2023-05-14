@@ -18,9 +18,12 @@ public:
   PacketBuilderDirector();
   ~PacketBuilderDirector();
 
-  // a megapacket is a packet whose app data is bigger than the maximum
-  // for a single packet.
-  std::vector<Packet> makeMegaPacket(std::vector<std::byte>& appData);
+  /**
+   * @brief A megapacket is a packet whose app data is bigger than Packet::APP_DATA_SIZE
+   * @param appData 
+   * @return * std::vector<Packet> 
+   */
+  std::vector<Packet> makeMegaPacket(const std::vector<std::byte>& appData);
 
   // make verification packet acceptance success
   // make verification packet acceptance failure

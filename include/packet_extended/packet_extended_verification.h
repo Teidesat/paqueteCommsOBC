@@ -46,7 +46,7 @@ public:
   PacketExtendedVerification getAcknowledgedVersion();
 
   void incrementSequenceCounter();
-  
+
   // When replying to something, source becomes destination and viceversa.
   PacketExtendedVerification swapApplicationIdFields();
   
@@ -54,6 +54,7 @@ public:
   bool hasErrorCode();
   int getErrorCode();
 
+  // verification acceptance failure includes parameters
   const std::vector<uint8_t>& getParameters();
 private:
   PacketExtendedBasic packetBasic_;
