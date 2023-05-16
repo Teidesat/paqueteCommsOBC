@@ -3,24 +3,24 @@
 #include <cassert>
 
 Packet::Packet() :
-  sequenceControlFlags_(std::byte{0x36}), // standalone by default
-  pusVersion_(std::byte{0b1}), // currentStandard requires =1
+  sequenceControlFlags_(SequenceFlags::STAND_ALONE), // standalone by default
+  pusVersion_(1), // currentStandard requires =1
   appDataIndex_(0)
 {}
 
 Packet::Packet(
-  const std::byte versionNumber,
-  const std::byte dataFieldHeader,
-  const std::byte appIdSource,
-  const std::byte appIdDestination,
-  const std::byte sequenceControlFlags,
-  const std::array<std::byte, 2> sequenceControlCount,
-  const std::array<std::byte, 2> length,
-  const std::byte ccsds,
-  const std::byte pusVersion,
-  const std::byte ack,
-  const std::byte serviceType,
-  const std::byte serviceSubtype,
+  const uint8_t versionNumber,
+  const bool dataFieldHeader,
+  const uint8_t appIdSource,
+  const uint8_t appIdDestination,
+  const SequenceFlags sequenceControlFlags,
+  const uint16_t sequenceControlCount,
+  const uint16_t length,
+  const bool ccsds,
+  const uint8_t pusVersion,
+  const bool ack,
+  const uint8_t serviceType,
+  const uint8_t serviceSubtype,
   const std::array<std::byte, Packet::APP_DATA_SIZE>& appData,
   const std::array<std::byte, 2> packetErrorControl
 ) :
@@ -60,112 +60,99 @@ Packet::Packet(const Packet& other) :
 
 Packet::~Packet() {}
 
-std::byte Packet::getVersionNumber() const {
+uint8_t Packet::getVersionNumber() const {
   return versionNumber_;
 }
 
-void Packet::setVersionNumber(std::byte versionNumber) {
+void Packet::setVersionNumber(uint8_t versionNumber) {
   versionNumber_ = versionNumber;
 }
 
-std::byte Packet::getDataFieldHeader() const {
+bool Packet::getDataFieldHeader() const {
   return dataFieldHeader_;
 }
 
-void Packet::setDataFieldHeader(const std::byte newValue) {
+void Packet::setDataFieldHeader(const bool newValue) {
   dataFieldHeader_ = newValue;
 }
 
-std::byte Packet::getAppIdSource() const {
+uint8_t Packet::getAppIdSource() const {
   return appIdSource_;
 }
 
-void Packet::setAppIdSource(std::byte newAddress) {
+void Packet::setAppIdSource(uint8_t newAddress) {
   appIdSource_ = newAddress;
 }
 
-std::byte Packet::getAppIdDestination() const {
+uint8_t Packet::getAppIdDestination() const {
   return appIdDestination_;
 }
 
-void Packet::setAppIdDestination(std::byte newAddress) {
+void Packet::setAppIdDestination(uint8_t newAddress) {
   appIdDestination_ = newAddress;
 }
 
-std::byte Packet::getSequenceControlFlags() const {
+Packet::SequenceFlags Packet::getSequenceControlFlags() const {
   return sequenceControlFlags_;
 }
 
-void Packet::setSequenceControlFlags(SequenceFlags const newFlags) {
-  switch (newFlags) {
-    case SequenceFlags::INITIAL:
-      sequenceControlFlags_ = std::byte{0b01};
-      break;
-    case SequenceFlags::INBETWEEN:
-      sequenceControlFlags_ = std::byte{0b00};
-      break;
-    case SequenceFlags::FINAL:
-      sequenceControlFlags_ = std::byte{0b10};
-      break;
-    case SequenceFlags::STAND_ALONE:
-      sequenceControlFlags_ = std::byte{0b11};
-      break;
-  }
+void Packet::setSequenceControlFlags(Packet::SequenceFlags const newFlags) {
+  sequenceControlFlags_ = newFlags;
 }
 
-std::array<std::byte, 2> Packet::getSequenceControlCount() const {
+uint16_t Packet::getSequenceControlCount() const {
   return sequenceControlCount_;
 }
 
-void Packet::setSequenceControlCount(const std::array<std::byte, 2> newCount) {
+void Packet::setSequenceControlCount(const uint16_t newCount) {
   sequenceControlCount_ = newCount;
 }
 
-std::array<std::byte, 2> Packet::getLength() const {
+uint16_t Packet::getLength() const {
   return length_;
 }
 
-void Packet::setLength(const std::array<std::byte, 2> amountOfBytes) {
+void Packet::setLength(const uint16_t amountOfBytes) {
   length_ = amountOfBytes;
 }
 
-std::byte Packet::getCCSDS() const {
+bool Packet::getCCSDS() const {
   return ccsds_;
 }
 
-void Packet::setCCSDS(const std::byte ccsds) {
+void Packet::setCCSDS(const bool ccsds) {
   ccsds_ = ccsds;
 }
 
-std::byte Packet::getPUSVersion() const {
+uint8_t Packet::getPUSVersion() const {
   return pusVersion_;
 }
 
-void Packet::setPUSVersion(const std::byte pusVersion) {
+void Packet::setPUSVersion(const uint8_t pusVersion) {
   pusVersion_ = pusVersion;
 }
 
-std::byte Packet::getAck() const {
+bool Packet::getAck() const {
   return ack_;
 }
 
-void Packet::setACK(const std::byte newValue) {
+void Packet::setACK(const bool newValue) {
   ack_ = newValue;
 }
 
-std::byte Packet::getServiceType() const {
+uint8_t Packet::getServiceType() const {
   return serviceType_;
 }
 
-void Packet::setServiceType(const std::byte typeId) {
+void Packet::setServiceType(const uint8_t typeId) {
   serviceType_ = typeId;
 }
 
-std::byte Packet::getServiceSubtype() const {
+uint8_t Packet::getServiceSubtype() const {
   return serviceSubtype_;
 }
 
-void Packet::setServiceSubtype(const std::byte subtypeId) {
+void Packet::setServiceSubtype(const uint8_t subtypeId) {
   serviceSubtype_ = subtypeId;
 }
 

@@ -9,19 +9,19 @@ PacketOperations::PacketOperations() {}
 PacketOperations::~PacketOperations() {}
 
 Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
-  std::byte versionNumber;
-  std::byte dataFieldHeader;
-  std::byte appIdSource;
-  std::byte appIdDestination;
-  std::byte sequenceControlFlags;
-  std::array<std::byte, 2> sequenceControlCount;
-  std::array<std::byte, 2> length;
+  uint8_t versionNumber;
+  bool dataFieldHeader;
+  uint8_t appIdSource;
+  uint8_t appIdDestination;
+  Packet::SequenceFlags sequenceControlFlags;
+  uint16_t sequenceControlCount;
+  uint16_t length;
 
-  std::byte ccsds;
-  std::byte pusVersion;
-  std::byte ack;
-  std::byte serviceType;
-  std::byte serviceSubtype;
+  bool ccsds;
+  uint8_t pusVersion;
+  bool ack;
+  uint8_t serviceType;
+  uint8_t serviceSubtype;
 
   std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
@@ -55,7 +55,7 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
   buffer += sizeof(length);
   size -= sizeof(length);
   
-  if (dataFieldHeader == std::byte{0b1}) {
+  if (dataFieldHeader) {
     std::memcpy(&ccsds, buffer, sizeof(ccsds));
     buffer += sizeof(ccsds);
     size -= sizeof(ccsds);
@@ -75,15 +75,18 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
     std::memcpy(&serviceSubtype, buffer, sizeof(serviceSubtype));
     buffer += sizeof(serviceSubtype);
     size -= sizeof(serviceSubtype);
-
-    std::memcpy(&appData, buffer, sizeof(appData));
-    buffer += sizeof(appData);
-    size -= sizeof(appData);
   } else {
-    ack = std::byte{0b0};
-    serviceType = std::byte{0b0};
-    serviceSubtype = std::byte{0b0};
+    // default values
+    ccsds = false;
+    pusVersion = 1;
+    ack = false;
+    serviceType = 0;
+    serviceSubtype = 0;
   }
+
+  std::memcpy(&appData, buffer, sizeof(appData));
+  buffer += sizeof(appData);
+  size -= sizeof(appData);
 
   std::memcpy(&packetErrorControl, buffer, sizeof(packetErrorControl));
   buffer += sizeof(packetErrorControl);
@@ -134,7 +137,7 @@ void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
   std::memcpy(buffer, &length, sizeof(length));
   buffer += sizeof(length);
   
-  if (dataFieldHeader == std::byte{0b1}) {
+  if (dataFieldHeader) {
     std::memcpy(buffer, &ccsds, sizeof(ccsds));
     buffer += sizeof(ccsds);
 
@@ -149,9 +152,8 @@ void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
 
     std::memcpy(buffer, &serviceSubtype, sizeof(serviceSubtype));
     buffer += sizeof(serviceSubtype);
-
-    std::copy(appData.begin(), appData.end(), buffer);
   }
+  std::copy(appData.begin(), appData.end(), buffer);
 
   std::memcpy(buffer, &packetErrorControl, sizeof(packetErrorControl));
   buffer += sizeof(packetErrorControl);

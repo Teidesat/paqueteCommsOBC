@@ -1,8 +1,12 @@
 /**
  * @file packet_factory.h
  * @author Marcos Barrios
- * @brief Uses the packet builder to make certain packets. Wraps the correct
- *      Packet extended.
+ * @brief Uses the packet builder to make certain packets. Each packet is wrapped
+ *      in the corresponding Packet extended variant depending on the service it
+ *      belongs to.
+ * 
+ * It handles type conversion to std::byte. An exception is the
+ * makeMegaPackete function. 
  * 
  */
 

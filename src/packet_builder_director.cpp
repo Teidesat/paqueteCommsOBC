@@ -8,9 +8,7 @@ PacketBuilderDirector::~PacketBuilderDirector() {}
 std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
     const std::vector<std::byte>& appData) {
   std::vector<Packet> output;
-  const size_t amountOfFullChunks = std::floor(
-      appData.size() / Packet::APP_DATA_SIZE
-  );
+  const size_t amountOfFullChunks = appData.size() / Packet::APP_DATA_SIZE;
 
   // copy chunk into packet, push packet
   for (size_t i = 0; i < amountOfFullChunks; ++i) {

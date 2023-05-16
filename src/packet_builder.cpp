@@ -1,5 +1,7 @@
 #include "../include/packet_builder.h"
 
+#include <array>
+
 PacketBuilder::PacketBuilder() {}
 
 PacketBuilder::~PacketBuilder() {}
@@ -8,10 +10,10 @@ Packet PacketBuilder::getPacket() const {
   return packet_;
 }
 
-void PacketBuilder::newPacket(const std::byte versionNumber,
-    const std::byte appIdSource, const std::byte appIdDestination,
-    const Packet::SequenceFlags sequenceControlFlags,
-    const std::array<std::byte, 2> sequenceControlCount
+void PacketBuilder::newPacket(const uint8_t versionNumber, const uint8_t appIdSource,
+      const uint8_t appIdDestination,
+      const Packet::SequenceFlags sequenceControlFlags,
+      const uint16_t sequenceControlCount
 ) {
   packet_ = Packet();
   packet_.setVersionNumber(versionNumber);
@@ -21,56 +23,56 @@ void PacketBuilder::newPacket(const std::byte versionNumber,
   packet_.setSequenceControlFlags(sequenceControlFlags);
 }
 
-void PacketBuilder::setDataFieldHeader(const std::byte ack,
-    const std::byte serviceType, const std::byte serviceSubtype) {
-  packet_.setDataFieldHeader(std::byte{0b1});
+void PacketBuilder::setDataFieldHeader(const bool ack, const uint8_t serviceType,
+      const uint8_t serviceSubtype) {
+  packet_.setDataFieldHeader(true);
   packet_.setACK(ack);
   packet_.setServiceType(serviceType);
   packet_.setServiceSubtype(serviceSubtype);
 }
 
-void PacketBuilder::addCommandVerificationHeader(const std::byte appIdSource,
-    const std::byte sequenceFlags, const std::array<std::byte, 2> sequenceCount) {
-  packet_.pushData(appIdSource);
-  packet_.pushData(sequenceFlags);
-  packet_.pushData(sequenceCount);
+void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
+      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount) {
+  packet_.pushData(std::byte(appIdSource));
+  packet_.pushData(std::byte(sequenceFlags));
+  std::array<std::byte, 2> temp;
+  std::memcpy(&temp, &sequenceCount, sizeof(sequenceCount));
+  packet_.pushData(temp);
 }
 
-void PacketBuilder::addCommandVerificationHeader(const std::byte appIdSource,
-    const std::byte sequenceFlags, const std::byte sequenceCount,
-    const std::byte code) {
-  packet_.pushData(appIdSource);
-  packet_.pushData(sequenceFlags);
-  packet_.pushData(sequenceCount);
-  packet_.pushData(code);
+void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
+      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
+      const uint8_t code) {
+  this->addCommandVerificationHeader(appIdSource, sequenceFlags, sequenceCount);
+  packet_.pushData(std::byte(code));
 }
 
-void PacketBuilder::addCommandVerificationHeader(const std::byte appIdSource,
-    const std::byte sequenceFlags, const std::byte sequenceCount,
-    const std::byte code, const std::vector<std::byte>& parameters) {
-  packet_.pushData(appIdSource);
-  packet_.pushData(sequenceFlags);
-  packet_.pushData(sequenceCount);
-  packet_.pushData(code);
+void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
+      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
+      const uint8_t code, const std::vector<std::byte>& parameters) {
+  this->addCommandVerificationHeader(appIdSource, sequenceFlags, sequenceCount, code);
   for (uint8_t i = 0; i < parameters.size(); ++i) {
     packet_.pushData(parameters[i]);
   }
 }
 
 // first byte may be the amount of addresses
+// uint8_t because 5 bits are used for module addresses currently on the packet.
 void PacketBuilder::addCommandDistributionHeader(
-    const std::vector<std::byte>& addresses) {
+    const std::vector<uint8_t>& addresses) {
   if (addresses.size() > 1) {
     packet_.pushData(std::byte(addresses.size()));
   }
   for (uint8_t i = 0; i < addresses.size(); ++i) {
-    packet_.pushData(addresses[i]);
+    packet_.pushData(std::byte(addresses[i]));
   }
 }
 
 // first byte may be the amount of addresses
 template <typename T>
-void PacketBuilder::addCommandDistributionHeader(const pairs_t<T>& addressAndData) {
+void PacketBuilder::addCommandDistributionHeader(
+    const pairs_t<uint8_t, T>& addressAndData
+) {
   if (addressAndData.size() > 1) {
     packet_.pushData(std::byte(addressAndData.size()));
   }
@@ -81,9 +83,9 @@ void PacketBuilder::addCommandDistributionHeader(const pairs_t<T>& addressAndDat
 }
 
 void PacketBuilder::addCommandDistributionHeader(
-    const pairs_t<std::byte>& lineIDAndDuration) {
+    const pairs_t<int, std::byte>& lineIDAndDuration) {
   for (uint8_t i = 0; i < lineIDAndDuration.size(); ++i) {
-    packet_.pushData(lineIDAndDuration[i].first);
+    packet_.pushData(std::byte(lineIDAndDuration[i].first));
     packet_.pushData(lineIDAndDuration[i].second);
   }
 }

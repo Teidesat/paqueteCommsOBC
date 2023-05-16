@@ -31,18 +31,18 @@ public:
 
   Packet();
   Packet(
-    const std::byte versionNumber,
-    const std::byte dataFieldHeader,
-    const std::byte appIdSource,
-    const std::byte appIdDestination,
-    const std::byte sequenceControlFlags,
-    const std::array<std::byte, 2> sequenceControlCount,
-    const std::array<std::byte, 2> length,
-    const std::byte ccsds,
-    const std::byte pusVersion,
-    const std::byte ack,
-    const std::byte serviceType,
-    const std::byte serviceSubtype,
+    const uint8_t versionNumber,
+    const bool dataFieldHeader,
+    const uint8_t appIdSource,
+    const uint8_t appIdDestination,
+    const SequenceFlags sequenceControlFlags,
+    const uint16_t sequenceControlCount,
+    const uint16_t length,
+    const bool ccsds,
+    const uint8_t pusVersion,
+    const bool ack,
+    const uint8_t serviceType,
+    const uint8_t serviceSubtype,
     const std::array<std::byte, APP_DATA_SIZE>& appData,
     const std::array<std::byte, 2> packetErrorControl
   );
@@ -50,41 +50,41 @@ public:
 
   ~Packet();
 
-  std::byte getVersionNumber() const;
-  void setVersionNumber(const std::byte versionNumber);
+  uint8_t getVersionNumber() const;
+  void setVersionNumber(const uint8_t versionNumber);
 
-  std::byte getDataFieldHeader() const;
-  void setDataFieldHeader(const std::byte newValue);
+  bool getDataFieldHeader() const;
+  void setDataFieldHeader(const bool newValue);
 
-  std::byte getAppIdSource() const;
-  void setAppIdSource(const std::byte newAddress);
+  uint8_t getAppIdSource() const;
+  void setAppIdSource(const uint8_t newAddress);
 
-  std::byte getAppIdDestination() const;
-  void setAppIdDestination(const std::byte newAddress);
+  uint8_t getAppIdDestination() const;
+  void setAppIdDestination(const uint8_t newAddress);
 
-  std::byte getSequenceControlFlags() const;
+  SequenceFlags getSequenceControlFlags() const;
   void setSequenceControlFlags(const SequenceFlags newFlags);
 
-  std::array<std::byte, 2> getSequenceControlCount() const;
-  void setSequenceControlCount(const std::array<std::byte, 2> newCount);
+  uint16_t getSequenceControlCount() const;
+  void setSequenceControlCount(const uint16_t newCount);
 
-  std::array<std::byte, 2> getLength() const;
-  void setLength(const std::array<std::byte, 2> amountOfBytes);
+  uint16_t getLength() const;
+  void setLength(const uint16_t amountOfBytes);
 
-  std::byte getCCSDS() const;
-  void setCCSDS(const std::byte ccsds);
+  bool getCCSDS() const;
+  void setCCSDS(const bool ccsds);
 
-  std::byte getPUSVersion() const;
-  void setPUSVersion(const std::byte pusVersion);
+  uint8_t getPUSVersion() const;
+  void setPUSVersion(const uint8_t pusVersion);
 
-  std::byte getAck() const;
-  void setACK(const std::byte newValue);
+  bool getAck() const;
+  void setACK(const bool newValue);
 
-  std::byte getServiceType() const;
-  void setServiceType(const std::byte typeId);
+  uint8_t getServiceType() const;
+  void setServiceType(const uint8_t typeId);
 
-  std::byte getServiceSubtype() const;
-  void setServiceSubtype(const std::byte subtypeId);
+  uint8_t getServiceSubtype() const;
+  void setServiceSubtype(const uint8_t subtypeId);
 
   std::array<std::byte, 2> getPacketErrorControl() const;
   void setPacketErrorControl(const std::array<std::byte, 2> crc);
@@ -102,21 +102,20 @@ public:
 
 private:
   // main header
-  std::byte versionNumber_;
-  std::byte type_; // always 0, only one packet type
-  std::byte dataFieldHeader_;
-  std::byte appIdSource_;
-  std::byte appIdDestination_;
-  std::byte sequenceControlFlags_;
-  std::array<std::byte, 2> sequenceControlCount_;
-  std::array<std::byte, 2> length_; // amount of octets within app. data
+  uint8_t versionNumber_;
+  bool dataFieldHeader_;
+  uint8_t appIdSource_;
+  uint8_t appIdDestination_;
+  SequenceFlags sequenceControlFlags_;
+  uint16_t sequenceControlCount_;
+  uint16_t length_; // amount of octets within app. data
 
   // data field header (optional)
-  std::byte ccsds_;
-  std::byte pusVersion_;
-  std::byte ack_;
-  std::byte serviceType_;
-  std::byte serviceSubtype_;
+  bool ccsds_;
+  uint8_t pusVersion_;
+  bool ack_;
+  uint8_t serviceType_;
+  uint8_t serviceSubtype_;
 
   // data
   std::array<std::byte, APP_DATA_SIZE> appData_;

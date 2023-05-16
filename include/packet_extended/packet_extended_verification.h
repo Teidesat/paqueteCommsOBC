@@ -16,40 +16,27 @@
 class PacketExtendedVerification {
 public:
   PacketExtendedVerification(const Packet& packet);
-
-  // constructors with error code
   PacketExtendedVerification(const Packet& packet, uint8_t errorCode,
       const std::vector<uint8_t>& parameters);
-  PacketExtendedVerification(const Packet& packet, uint8_t errorCode,
-      std::vector<uint8_t>&& parameters);
-  
-  // copy and move constructors
-  PacketExtendedVerification(const PacketExtendedVerification& other);
-  PacketExtendedVerification(PacketExtendedVerification&& other);
 
   ~PacketExtendedVerification();
 
-  // low level packet 
-  Packet& getPacket();
+  /**
+   * @brief Get low level packet 
+   * 
+   * To avoid having to define all the getters here.
+   * 
+   * @return const Packet& 
+   */
+  const Packet& getPacket();
 
-  int getVersionNumber();
-  int getAppIdOrigin();
-  int getAppIdDestination();
-  int getSequenceCount();
-  int getLength();
-
-  int getPUSVersion();
-  int getServiceType();
-  int getServiceSubtype();
-
-  PacketExtendedVerification getInstance();
-  PacketExtendedVerification getAcknowledgedVersion();
-
-  void incrementSequenceCounter();
-
-  // When replying to something, source becomes destination and viceversa.
+  /**
+   * @brief When replying to something, source becomes destination and viceversa.
+   * 
+   * @return PacketExtendedBasic 
+   */
   PacketExtendedVerification swapApplicationIdFields();
-  
+
   // verification acceptance failure includes an error code
   bool hasErrorCode();
   int getErrorCode();
@@ -59,6 +46,7 @@ public:
 private:
   PacketExtendedBasic packetBasic_;
   uint8_t errorCode_;
+  bool hasErrorCode_; // if it has error code then this is a failure packet
   std::vector<uint8_t> parameters_;
 };
 
