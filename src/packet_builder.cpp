@@ -6,7 +6,7 @@ PacketBuilder::PacketBuilder() {}
 
 PacketBuilder::~PacketBuilder() {}
 
-Packet PacketBuilder::getPacket() const {
+Packet& PacketBuilder::getPacket() {
   return packet_;
 }
 

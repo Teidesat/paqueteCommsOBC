@@ -1,6 +1,6 @@
 # Design choices
 
-Justification of the arquitecture of the system.
+Recopilation of design choices for the library.
 
 ## Construction of the packet
 
@@ -42,4 +42,6 @@ I decided to coarce everything to <code>std::byte</code> before pushing to app. 
 
 I can define one class for handling the fields of the packets of each different service, or I could leave that part for the services to handle the application data field on their own. Taking into account that the app. data field will typically be associated with only one service, then I can easily implement the first. In other words: a packet will not be multipurpose, to keep things simple. For example, If I wanted to send information about housekeeping but also about the command verification service, then two packets would have to be sent. Otherwise, the code would have to check the app. data. in detail and somehow try to split the fields depending on what service they are from. So having multiple classes for representing packets of different services is viable.
 
+## To implement a polymorph method for wrapping Packets on corresponding Packet Extended
 
+I could define on <code>PacketBuilderDirector</code> (since packet wrapping is it's responsibility) a method that returns at runtime the proper wrapper for the received <code>Packet</code>, but I'd rather not use dynamic memory since could be slower than the stack. Instead I will rely on giving the services the tools to instance the corresponding wrapper by defining a method for each wrapper.

@@ -38,3 +38,37 @@ std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
   }
   return output;
 }
+
+PacketExtendedVerification PacketBuilderDirector::makeVerificationSuccess(
+    const uint8_t appIdSource, const uint8_t appIdDestination,
+    const uint16_t sequenceCount) {
+  builder_.newPacket(0, appIdSource, appIdDestination,
+      Packet::SequenceFlags::STAND_ALONE, sequenceCount);
+  builder_.addCommandVerificationHeader(appIdSource,
+      Packet::SequenceFlags::STAND_ALONE, sequenceCount);
+  return PacketExtendedVerification(builder_.getPacket());
+}
+
+PacketExtendedVerification PacketBuilderDirector::makeVerificationFailure(
+    const uint8_t appIdSource, const uint8_t appIdDestination,
+    const uint16_t sequenceCount, const uint8_t code,
+    const std::vector<std::byte>& parameters) {
+  builder_.newPacket(0, appIdSource, appIdDestination,
+      Packet::SequenceFlags::STAND_ALONE, sequenceCount);
+  builder_.addCommandVerificationHeader(appIdSource,
+      Packet::SequenceFlags::STAND_ALONE, sequenceCount, code, parameters);
+  return PacketExtendedVerification(builder_.getPacket());
+}
+
+// std::move parameters
+PacketExtendedVerification PacketBuilderDirector::makeVerificationFailure(
+    const uint8_t appIdSource, const uint8_t appIdDestination,
+    const uint16_t sequenceCount, const uint8_t code,
+    std::vector<std::byte>&& parameters) {
+  builder_.newPacket(0, appIdSource, appIdDestination,
+      Packet::SequenceFlags::STAND_ALONE, sequenceCount);
+  builder_.addCommandVerificationHeader(appIdSource,
+      Packet::SequenceFlags::STAND_ALONE, sequenceCount, code,
+      std::move(parameters));
+  return PacketExtendedVerification(builder_.getPacket());
+}

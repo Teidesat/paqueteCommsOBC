@@ -78,12 +78,41 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a61124772091a2162ba0caf52c667ea88"><td class="memItemLeft" align="right" valign="top"><a id="a61124772091a2162ba0caf52c667ea88" name="a61124772091a2162ba0caf52c667ea88"></a>
-std::vector&lt; <a class="el" href="class_packet.html">Packet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>makeMegaPacket</b> (std::vector&lt; std::byte &gt; &amp;appData)</td></tr>
-<tr class="separator:a61124772091a2162ba0caf52c667ea88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f0e4887422a57e0f6f50dab8f623ddc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_packet.html">Packet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#a1f0e4887422a57e0f6f50dab8f623ddc">makeMegaPacket</a> (const std::vector&lt; std::byte &gt; &amp;appData)</td></tr>
+<tr class="memdesc:a1f0e4887422a57e0f6f50dab8f623ddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A megapacket is a packet whose app data is bigger than Packet::APP_DATA_SIZE.  <br /></td></tr>
+<tr class="separator:a1f0e4887422a57e0f6f50dab8f623ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1f0e4887422a57e0f6f50dab8f623ddc" name="a1f0e4887422a57e0f6f50dab8f623ddc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f0e4887422a57e0f6f50dab8f623ddc">&#9670;&#160;</a></span>makeMegaPacket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_packet.html">Packet</a> &gt; PacketBuilderDirector::makeMegaPacket </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::byte &gt; &amp;&#160;</td>
+          <td class="paramname"><em>appData</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A megapacket is a packet whose app data is bigger than Packet::APP_DATA_SIZE. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">appData</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>* std::vector&lt;Packet&gt; </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="packet__builder__director_8h_source.html">packet_builder_director.h</a></li>
+<li>src/packet_builder_director.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

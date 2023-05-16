@@ -89,84 +89,84 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2270e9d5175e57d67d341edf3f0bcde6"><td class="memItemLeft" align="right" valign="top"><a id="a2270e9d5175e57d67d341edf3f0bcde6" name="a2270e9d5175e57d67d341edf3f0bcde6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const std::byte versionNumber, const std::byte dataFieldHeader, const std::byte appIdSource, const std::byte appIdDestination, const std::byte sequenceControlFlags, const std::array&lt; std::byte, 2 &gt; sequenceControlCount, const std::array&lt; std::byte, 2 &gt; length, const std::byte ccsds, const std::byte pusVersion, const std::byte ack, const std::byte serviceType, const std::byte serviceSubtype, const std::array&lt; std::byte, APP_DATA_SIZE &gt; &amp;appData, const std::array&lt; std::byte, 2 &gt; packetErrorControl)</td></tr>
-<tr class="separator:a2270e9d5175e57d67d341edf3f0bcde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad301a439ddea576c95485d982ef6e1e"><td class="memItemLeft" align="right" valign="top"><a id="aad301a439ddea576c95485d982ef6e1e" name="aad301a439ddea576c95485d982ef6e1e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const uint8_t versionNumber, const bool dataFieldHeader, const uint8_t appIdSource, const uint8_t appIdDestination, const SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount, const uint16_t length, const bool ccsds, const uint8_t pusVersion, const bool ack, const uint8_t serviceType, const uint8_t serviceSubtype, const std::array&lt; std::byte, APP_DATA_SIZE &gt; &amp;appData, const std::array&lt; std::byte, 2 &gt; packetErrorControl)</td></tr>
+<tr class="separator:aad301a439ddea576c95485d982ef6e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d5dfea51fa7fe55e4705b176f326ec"><td class="memItemLeft" align="right" valign="top"><a id="ae8d5dfea51fa7fe55e4705b176f326ec" name="ae8d5dfea51fa7fe55e4705b176f326ec"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const <a class="el" href="class_packet.html">Packet</a> &amp;other)</td></tr>
 <tr class="separator:ae8d5dfea51fa7fe55e4705b176f326ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae60320081f31447e68786b20814b524d"><td class="memItemLeft" align="right" valign="top"><a id="ae60320081f31447e68786b20814b524d" name="ae60320081f31447e68786b20814b524d"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getVersionNumber</b> () const</td></tr>
-<tr class="separator:ae60320081f31447e68786b20814b524d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab36fc3c42a7a5ed9b2ae46fae3710a8f"><td class="memItemLeft" align="right" valign="top"><a id="ab36fc3c42a7a5ed9b2ae46fae3710a8f" name="ab36fc3c42a7a5ed9b2ae46fae3710a8f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setVersionNumber</b> (const std::byte versionNumber)</td></tr>
-<tr class="separator:ab36fc3c42a7a5ed9b2ae46fae3710a8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf911eb9ec96e94f1e92197ce19144b3"><td class="memItemLeft" align="right" valign="top"><a id="abf911eb9ec96e94f1e92197ce19144b3" name="abf911eb9ec96e94f1e92197ce19144b3"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getDataFieldHeader</b> () const</td></tr>
-<tr class="separator:abf911eb9ec96e94f1e92197ce19144b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a842700f0319e046d3ae69ff5defb72e6"><td class="memItemLeft" align="right" valign="top"><a id="a842700f0319e046d3ae69ff5defb72e6" name="a842700f0319e046d3ae69ff5defb72e6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const std::byte newValue)</td></tr>
-<tr class="separator:a842700f0319e046d3ae69ff5defb72e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ca8390e1df0bd72887075e7736d4f90"><td class="memItemLeft" align="right" valign="top"><a id="a5ca8390e1df0bd72887075e7736d4f90" name="a5ca8390e1df0bd72887075e7736d4f90"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getAppIdSource</b> () const</td></tr>
-<tr class="separator:a5ca8390e1df0bd72887075e7736d4f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57e2d23fef76be842271dbb60778afe8"><td class="memItemLeft" align="right" valign="top"><a id="a57e2d23fef76be842271dbb60778afe8" name="a57e2d23fef76be842271dbb60778afe8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setAppIdSource</b> (const std::byte newAddress)</td></tr>
-<tr class="separator:a57e2d23fef76be842271dbb60778afe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d6d22a71fcb7201f296306bc2211dd6"><td class="memItemLeft" align="right" valign="top"><a id="a9d6d22a71fcb7201f296306bc2211dd6" name="a9d6d22a71fcb7201f296306bc2211dd6"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getAppIdDestination</b> () const</td></tr>
-<tr class="separator:a9d6d22a71fcb7201f296306bc2211dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6780231c8366d9a36350f815ba54118c"><td class="memItemLeft" align="right" valign="top"><a id="a6780231c8366d9a36350f815ba54118c" name="a6780231c8366d9a36350f815ba54118c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setAppIdDestination</b> (const std::byte newAddress)</td></tr>
-<tr class="separator:a6780231c8366d9a36350f815ba54118c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a1ff0b9da4467e561103e54d82708cd"><td class="memItemLeft" align="right" valign="top"><a id="a7a1ff0b9da4467e561103e54d82708cd" name="a7a1ff0b9da4467e561103e54d82708cd"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceControlFlags</b> () const</td></tr>
-<tr class="separator:a7a1ff0b9da4467e561103e54d82708cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9243df922c2ebc77f30230671c29609e"><td class="memItemLeft" align="right" valign="top"><a id="a9243df922c2ebc77f30230671c29609e" name="a9243df922c2ebc77f30230671c29609e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getVersionNumber</b> () const</td></tr>
+<tr class="separator:a9243df922c2ebc77f30230671c29609e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f430a297d386294839f68c4ad27737"><td class="memItemLeft" align="right" valign="top"><a id="af7f430a297d386294839f68c4ad27737" name="af7f430a297d386294839f68c4ad27737"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVersionNumber</b> (const uint8_t versionNumber)</td></tr>
+<tr class="separator:af7f430a297d386294839f68c4ad27737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353d8d6c8dc9de716fccd7598b68ff3c"><td class="memItemLeft" align="right" valign="top"><a id="a353d8d6c8dc9de716fccd7598b68ff3c" name="a353d8d6c8dc9de716fccd7598b68ff3c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>getDataFieldHeader</b> () const</td></tr>
+<tr class="separator:a353d8d6c8dc9de716fccd7598b68ff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6769d03f83f2b0610f4ec39a909b25aa"><td class="memItemLeft" align="right" valign="top"><a id="a6769d03f83f2b0610f4ec39a909b25aa" name="a6769d03f83f2b0610f4ec39a909b25aa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const bool newValue)</td></tr>
+<tr class="separator:a6769d03f83f2b0610f4ec39a909b25aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4f9e7cc199315f20945766672a5d117"><td class="memItemLeft" align="right" valign="top"><a id="ab4f9e7cc199315f20945766672a5d117" name="ab4f9e7cc199315f20945766672a5d117"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getAppIdSource</b> () const</td></tr>
+<tr class="separator:ab4f9e7cc199315f20945766672a5d117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793bb0896cf507b472ab764de77f4a80"><td class="memItemLeft" align="right" valign="top"><a id="a793bb0896cf507b472ab764de77f4a80" name="a793bb0896cf507b472ab764de77f4a80"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setAppIdSource</b> (const uint8_t newAddress)</td></tr>
+<tr class="separator:a793bb0896cf507b472ab764de77f4a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a01816470a0d51cd7fa4de9e991cc06"><td class="memItemLeft" align="right" valign="top"><a id="a7a01816470a0d51cd7fa4de9e991cc06" name="a7a01816470a0d51cd7fa4de9e991cc06"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getAppIdDestination</b> () const</td></tr>
+<tr class="separator:a7a01816470a0d51cd7fa4de9e991cc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e222ef80bc557c1188f484295981d9c"><td class="memItemLeft" align="right" valign="top"><a id="a3e222ef80bc557c1188f484295981d9c" name="a3e222ef80bc557c1188f484295981d9c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setAppIdDestination</b> (const uint8_t newAddress)</td></tr>
+<tr class="separator:a3e222ef80bc557c1188f484295981d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb1d0c67b126f0f95462466217de1128"><td class="memItemLeft" align="right" valign="top"><a id="aeb1d0c67b126f0f95462466217de1128" name="aeb1d0c67b126f0f95462466217de1128"></a>
+SequenceFlags&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceControlFlags</b> () const</td></tr>
+<tr class="separator:aeb1d0c67b126f0f95462466217de1128"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae358071cf4112073efb0b55560b1431c"><td class="memItemLeft" align="right" valign="top"><a id="ae358071cf4112073efb0b55560b1431c" name="ae358071cf4112073efb0b55560b1431c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setSequenceControlFlags</b> (const SequenceFlags newFlags)</td></tr>
 <tr class="separator:ae358071cf4112073efb0b55560b1431c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c81fa81f6ede2118b81fcc43dab9324"><td class="memItemLeft" align="right" valign="top"><a id="a4c81fa81f6ede2118b81fcc43dab9324" name="a4c81fa81f6ede2118b81fcc43dab9324"></a>
-std::array&lt; std::byte, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceControlCount</b> () const</td></tr>
-<tr class="separator:a4c81fa81f6ede2118b81fcc43dab9324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdfaf6b3d3e37f1c07c47214d669c18d"><td class="memItemLeft" align="right" valign="top"><a id="afdfaf6b3d3e37f1c07c47214d669c18d" name="afdfaf6b3d3e37f1c07c47214d669c18d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSequenceControlCount</b> (const std::array&lt; std::byte, 2 &gt; newCount)</td></tr>
-<tr class="separator:afdfaf6b3d3e37f1c07c47214d669c18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9772ff7b050bde0ea63d79252fb9d1fb"><td class="memItemLeft" align="right" valign="top"><a id="a9772ff7b050bde0ea63d79252fb9d1fb" name="a9772ff7b050bde0ea63d79252fb9d1fb"></a>
-std::array&lt; std::byte, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getLength</b> () const</td></tr>
-<tr class="separator:a9772ff7b050bde0ea63d79252fb9d1fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a6cb258b9b305d82a8df0b125bbc8c0"><td class="memItemLeft" align="right" valign="top"><a id="a8a6cb258b9b305d82a8df0b125bbc8c0" name="a8a6cb258b9b305d82a8df0b125bbc8c0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setLength</b> (const std::array&lt; std::byte, 2 &gt; amountOfBytes)</td></tr>
-<tr class="separator:a8a6cb258b9b305d82a8df0b125bbc8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6d056d164cd7e1ea987b8dde982a63"><td class="memItemLeft" align="right" valign="top"><a id="a0a6d056d164cd7e1ea987b8dde982a63" name="a0a6d056d164cd7e1ea987b8dde982a63"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getCCSDS</b> () const</td></tr>
-<tr class="separator:a0a6d056d164cd7e1ea987b8dde982a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a117802d9d9382b5db1ae3444da736296"><td class="memItemLeft" align="right" valign="top"><a id="a117802d9d9382b5db1ae3444da736296" name="a117802d9d9382b5db1ae3444da736296"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCCSDS</b> (const std::byte ccsds)</td></tr>
-<tr class="separator:a117802d9d9382b5db1ae3444da736296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63a1da0ab1869468a9bd460ac733254f"><td class="memItemLeft" align="right" valign="top"><a id="a63a1da0ab1869468a9bd460ac733254f" name="a63a1da0ab1869468a9bd460ac733254f"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getPUSVersion</b> () const</td></tr>
-<tr class="separator:a63a1da0ab1869468a9bd460ac733254f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1c8f11aa9d7fb07185fa840b95b4805"><td class="memItemLeft" align="right" valign="top"><a id="ad1c8f11aa9d7fb07185fa840b95b4805" name="ad1c8f11aa9d7fb07185fa840b95b4805"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPUSVersion</b> (const std::byte pusVersion)</td></tr>
-<tr class="separator:ad1c8f11aa9d7fb07185fa840b95b4805"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5db3c810df37759cd7d212c63e2487b"><td class="memItemLeft" align="right" valign="top"><a id="ab5db3c810df37759cd7d212c63e2487b" name="ab5db3c810df37759cd7d212c63e2487b"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getAck</b> () const</td></tr>
-<tr class="separator:ab5db3c810df37759cd7d212c63e2487b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbbf7f5a949f5632636b6777a0e7a313"><td class="memItemLeft" align="right" valign="top"><a id="adbbf7f5a949f5632636b6777a0e7a313" name="adbbf7f5a949f5632636b6777a0e7a313"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setACK</b> (const std::byte newValue)</td></tr>
-<tr class="separator:adbbf7f5a949f5632636b6777a0e7a313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1d93c872f1b2fb962660a0644b59f6c"><td class="memItemLeft" align="right" valign="top"><a id="aa1d93c872f1b2fb962660a0644b59f6c" name="aa1d93c872f1b2fb962660a0644b59f6c"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getServiceType</b> () const</td></tr>
-<tr class="separator:aa1d93c872f1b2fb962660a0644b59f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b86d1ea300a5ce93c22c210f12439b8"><td class="memItemLeft" align="right" valign="top"><a id="a8b86d1ea300a5ce93c22c210f12439b8" name="a8b86d1ea300a5ce93c22c210f12439b8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setServiceType</b> (const std::byte typeId)</td></tr>
-<tr class="separator:a8b86d1ea300a5ce93c22c210f12439b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af102ec0beda54b7059c9e00a7c35d009"><td class="memItemLeft" align="right" valign="top"><a id="af102ec0beda54b7059c9e00a7c35d009" name="af102ec0beda54b7059c9e00a7c35d009"></a>
-std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>getServiceSubtype</b> () const</td></tr>
-<tr class="separator:af102ec0beda54b7059c9e00a7c35d009"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a321173f1fcb9050a7fb1deca352d527f"><td class="memItemLeft" align="right" valign="top"><a id="a321173f1fcb9050a7fb1deca352d527f" name="a321173f1fcb9050a7fb1deca352d527f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setServiceSubtype</b> (const std::byte subtypeId)</td></tr>
-<tr class="separator:a321173f1fcb9050a7fb1deca352d527f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed7c2950ac41b020c669ff94d3193f3"><td class="memItemLeft" align="right" valign="top"><a id="a9ed7c2950ac41b020c669ff94d3193f3" name="a9ed7c2950ac41b020c669ff94d3193f3"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSequenceControlCount</b> () const</td></tr>
+<tr class="separator:a9ed7c2950ac41b020c669ff94d3193f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96c7132a06748194843512d472d03ff1"><td class="memItemLeft" align="right" valign="top"><a id="a96c7132a06748194843512d472d03ff1" name="a96c7132a06748194843512d472d03ff1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setSequenceControlCount</b> (const uint16_t newCount)</td></tr>
+<tr class="separator:a96c7132a06748194843512d472d03ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a25178f5f9ad5d517071831743e2757"><td class="memItemLeft" align="right" valign="top"><a id="a4a25178f5f9ad5d517071831743e2757" name="a4a25178f5f9ad5d517071831743e2757"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getLength</b> () const</td></tr>
+<tr class="separator:a4a25178f5f9ad5d517071831743e2757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acefed5e5d6e97fa75fe75b6d32096e43"><td class="memItemLeft" align="right" valign="top"><a id="acefed5e5d6e97fa75fe75b6d32096e43" name="acefed5e5d6e97fa75fe75b6d32096e43"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setLength</b> (const uint16_t amountOfBytes)</td></tr>
+<tr class="separator:acefed5e5d6e97fa75fe75b6d32096e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a932e5c99c4f99eaf5459c72f6e2c0aae"><td class="memItemLeft" align="right" valign="top"><a id="a932e5c99c4f99eaf5459c72f6e2c0aae" name="a932e5c99c4f99eaf5459c72f6e2c0aae"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>getCCSDS</b> () const</td></tr>
+<tr class="separator:a932e5c99c4f99eaf5459c72f6e2c0aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa34d73e020bbeba02eee8b7e57aa517e"><td class="memItemLeft" align="right" valign="top"><a id="aa34d73e020bbeba02eee8b7e57aa517e" name="aa34d73e020bbeba02eee8b7e57aa517e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCCSDS</b> (const bool ccsds)</td></tr>
+<tr class="separator:aa34d73e020bbeba02eee8b7e57aa517e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a749d41f1b668cf60bd2f88db2aaf4b5e"><td class="memItemLeft" align="right" valign="top"><a id="a749d41f1b668cf60bd2f88db2aaf4b5e" name="a749d41f1b668cf60bd2f88db2aaf4b5e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getPUSVersion</b> () const</td></tr>
+<tr class="separator:a749d41f1b668cf60bd2f88db2aaf4b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d14bbd9d6f0761c91733ddc047b07e2"><td class="memItemLeft" align="right" valign="top"><a id="a9d14bbd9d6f0761c91733ddc047b07e2" name="a9d14bbd9d6f0761c91733ddc047b07e2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPUSVersion</b> (const uint8_t pusVersion)</td></tr>
+<tr class="separator:a9d14bbd9d6f0761c91733ddc047b07e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb07f9d98ddbc7ea1eb2b46120db53e6"><td class="memItemLeft" align="right" valign="top"><a id="afb07f9d98ddbc7ea1eb2b46120db53e6" name="afb07f9d98ddbc7ea1eb2b46120db53e6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>getAck</b> () const</td></tr>
+<tr class="separator:afb07f9d98ddbc7ea1eb2b46120db53e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d02486e5eab1dc2f1c0e366f3e8dad3"><td class="memItemLeft" align="right" valign="top"><a id="a6d02486e5eab1dc2f1c0e366f3e8dad3" name="a6d02486e5eab1dc2f1c0e366f3e8dad3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setACK</b> (const bool newValue)</td></tr>
+<tr class="separator:a6d02486e5eab1dc2f1c0e366f3e8dad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbdd9facf33fddaf5296e300a12b0e16"><td class="memItemLeft" align="right" valign="top"><a id="adbdd9facf33fddaf5296e300a12b0e16" name="adbdd9facf33fddaf5296e300a12b0e16"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getServiceType</b> () const</td></tr>
+<tr class="separator:adbdd9facf33fddaf5296e300a12b0e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dbdf2544e152e5fbc3001f4be4ac16a"><td class="memItemLeft" align="right" valign="top"><a id="a7dbdf2544e152e5fbc3001f4be4ac16a" name="a7dbdf2544e152e5fbc3001f4be4ac16a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setServiceType</b> (const uint8_t typeId)</td></tr>
+<tr class="separator:a7dbdf2544e152e5fbc3001f4be4ac16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2935c0384e03434a1ff00e0944ba541e"><td class="memItemLeft" align="right" valign="top"><a id="a2935c0384e03434a1ff00e0944ba541e" name="a2935c0384e03434a1ff00e0944ba541e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getServiceSubtype</b> () const</td></tr>
+<tr class="separator:a2935c0384e03434a1ff00e0944ba541e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a661b2d31f7d48adf9bf5cfcbb8b7e33e"><td class="memItemLeft" align="right" valign="top"><a id="a661b2d31f7d48adf9bf5cfcbb8b7e33e" name="a661b2d31f7d48adf9bf5cfcbb8b7e33e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setServiceSubtype</b> (const uint8_t subtypeId)</td></tr>
+<tr class="separator:a661b2d31f7d48adf9bf5cfcbb8b7e33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac398824da9b479c22d1dc10acedf3198"><td class="memItemLeft" align="right" valign="top"><a id="ac398824da9b479c22d1dc10acedf3198" name="ac398824da9b479c22d1dc10acedf3198"></a>
 std::array&lt; std::byte, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getPacketErrorControl</b> () const</td></tr>
 <tr class="separator:ac398824da9b479c22d1dc10acedf3198"><td class="memSeparator" colspan="2">&#160;</td></tr>

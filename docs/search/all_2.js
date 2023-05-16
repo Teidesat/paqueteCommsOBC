@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['getacknowledgedversion_0',['getAcknowledgedVersion',['../class_packet_extended_basic.html#abdd4d518dca049ace4feca490eb4f162',1,'PacketExtendedBasic']]],
-  ['getinstance_1',['getInstance',['../class_packet_extended_basic.html#a45c6e38372a12cf523656f2ce727ce9a',1,'PacketExtendedBasic']]]
+  ['getpacket_0',['getPacket',['../class_packet_extended_basic.html#a009cc63cf948ddf9a624ec1b56890ef3',1,'PacketExtendedBasic::getPacket()'],['../class_packet_extended_verification.html#a68357c7d81b17ba4da1fda215040467f',1,'PacketExtendedVerification::getPacket()']]]
 ];

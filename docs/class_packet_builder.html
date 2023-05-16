@@ -79,41 +79,40 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5c79eca787d32c1a1f40b4a81c2de5b2"><td class="memTemplParams" colspan="2"><a id="a5c79eca787d32c1a1f40b4a81c2de5b2" name="a5c79eca787d32c1a1f40b4a81c2de5b2"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5c79eca787d32c1a1f40b4a81c2de5b2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pairs_t</b> = std::vector&lt; std::pair&lt; T, T &gt; &gt;</td></tr>
-<tr class="separator:a5c79eca787d32c1a1f40b4a81c2de5b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1c492335e46012a3e13407793a9c7b"><td class="memTemplParams" colspan="2"><a id="a0d1c492335e46012a3e13407793a9c7b" name="a0d1c492335e46012a3e13407793a9c7b"></a>
+template&lt;typename T1 , typename T2 &gt; </td></tr>
+<tr class="memitem:a0d1c492335e46012a3e13407793a9c7b"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pairs_t</b> = std::vector&lt; std::pair&lt; T1, T2 &gt; &gt;</td></tr>
+<tr class="separator:a0d1c492335e46012a3e13407793a9c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a58011f269ab471ec8fba356c12c5761c"><td class="memItemLeft" align="right" valign="top"><a id="a58011f269ab471ec8fba356c12c5761c" name="a58011f269ab471ec8fba356c12c5761c"></a>
 <a class="el" href="class_packet.html">Packet</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getPacket</b> () const</td></tr>
 <tr class="separator:a58011f269ab471ec8fba356c12c5761c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa006bab17114808596b3420ffc326ce"><td class="memItemLeft" align="right" valign="top"><a id="afa006bab17114808596b3420ffc326ce" name="afa006bab17114808596b3420ffc326ce"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>newPacket</b> (const std::byte versionNumber, const std::byte appIdSource, const std::byte appIdDestination, const Packet::SequenceFlags sequenceControlFlags, const std::array&lt; std::byte, 2 &gt; sequenceControlCount)</td></tr>
-<tr class="separator:afa006bab17114808596b3420ffc326ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c1a9f2409f5d36d0cf52865c2fb38fc"><td class="memItemLeft" align="right" valign="top"><a id="a8c1a9f2409f5d36d0cf52865c2fb38fc" name="a8c1a9f2409f5d36d0cf52865c2fb38fc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const std::byte ack, const std::byte serviceType, const std::byte serviceSubtype)</td></tr>
-<tr class="separator:a8c1a9f2409f5d36d0cf52865c2fb38fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95173c4719650c3ea9623ff1d2731840"><td class="memItemLeft" align="right" valign="top"><a id="a95173c4719650c3ea9623ff1d2731840" name="a95173c4719650c3ea9623ff1d2731840"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addCommandVerificationHeader</b> (const std::byte appIdSource, const std::byte sequenceFlags, const std::array&lt; std::byte, 2 &gt; sequenceCount)</td></tr>
-<tr class="separator:a95173c4719650c3ea9623ff1d2731840"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a096bfdaf2fd8867ea7f99a847e1e9bf1"><td class="memItemLeft" align="right" valign="top"><a id="a096bfdaf2fd8867ea7f99a847e1e9bf1" name="a096bfdaf2fd8867ea7f99a847e1e9bf1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addCommandVerificationHeader</b> (const std::byte appIdSource, const std::byte sequenceFlags, const std::byte sequenceCount, const std::byte code)</td></tr>
-<tr class="separator:a096bfdaf2fd8867ea7f99a847e1e9bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ac4b6952c3b4f9176570f27e0917cdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a4ac4b6952c3b4f9176570f27e0917cdd">addCommandVerificationHeader</a> (const std::byte appIdSource, const std::byte sequenceFlags, const std::byte sequenceCount, const std::byte code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
-<tr class="separator:a4ac4b6952c3b4f9176570f27e0917cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2fcde3d058957e09e53e4ca4dfd81f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#ad2fcde3d058957e09e53e4ca4dfd81f2">addCommandDistributionHeader</a> (const std::vector&lt; std::byte &gt; &amp;addresses)</td></tr>
-<tr class="separator:ad2fcde3d058957e09e53e4ca4dfd81f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa53da8bf0353583b4ede658b10f1a09a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aa53da8bf0353583b4ede658b10f1a09a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#aa53da8bf0353583b4ede658b10f1a09a">addCommandDistributionHeader</a> (const pairs_t&lt; T &gt; &amp;addressAndData)</td></tr>
-<tr class="separator:aa53da8bf0353583b4ede658b10f1a09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f73dca883e92554206b2ace03598116"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a6f73dca883e92554206b2ace03598116">addCommandDistributionHeader</a> (const pairs_t&lt; std::byte &gt; &amp;lineIDAndDuration)</td></tr>
-<tr class="separator:a6f73dca883e92554206b2ace03598116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade886f473dde23673bc0091c93c15e5c"><td class="memItemLeft" align="right" valign="top"><a id="ade886f473dde23673bc0091c93c15e5c" name="ade886f473dde23673bc0091c93c15e5c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>newPacket</b> (const uint8_t versionNumber, const uint8_t appIdSource, const uint8_t appIdDestination, const Packet::SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount)</td></tr>
+<tr class="separator:ade886f473dde23673bc0091c93c15e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b89affb949fcfbd359f505bf6d66a2"><td class="memItemLeft" align="right" valign="top"><a id="a58b89affb949fcfbd359f505bf6d66a2" name="a58b89affb949fcfbd359f505bf6d66a2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const bool ack, const uint8_t serviceType, const uint8_t serviceSubtype)</td></tr>
+<tr class="separator:a58b89affb949fcfbd359f505bf6d66a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af189f401aa63a9ead3cc76c2535e8be0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#af189f401aa63a9ead3cc76c2535e8be0">addCommandVerificationHeader</a> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount)</td></tr>
+<tr class="separator:af189f401aa63a9ead3cc76c2535e8be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d951bafba64d430afddf5d65946319a"><td class="memItemLeft" align="right" valign="top"><a id="a6d951bafba64d430afddf5d65946319a" name="a6d951bafba64d430afddf5d65946319a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addCommandVerificationHeader</b> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount, const uint8_t code)</td></tr>
+<tr class="separator:a6d951bafba64d430afddf5d65946319a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d8359a90b87217c0b011d1c17462abf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a8d8359a90b87217c0b011d1c17462abf">addCommandVerificationHeader</a> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount, const uint8_t code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
+<tr class="separator:a8d8359a90b87217c0b011d1c17462abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d88c2440b04f141a8361e73f3f568a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a97d88c2440b04f141a8361e73f3f568a">addCommandDistributionHeader</a> (const std::vector&lt; uint8_t &gt; &amp;addresses)</td></tr>
+<tr class="separator:a97d88c2440b04f141a8361e73f3f568a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5da96219297bfef34807c83d5b96e45"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ad5da96219297bfef34807c83d5b96e45"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#ad5da96219297bfef34807c83d5b96e45">addCommandDistributionHeader</a> (const pairs_t&lt; uint8_t, T &gt; &amp;addressAndData)</td></tr>
+<tr class="separator:ad5da96219297bfef34807c83d5b96e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af90cc89909a83e2a625800d43f4f7df7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#af90cc89909a83e2a625800d43f4f7df7">addCommandDistributionHeader</a> (const pairs_t&lt; int, std::byte &gt; &amp;lineIDAndDuration)</td></tr>
+<tr class="separator:af90cc89909a83e2a625800d43f4f7df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6f73dca883e92554206b2ace03598116" name="a6f73dca883e92554206b2ace03598116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f73dca883e92554206b2ace03598116">&#9670;&#160;</a></span>addCommandDistributionHeader() <span class="overload">[1/3]</span></h2>
+<a id="af90cc89909a83e2a625800d43f4f7df7" name="af90cc89909a83e2a625800d43f4f7df7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af90cc89909a83e2a625800d43f4f7df7">&#9670;&#160;</a></span>addCommandDistributionHeader() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -121,19 +120,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addCommandVerificatio
         <tr>
           <td class="memname">void PacketBuilder::addCommandDistributionHeader </td>
           <td>(</td>
-          <td class="paramtype">const pairs_t&lt; std::byte &gt; &amp;&#160;</td>
+          <td class="paramtype">const pairs_t&lt; int, std::byte &gt; &amp;&#160;</td>
           <td class="paramname"><em>lineIDAndDuration</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>CPDU It represents a sequence of pulses on certain output line.</p>
+<p>I use int here because I am not sure about how many lines there will be</p>
 <dl class="section pre"><dt>Precondition</dt><dd>lineIDAndDuration.size() &lt;= Packet::APP_DATA_SIZE </dd></dl>
 
 </div>
 </div>
-<a id="aa53da8bf0353583b4ede658b10f1a09a" name="aa53da8bf0353583b4ede658b10f1a09a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa53da8bf0353583b4ede658b10f1a09a">&#9670;&#160;</a></span>addCommandDistributionHeader() <span class="overload">[2/3]</span></h2>
+<a id="ad5da96219297bfef34807c83d5b96e45" name="ad5da96219297bfef34807c83d5b96e45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5da96219297bfef34807c83d5b96e45">&#9670;&#160;</a></span>addCommandDistributionHeader() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -143,7 +143,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">void PacketBuilder::addCommandDistributionHeader </td>
           <td>(</td>
-          <td class="paramtype">const pairs_t&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const pairs_t&lt; uint8_t, T &gt; &amp;&#160;</td>
           <td class="paramname"><em>addressAndData</em></td><td>)</td>
           <td></td>
         </tr>
@@ -155,8 +155,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ad2fcde3d058957e09e53e4ca4dfd81f2" name="ad2fcde3d058957e09e53e4ca4dfd81f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2fcde3d058957e09e53e4ca4dfd81f2">&#9670;&#160;</a></span>addCommandDistributionHeader() <span class="overload">[3/3]</span></h2>
+<a id="a97d88c2440b04f141a8361e73f3f568a" name="a97d88c2440b04f141a8361e73f3f568a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97d88c2440b04f141a8361e73f3f568a">&#9670;&#160;</a></span>addCommandDistributionHeader() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,18 +164,18 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">void PacketBuilder::addCommandDistributionHeader </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::byte &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>addresses</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Device command Distribution Service header on-off register </p>
+<p>******** Device command Distribution Service headers. ******** on-off register </p>
 
 </div>
 </div>
-<a id="a4ac4b6952c3b4f9176570f27e0917cdd" name="a4ac4b6952c3b4f9176570f27e0917cdd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ac4b6952c3b4f9176570f27e0917cdd">&#9670;&#160;</a></span>addCommandVerificationHeader()</h2>
+<a id="af189f401aa63a9ead3cc76c2535e8be0" name="af189f401aa63a9ead3cc76c2535e8be0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af189f401aa63a9ead3cc76c2535e8be0">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,25 +183,60 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">void PacketBuilder::addCommandVerificationHeader </td>
           <td>(</td>
-          <td class="paramtype">const std::byte&#160;</td>
+          <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>appIdSource</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::byte&#160;</td>
+          <td class="paramtype">const Packet::SequenceFlags&#160;</td>
           <td class="paramname"><em>sequenceFlags</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::byte&#160;</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>sequenceCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>******** Telecommand Verification Service headers. ******** </p>
+
+</div>
+</div>
+<a id="a8d8359a90b87217c0b011d1c17462abf" name="a8d8359a90b87217c0b011d1c17462abf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d8359a90b87217c0b011d1c17462abf">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PacketBuilder::addCommandVerificationHeader </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Packet::SequenceFlags&#160;</td>
+          <td class="paramname"><em>sequenceFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
           <td class="paramname"><em>sequenceCount</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::byte&#160;</td>
+          <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>code</em>, </td>
         </tr>
         <tr>

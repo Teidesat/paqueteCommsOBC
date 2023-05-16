@@ -30,7 +30,8 @@ public:
 
   /****** getters and setters ******/
 
-  Packet getPacket() const;
+  // reference to avoid an extra copy
+  Packet& getPacket();
 
   /****** other ******/
 

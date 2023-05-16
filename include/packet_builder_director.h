@@ -17,21 +17,48 @@
 
 #include "packet.h"
 
+#include "../include/packet_builder.h"
+#include "packet_extended/packet_extended_verification.h"
+
 class PacketBuilderDirector {
 public:
   PacketBuilderDirector();
   ~PacketBuilderDirector();
 
   /**
-   * @brief A megapacket is a packet whose app data is bigger than Packet::APP_DATA_SIZE
+   * @brief A megapacket is a packet whose app data is bigger than
+   *    Packet::APP_DATA_SIZE
    * @param appData 
    * @return * std::vector<Packet> 
    */
   std::vector<Packet> makeMegaPacket(const std::vector<std::byte>& appData);
 
-  // make verification packet acceptance success
-  // make verification packet acceptance failure
-  // etc
+  /**
+   * @brief Make verification packet acceptance success
+   * 
+   * SequenceFlag is stand-alone by default
+   * 
+   * @param appIdSource 
+   * @param appIdDestination 
+   * @param sequenceCount Sequence control count
+   * @return PacketExtendedVerification 
+   */
+  PacketExtendedVerification makeVerificationSuccess(
+      const uint8_t appIdSource, const uint8_t appIdDestination,
+      const uint16_t sequenceCount);
+
+  PacketExtendedVerification makeVerificationFailure(
+      const uint8_t appIdSource, const uint8_t appIdDestination,
+      const uint16_t sequenceCount, const uint8_t code,
+      const std::vector<std::byte>& parameters);
+
+  PacketExtendedVerification makeVerificationFailure(
+      const uint8_t appIdSource, const uint8_t appIdDestination,
+      const uint16_t sequenceCount, const uint8_t code,
+      std::vector<std::byte>&& parameters);
+
+private:
+  PacketBuilder builder_;
 };
 
 #endif
