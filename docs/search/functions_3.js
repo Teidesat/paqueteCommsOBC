@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['swapapplicationidfields_0',['swapApplicationIdFields',['../class_packet_extended_basic.html#abedd87e39cc50381bff7eb16df06a7ec',1,'PacketExtendedBasic::swapApplicationIdFields()'],['../class_packet_extended_verification.html#a31c6c45509c7203aaa1662e96ab68ab4',1,'PacketExtendedVerification::swapApplicationIdFields()']]]
+  ['newpacket_0',['newPacket',['../class_packet_builder.html#ade886f473dde23673bc0091c93c15e5c',1,'PacketBuilder']]]
 ];

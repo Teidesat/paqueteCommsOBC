@@ -5,16 +5,19 @@
  * 
  */
 
-#pragma once
+#ifndef PACKET_BUFFER_IO_H
+#define PACKET_BUFFER_IO_H
 
 #include "packet.h"
 
-class PacketOperations {
+class PacketBufferIO {
 public:
-  PacketOperations();
-  ~PacketOperations();
+  PacketBufferIO();
+  ~PacketBufferIO();
 
   Packet readPacket(const std::byte* buffer, std::size_t size);
   void writePacket(std::byte* buffer, Packet& packet);
 private:
 };
+
+#endif

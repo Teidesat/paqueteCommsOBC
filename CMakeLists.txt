@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10.0)
 project(paqueteCnC VERSION 0.1.0)
 add_library(paqueteCnCLibrary
   src/packet.cpp
-  src/packet_operations.cpp
+  src/packet_buffer_io.cpp
   src/packet_extended/packet_extended_basic.cpp
   src/packet_extended/packet_extended_verification.cpp
   src/packet_builder_director.cpp

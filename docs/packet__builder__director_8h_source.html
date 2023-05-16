@@ -84,21 +84,40 @@ $(function() {
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="packet_8h.html">packet.h</a>&quot;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_packet_builder_director.html">   20</a></span><span class="keyword">class </span><a class="code hl_class" href="class_packet_builder_director.html">PacketBuilderDirector</a> {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <a class="code hl_class" href="class_packet_builder_director.html">PacketBuilderDirector</a>();</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <a class="code hl_class" href="class_packet_builder_director.html">~PacketBuilderDirector</a>();</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  std::vector&lt;Packet&gt; <a class="code hl_function" href="class_packet_builder_director.html#a1f0e4887422a57e0f6f50dab8f623ddc">makeMegaPacket</a>(<span class="keyword">const</span> std::vector&lt;std::byte&gt;&amp; appData);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="comment">// make verification packet acceptance success</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="comment">// make verification packet acceptance failure</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="comment">// etc</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>};</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_packet_builder_director_html"><div class="ttname"><a href="class_packet_builder_director.html">PacketBuilderDirector</a></div><div class="ttdef"><b>Definition:</b> packet_builder_director.h:20</div></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;../include/packet_builder.h&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;packet_extended/packet_extended_verification.h&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_packet_builder_director.html">   23</a></span><span class="keyword">class </span><a class="code hl_class" href="class_packet_builder_director.html">PacketBuilderDirector</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <a class="code hl_class" href="class_packet_builder_director.html">PacketBuilderDirector</a>();</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <a class="code hl_class" href="class_packet_builder_director.html">~PacketBuilderDirector</a>();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  std::vector&lt;Packet&gt; <a class="code hl_function" href="class_packet_builder_director.html#a1f0e4887422a57e0f6f50dab8f623ddc">makeMegaPacket</a>(<span class="keyword">const</span> std::vector&lt;std::byte&gt;&amp; appData);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <a class="code hl_class" href="class_packet_extended_verification.html">PacketExtendedVerification</a> <a class="code hl_function" href="class_packet_builder_director.html#a4701352ff22e84b6087699165c370369">makeVerificationSuccess</a>(</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>      <span class="keyword">const</span> uint8_t appIdSource, <span class="keyword">const</span> uint8_t appIdDestination,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      <span class="keyword">const</span> uint16_t sequenceCount);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <a class="code hl_class" href="class_packet_extended_verification.html">PacketExtendedVerification</a> makeVerificationFailure(</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      <span class="keyword">const</span> uint8_t appIdSource, <span class="keyword">const</span> uint8_t appIdDestination,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      <span class="keyword">const</span> uint16_t sequenceCount, <span class="keyword">const</span> uint8_t code,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      <span class="keyword">const</span> std::vector&lt;std::byte&gt;&amp; parameters);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <a class="code hl_class" href="class_packet_extended_verification.html">PacketExtendedVerification</a> makeVerificationFailure(</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>      <span class="keyword">const</span> uint8_t appIdSource, <span class="keyword">const</span> uint8_t appIdDestination,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>      <span class="keyword">const</span> uint16_t sequenceCount, <span class="keyword">const</span> uint8_t code,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      std::vector&lt;std::byte&gt;&amp;&amp; parameters);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <a class="code hl_class" href="class_packet_builder.html">PacketBuilder</a> builder_;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>};</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_packet_builder_director_html"><div class="ttname"><a href="class_packet_builder_director.html">PacketBuilderDirector</a></div><div class="ttdef"><b>Definition:</b> packet_builder_director.h:23</div></div>
 <div class="ttc" id="aclass_packet_builder_director_html_a1f0e4887422a57e0f6f50dab8f623ddc"><div class="ttname"><a href="class_packet_builder_director.html#a1f0e4887422a57e0f6f50dab8f623ddc">PacketBuilderDirector::makeMegaPacket</a></div><div class="ttdeci">std::vector&lt; Packet &gt; makeMegaPacket(const std::vector&lt; std::byte &gt; &amp;appData)</div><div class="ttdoc">A megapacket is a packet whose app data is bigger than Packet::APP_DATA_SIZE.</div><div class="ttdef"><b>Definition:</b> packet_builder_director.cpp:8</div></div>
+<div class="ttc" id="aclass_packet_builder_director_html_a4701352ff22e84b6087699165c370369"><div class="ttname"><a href="class_packet_builder_director.html#a4701352ff22e84b6087699165c370369">PacketBuilderDirector::makeVerificationSuccess</a></div><div class="ttdeci">PacketExtendedVerification makeVerificationSuccess(const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount)</div><div class="ttdoc">Make verification packet acceptance success.</div><div class="ttdef"><b>Definition:</b> packet_builder_director.cpp:42</div></div>
+<div class="ttc" id="aclass_packet_builder_html"><div class="ttname"><a href="class_packet_builder.html">PacketBuilder</a></div><div class="ttdef"><b>Definition:</b> packet_builder.h:23</div></div>
+<div class="ttc" id="aclass_packet_extended_verification_html"><div class="ttname"><a href="class_packet_extended_verification.html">PacketExtendedVerification</a></div><div class="ttdef"><b>Definition:</b> packet_extended_verification.h:16</div></div>
 <div class="ttc" id="apacket_8h_html"><div class="ttname"><a href="packet_8h.html">packet.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

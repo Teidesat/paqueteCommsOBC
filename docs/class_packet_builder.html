@@ -86,11 +86,11 @@ template&lt;typename T1 , typename T2 &gt; </td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a58011f269ab471ec8fba356c12c5761c"><td class="memItemLeft" align="right" valign="top"><a id="a58011f269ab471ec8fba356c12c5761c" name="a58011f269ab471ec8fba356c12c5761c"></a>
-<a class="el" href="class_packet.html">Packet</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getPacket</b> () const</td></tr>
-<tr class="separator:a58011f269ab471ec8fba356c12c5761c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade886f473dde23673bc0091c93c15e5c"><td class="memItemLeft" align="right" valign="top"><a id="ade886f473dde23673bc0091c93c15e5c" name="ade886f473dde23673bc0091c93c15e5c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>newPacket</b> (const uint8_t versionNumber, const uint8_t appIdSource, const uint8_t appIdDestination, const Packet::SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount)</td></tr>
+<tr class="memitem:a0f551d9e14436637627f797aa8bf293b"><td class="memItemLeft" align="right" valign="top"><a id="a0f551d9e14436637627f797aa8bf293b" name="a0f551d9e14436637627f797aa8bf293b"></a>
+<a class="el" href="class_packet.html">Packet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPacket</b> ()</td></tr>
+<tr class="separator:a0f551d9e14436637627f797aa8bf293b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade886f473dde23673bc0091c93c15e5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#ade886f473dde23673bc0091c93c15e5c">newPacket</a> (const uint8_t versionNumber, const uint8_t appIdSource, const uint8_t appIdDestination, const Packet::SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount)</td></tr>
+<tr class="memdesc:ade886f473dde23673bc0091c93c15e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset current construction with a new fresh packet dataFieldHeader is true by default.  <br /></td></tr>
 <tr class="separator:ade886f473dde23673bc0091c93c15e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58b89affb949fcfbd359f505bf6d66a2"><td class="memItemLeft" align="right" valign="top"><a id="a58b89affb949fcfbd359f505bf6d66a2" name="a58b89affb949fcfbd359f505bf6d66a2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const bool ack, const uint8_t serviceType, const uint8_t serviceSubtype)</td></tr>
@@ -253,6 +253,64 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 <dl class="section pre"><dt>Precondition</dt><dd>addressAndDataPair.size() &lt;= Packet::APP_DATA_SIZE </dd></dl>
+
+</div>
+</div>
+<a id="ade886f473dde23673bc0091c93c15e5c" name="ade886f473dde23673bc0091c93c15e5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade886f473dde23673bc0091c93c15e5c">&#9670;&#160;</a></span>newPacket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PacketBuilder::newPacket </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>versionNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Packet::SequenceFlags&#160;</td>
+          <td class="paramname"><em>sequenceControlFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>sequenceControlCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>reset current construction with a new fresh packet dataFieldHeader is true by default. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">versionNumber</td><td></td></tr>
+    <tr><td class="paramname">appIdSource</td><td></td></tr>
+    <tr><td class="paramname">appIdDestination</td><td></td></tr>
+    <tr><td class="paramname">sequenceControlFlags</td><td></td></tr>
+    <tr><td class="paramname">sequenceControlCount</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -35,9 +35,16 @@ public:
 
   /****** other ******/
 
-  // reset current construction
-  // dataFieldHeader is left implicit.
-  // sequece control flags is set to default 11 independent
+  /**
+   * @brief reset current construction with a new fresh packet
+   * dataFieldHeader is true by default.
+   * 
+   * @param versionNumber 
+   * @param appIdSource 
+   * @param appIdDestination 
+   * @param sequenceControlFlags 
+   * @param sequenceControlCount 
+   */
   void newPacket(const uint8_t versionNumber, const uint8_t appIdSource,
       const uint8_t appIdDestination,
       const Packet::SequenceFlags sequenceControlFlags,

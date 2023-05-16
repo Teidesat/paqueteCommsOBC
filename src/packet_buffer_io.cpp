@@ -1,14 +1,14 @@
-#include "../include/packet_operations.h"
+#include "../include/packet_buffer_io.h"
 
 #include <cassert>
 #include <cstring>
 #include <array>
 
-PacketOperations::PacketOperations() {}
+PacketBufferIO::PacketBufferIO() {}
 
-PacketOperations::~PacketOperations() {}
+PacketBufferIO::~PacketBufferIO() {}
 
-Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
+Packet PacketBufferIO::readPacket(const std::byte* buffer, std::size_t size) {
   uint8_t versionNumber;
   bool dataFieldHeader;
   uint8_t appIdSource;
@@ -97,7 +97,7 @@ Packet PacketOperations::readPacket(const std::byte* buffer, std::size_t size) {
       ack, serviceType, serviceSubtype, appData, packetErrorControl);
 }
 
-void PacketOperations::writePacket(std::byte* buffer, Packet& packet) {
+void PacketBufferIO::writePacket(std::byte* buffer, Packet& packet) {
   const auto& versionNumber = packet.getVersionNumber();
   const auto& dataFieldHeader = packet.getDataFieldHeader();
   const auto& appIdSource = packet.getAppIdSource();
