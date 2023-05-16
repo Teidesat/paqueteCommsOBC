@@ -1,5 +1,5 @@
 /**
- * @file packet_extended.h
+ * @file packet_extended_basic.h
  * @author Marcos Barrios
  * @brief Higher level packet for the services.
  * 

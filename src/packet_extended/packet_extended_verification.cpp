@@ -33,7 +33,7 @@ int PacketExtendedVerification::getErrorCode() {
   return errorCode_;
 }
 
-const std::vector<uint8_t>& PacketExtendedVerification::getParameters() {
+std::vector<uint8_t> PacketExtendedVerification::getParameters() {
   return parameters_;
 }
 

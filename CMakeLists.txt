@@ -5,6 +5,7 @@ add_library(paqueteCnCLibrary
   src/packet_buffer_io.cpp
   src/packet_extended/packet_extended_basic.cpp
   src/packet_extended/packet_extended_verification.cpp
+  src/packet_extended/packet_extended_housekeeping.cpp
   src/packet_builder_director.cpp
   src/packet_builder.cpp)
 

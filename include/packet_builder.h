@@ -19,6 +19,7 @@
 #include <array>
 
 #include "packet.h"
+#include "packet_extended/packet_extended_housekeeping.h"
 
 class PacketBuilder {
 public:
@@ -37,6 +38,7 @@ public:
 
   /**
    * @brief reset current construction with a new fresh packet
+   * 
    * dataFieldHeader is true by default.
    * 
    * @param versionNumber 
@@ -60,12 +62,26 @@ public:
   void addCommandVerificationHeader(const uint8_t appIdSource,
       const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount);
 
+  /**
+   * @brief 
+   * 
+   * @param appIdSource 
+   * @param sequenceFlags 
+   * @param sequenceCount 
+   * @param code error code
+   */
   void addCommandVerificationHeader(const uint8_t appIdSource,
       const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
       const uint8_t code);
 
   /**
-   * @pre addressAndDataPair.size() <= Packet::APP_DATA_SIZE
+   * @brief 
+   * 
+   * @param appIdSource 
+   * @param sequenceFlags 
+   * @param sequenceCount 
+   * @param code error code
+   * @param parameters
    */
   void addCommandVerificationHeader(const uint8_t appIdSource,
       const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
@@ -109,7 +125,34 @@ public:
    * 
    */
 
-  
+  /**
+   * @brief Housekeeping report with an Structure Identifier (SID), a
+   *    generation mode and then the content of the report.
+   * 
+   * Each SID defines an amount of parameters, an amount of fixed-length
+   *  arrays, how many times a parameter is sampled in the array, and
+   *  how many parameters the array contains.
+   * 
+   * Each parameter has an associated Parameter ID in the ground station.
+   *  The ground station knows the parameters by the (SID, origin app. id,
+   *    service type) tuple. 
+   *
+   * The generation mode can be periodic or filtered. Filtered allows some
+   *  parameters not to be included in the report, although a maximum
+   *  timeout period exists for that parameter, after which the
+   *  parameter will be sampled even if it is filtered. Periodic is just
+   *  periodically sending all of the SID's parameters. Each mode has
+   *  a value associated, 0 being periodic. For filtered, 1 when a the
+   *  filtered parameter exceeded threshold, 2 when the timeout took place.
+   *  So on filtered mode, if no parameter has changed beyond the threshold
+   *  or no timeout has activated for that SID then no report is generated.
+   * 
+   *  @param structureID int because I don't know how many we need.
+   *  @param mode
+   */
+  void addHousekeepingReportHeader(int structureId,
+      PacketExtendedHousekeeping::GenerationMode mode,
+      const std::vector<std::byte>& parameters);
 
 private:
   Packet packet_;

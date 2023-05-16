@@ -1,5 +1,5 @@
 /**
- * @file packet_extended.h
+ * @file packet_extended_verification.h
  * @author Marcos Barrios
  * @brief Higher level packet for command verification service. 
  * 
@@ -33,7 +33,7 @@ public:
   /**
    * @brief When replying to something, source becomes destination and viceversa.
    * 
-   * @return PacketExtendedBasic 
+   * @return PacketExtendedVerification 
    */
   PacketExtendedVerification swapApplicationIdFields();
 
@@ -42,7 +42,7 @@ public:
   int getErrorCode();
 
   // verification acceptance failure includes parameters
-  const std::vector<uint8_t>& getParameters();
+  std::vector<uint8_t> getParameters();
 private:
   PacketExtendedBasic packetBasic_;
   uint8_t errorCode_;
