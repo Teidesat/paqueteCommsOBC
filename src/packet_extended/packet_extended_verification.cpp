@@ -1,7 +1,5 @@
 #include "../../include/packet_extended/packet_extended_verification.h"
 
-#include "../../include/packet_extended/packet_extended_basic.h"
-
 PacketExtendedVerification::PacketExtendedVerification(const Packet& packet) :
   packetBasic_(packet),
   errorCode_(0),

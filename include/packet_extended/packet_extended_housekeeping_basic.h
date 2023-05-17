@@ -3,6 +3,13 @@
  * @author Marcos Barrios
  * @brief Higher level packet for housekeeping and diagnostic data
  *    service. Basic packet that all the subtypes use.
+ * 
+ *  This packet can be used to represent the following subtypes:
+ *    3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 17, 18, 21, 22
+ *  because they all just require a SID as content.
+ *
+ *  The full minimum capability sets for both housekeeping and
+ *    diagnostics data can be handled with this class and 2, 25.
  *
  *  A data structure for each SID is stored as static to know
  *    how to interpret the parameters field. The content of that

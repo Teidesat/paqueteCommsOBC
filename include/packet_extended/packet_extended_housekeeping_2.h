@@ -2,8 +2,8 @@
  * @file packet_extended_housekeeping_2.h
  * @author Marcos Barrios
  * @brief Higher level packet for housekeeping and diagnostic data
- *    service. Packet of subtype 2: Define new diagnostic parameter
- *    report.
+ *    service. Packet of subtype 2 and 1: Define new diagnostic
+ *    parameter report.
  * 
  *  A diagnostic parameter report consists of a collection interval,
  *    an amount of parameters to sample, the sequence of parameter ID
