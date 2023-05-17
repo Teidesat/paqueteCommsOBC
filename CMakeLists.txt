@@ -10,7 +10,9 @@ add_library(paqueteCnCLibrary
   src/packet_extended/packet_extended_housekeeping_2.cpp
   src/packet_extended/packet_extended_housekeeping_25.cpp
   src/packet_extended/packet_extended_housekeeping_basic.cpp
-  src/packet_extended/packet_extended_large_data_1.cpp)
+  src/packet_extended/packet_extended_large_data_1.cpp
+  src/packet_extended/packet_extended_large_data_4.cpp
+  src/packet_extended/packet_extended_large_data_5.cpp)
 
 add_executable(paqueteCnC src/main.cpp)
 target_link_libraries(paqueteCnC paqueteCnCLibrary)

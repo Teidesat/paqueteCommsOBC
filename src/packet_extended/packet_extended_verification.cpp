@@ -15,8 +15,8 @@ PacketExtendedVerification::PacketExtendedVerification(const Packet& packet,
 {}
 
 // low level packet 
-Packet& PacketExtendedBasic::getPacket() {
-  return packet_;
+Packet& PacketExtendedVerification::getPacket() {
+  return packetBasic_.getPacket();
 }
 
 PacketExtendedVerification PacketExtendedVerification::swapApplicationIdFields() {

@@ -96,6 +96,8 @@ Classes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Higher level packet for housekeeping and diagnostic data service. Basic packet that all the subtypes use. </p>
 <dl class="section author"><dt>Author</dt><dd>Marcos Barrios </dd></dl>
+<p>This packet can be used to represent the following subtypes: 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 17, 18, 21, 22 because they all just require a SID as content.</p>
+<p>The full minimum capability sets for both housekeeping and diagnostics data can be handled with this class and 2, 25.</p>
 <p>A data structure for each SID is stored as static to know how to interpret the parameters field. The content of that data structure is the same information that a packet from ground station sends for defining an SID. See ECSS-E-70-41A. Minimum capability doesn't include sending packets for defining a new SID, so the SID must be defined on the code, but I don't know what we need, so I just use it empty.</p>
 <p>The packet for definition of a SID includes the sampling period, but it is not included in the data structure of the SID that is static to this class. </p>
 </div></div><!-- contents -->

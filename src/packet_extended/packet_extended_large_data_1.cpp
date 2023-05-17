@@ -19,8 +19,8 @@ PacketExtendedLargeData1::PacketExtendedLargeData1(const Packet& packet,
 {}
 
 // low level packet 
-Packet& PacketExtendedBasic::getPacket() {
-  return packet_;
+Packet& PacketExtendedLargeData1::getPacket() {
+  return packetBasic_.getPacket();
 }
 
 PacketExtendedLargeData1 PacketExtendedLargeData1::swapApplicationIdFields() {
@@ -40,6 +40,18 @@ uint16_t PacketExtendedLargeData1::getSequenceNumber() {
   return sequenceNumber_;
 }
 
+void PacketExtendedLargeData1::setSequenceNumber(const uint16_t newSequenceNumber) {
+  sequenceNumber_ = newSequenceNumber;
+}
+
 std::vector<std::byte>& PacketExtendedLargeData1::getData() {
   return data_;
+}
+
+void PacketExtendedLargeData1::setData(const std::vector<std::byte>& newData) {
+  data_ = newData;
+}
+
+void PacketExtendedLargeData1::setData(std::vector<std::byte>&& newData) {
+  data_ = std::move(newData);
 }
