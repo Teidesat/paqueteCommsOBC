@@ -45,3 +45,7 @@ I can define one class for handling the fields of the packets of each different 
 ## To implement a polymorph method for wrapping Packets on corresponding Packet Extended
 
 I could define on <code>PacketBuilderDirector</code> (since packet wrapping is it's responsibility) a method that returns at runtime the proper wrapper for the received <code>Packet</code>, but I'd rather not use dynamic memory since could be slower than the stack. Instead I will rely on giving the services the tools to instance the corresponding wrapper by defining a method for each wrapper.
+
+## Packet wrapping for subtypes
+
+I decided to implement a new class fore ach subtype packet of a service because the structure is different and it is simpler than having one class with all the methods.

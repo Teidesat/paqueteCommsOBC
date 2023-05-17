@@ -19,7 +19,8 @@
 #include <array>
 
 #include "packet.h"
-#include "packet_extended/packet_extended_housekeeping.h"
+#include "packet_extended/packet_extended_housekeeping_basic.h"
+#include "packet_extended/packet_extended_housekeeping_25.h"
 
 class PacketBuilder {
 public:
@@ -126,32 +127,14 @@ public:
    */
 
   /**
-   * @brief Housekeeping report with an Structure Identifier (SID), a
-   *    generation mode and then the content of the report.
-   * 
-   * Each SID defines an amount of parameters, an amount of fixed-length
-   *  arrays, how many times a parameter is sampled in the array, and
-   *  how many parameters the array contains.
-   * 
-   * Each parameter has an associated Parameter ID in the ground station.
-   *  The ground station knows the parameters by the (SID, origin app. id,
-   *    service type) tuple. 
+   * @brief Housekeeping parameter report with an Structure Identifier (SID),
+   *    a generation mode and then the content of the report.
    *
-   * The generation mode can be periodic or filtered. Filtered allows some
-   *  parameters not to be included in the report, although a maximum
-   *  timeout period exists for that parameter, after which the
-   *  parameter will be sampled even if it is filtered. Periodic is just
-   *  periodically sending all of the SID's parameters. Each mode has
-   *  a value associated, 0 being periodic. For filtered, 1 when a the
-   *  filtered parameter exceeded threshold, 2 when the timeout took place.
-   *  So on filtered mode, if no parameter has changed beyond the threshold
-   *  or no timeout has activated for that SID then no report is generated.
-   * 
-   *  @param structureID int16_t because I don't know how many we need.
+   *  @param structureID int16_t for not because I don't know how many we need.
    *  @param mode
    */
   void addHousekeepingReportHeader(uint16_t structureId,
-      PacketExtendedHousekeeping::GenerationMode mode,
+      PacketExtendedHousekeeping25::GenerationMode mode,
       const std::vector<std::byte>& parameters);
 
 private:

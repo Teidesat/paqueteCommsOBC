@@ -1,23 +1,22 @@
-#include "../../include/packet_extended/packet_extended_housekeeping.h"
+#include "../../include/packet_extended/packet_extended_housekeeping_25.h"
 
-std::unordered_map<uint16_t, std::vector<uint8_t>> PacketExtendedHousekeeping::structureIdDefinitions;
-
-PacketExtendedHousekeeping::PacketExtendedHousekeeping(
+PacketExtendedHousekeeping25::PacketExtendedHousekeeping25(
     const Packet& packet, uint16_t structureId,
     GenerationMode mode, const std::vector<std::byte>& parameters) :
-      packetBasic_(packet),
-      structureId_(structureId),
+      packetHousekeepingBasic_(packet, structureId),
       mode_(mode) {
-  const auto& relevantDefinition = structureIdDefinitions.find(structureId)->second;
-  
+  const auto& relevantDefinition =
+      PacketExtendedHousekeeping::structureIdDefinitions.find(structureId)->second;
+
   // The definition is a vector structured as follows:
-  // length first sequence, first sequence parameters, length second sequence,
-  // second sequence arrays
+  // length first sequence, first sequence parameters, length second
+  // sequence, second sequence arrays
   const uint8_t lengthFirstSequence = relevantDefinition[0];
   for (uint8_t i = 1; i < 1 + lengthFirstSequence; ++i) {
     sampledParameters_.push_back(relevantDefinition[i]);
   }
-  const uint8_t lengthSecondSequence = relevantDefinition[1 + lengthFirstSequence];
+  const uint8_t lengthSecondSequence =
+      relevantDefinition[1 + lengthFirstSequence];
 
   // For each array extract it's content and then update current position
   uint8_t currentPosition = 1 + lengthFirstSequence;
@@ -34,16 +33,16 @@ PacketExtendedHousekeeping::PacketExtendedHousekeeping(
   }
 }
 
-PacketExtendedHousekeeping::~PacketExtendedHousekeeping() {}
+PacketExtendedHousekeeping25::~PacketExtendedHousekeeping25() {}
 
-std::vector<uint8_t> PacketExtendedHousekeeping::getSampledParameters() {
+std::vector<uint8_t> PacketExtendedHousekeeping25::getSampledParameters() {
   return sampledParameters_;
 }
 
-std::vector<std::vector<uint8_t>> PacketExtendedHousekeeping::getSampledArrays() {
+std::vector<std::vector<uint8_t>> PacketExtendedHousekeeping25::getSampledArrays() {
   return sampledArrays_;
 }
 
-PacketExtendedHousekeeping::GenerationMode PacketExtendedHousekeeping::getGenerationMode() {
+PacketExtendedHousekeeping25::GenerationMode PacketExtendedHousekeeping25::getGenerationMode() {
   return mode_;
 }

@@ -90,9 +90,8 @@ void PacketBuilder::addCommandDistributionHeader(
   }
 }
 
-// assuming little-endian
 void PacketBuilder::addHousekeepingReportHeader(uint16_t structureId,
-    PacketExtendedHousekeeping::GenerationMode mode,
+    PacketExtendedHousekeeping25::GenerationMode mode,
     const std::vector<std::byte>& parameters) {
   packet_.pushData(structureId);
   packet_.pushData(std::byte(mode));
