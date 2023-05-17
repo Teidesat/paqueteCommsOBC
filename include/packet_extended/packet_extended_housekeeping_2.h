@@ -40,9 +40,7 @@ public:
   PacketExtendedHousekeeping2(const Packet& packet, uint16_t structureId,
       uint8_t collectionInterval, uint8_t amountOfSamples,
       const std::vector<uint8_t>& samples, uint8_t amountOfArrays,
-      const std::vector<uint8_t>& arrays);
-       // arrays are fixed-length, so leave the interpretation for later and
-       // just receive a vector of bytes.
+      const std::vector<std::vector<uint8_t>>& arrays);
 
   /****** Methods from composited classes ******/
 
@@ -115,9 +113,9 @@ private:
   PacketExtendedHousekeeping packetHousekeepingBasic_;
   uint8_t collectionInterval_;
   uint8_t amountOfSamples_;
-  const std::vector<uint8_t>& samples_;
+  std::vector<uint8_t> samples_;
   uint8_t amountOfArrays_;
-  const std::vector<uint8_t>& arrays_;
+  std::vector<std::vector<uint8_t>> arrays_;
 };
 
 #endif

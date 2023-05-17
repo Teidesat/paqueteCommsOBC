@@ -81,9 +81,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aefda28fe3911e35fdf90a9b4294aae17"><td class="memItemLeft" align="right" valign="top"><a id="aefda28fe3911e35fdf90a9b4294aae17" name="aefda28fe3911e35fdf90a9b4294aae17"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>PacketExtendedHousekeeping2</b> (const <a class="el" href="class_packet.html">Packet</a> &amp;packet, uint16_t structureId, uint8_t collectionInterval, uint8_t amountOfSamples, const std::vector&lt; uint8_t &gt; &amp;samples, uint8_t amountOfArrays, const std::vector&lt; uint8_t &gt; &amp;arrays)</td></tr>
 <tr class="separator:aefda28fe3911e35fdf90a9b4294aae17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a173f98717964f9ab00d049cfac7312b1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_packet.html">Packet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_extended_housekeeping2.html#a173f98717964f9ab00d049cfac7312b1">getPacket</a> ()</td></tr>
-<tr class="memdesc:a173f98717964f9ab00d049cfac7312b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the packet extended basic implementation of this method.  <br /></td></tr>
-<tr class="separator:a173f98717964f9ab00d049cfac7312b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57e697c610934b7d3c2050d7ad0de2c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet.html">Packet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_extended_housekeeping2.html#a57e697c610934b7d3c2050d7ad0de2c6">getPacket</a> ()</td></tr>
+<tr class="memdesc:a57e697c610934b7d3c2050d7ad0de2c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the packet extended basic implementation of this method.  <br /></td></tr>
+<tr class="separator:a57e697c610934b7d3c2050d7ad0de2c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a781a661f77ab9ebf6128fcb67c8b8f74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet_extended_housekeeping2.html">PacketExtendedHousekeeping2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_extended_housekeeping2.html#a781a661f77ab9ebf6128fcb67c8b8f74">swapApplicationIdFields</a> ()</td></tr>
 <tr class="memdesc:a781a661f77ab9ebf6128fcb67c8b8f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the packet extended basic implementation of this method.  <br /></td></tr>
 <tr class="separator:a781a661f77ab9ebf6128fcb67c8b8f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,6 +108,9 @@ const std::vector&lt; uint8_t &gt; &amp;&#160;</td><td class="memItemRight" vali
 <tr class="separator:a9feac22f9c593a7912fe9c93754feacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0c7828cdd679a4edfd61d665baaef3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_extended_housekeeping2.html#ac0c7828cdd679a4edfd61d665baaef3d">setSamples</a> (const std::vector&lt; uint8_t &gt; &amp;newSamples)</td></tr>
 <tr class="separator:ac0c7828cdd679a4edfd61d665baaef3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a624372e00317aca7e52b383a19e49882"><td class="memItemLeft" align="right" valign="top"><a id="a624372e00317aca7e52b383a19e49882" name="a624372e00317aca7e52b383a19e49882"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setSamples</b> (std::vector&lt; uint8_t &gt; &amp;&amp;newSamples)</td></tr>
+<tr class="separator:a624372e00317aca7e52b383a19e49882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5a10814ed7e678e3803a744d1580d87"><td class="memItemLeft" align="right" valign="top"><a id="ab5a10814ed7e678e3803a744d1580d87" name="ab5a10814ed7e678e3803a744d1580d87"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getAmountOfArrays</b> ()</td></tr>
 <tr class="separator:ab5a10814ed7e678e3803a744d1580d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,16 +122,19 @@ const std::vector&lt; uint8_t &gt; &amp;&#160;</td><td class="memItemRight" vali
 <tr class="separator:a8b9c7e6c332c3dfafffec25c68eb8c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f2e6d68c9c524472a54dffc1c2327d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_extended_housekeeping2.html#a5f2e6d68c9c524472a54dffc1c2327d6">setArrays</a> (const std::vector&lt; uint8_t &gt; &amp;newArrays)</td></tr>
 <tr class="separator:a5f2e6d68c9c524472a54dffc1c2327d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3af717ea6d872880e40573c357e1a3"><td class="memItemLeft" align="right" valign="top"><a id="a5e3af717ea6d872880e40573c357e1a3" name="a5e3af717ea6d872880e40573c357e1a3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setArrays</b> (std::vector&lt; uint8_t &gt; &amp;&amp;newArrays)</td></tr>
+<tr class="separator:a5e3af717ea6d872880e40573c357e1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a173f98717964f9ab00d049cfac7312b1" name="a173f98717964f9ab00d049cfac7312b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a173f98717964f9ab00d049cfac7312b1">&#9670;&#160;</a></span>getPacket()</h2>
+<a id="a57e697c610934b7d3c2050d7ad0de2c6" name="a57e697c610934b7d3c2050d7ad0de2c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57e697c610934b7d3c2050d7ad0de2c6">&#9670;&#160;</a></span>getPacket()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="class_packet.html">Packet</a> &amp; PacketExtendedHousekeeping2::getPacket </td>
+          <td class="memname"><a class="el" href="class_packet.html">Packet</a> &amp; PacketExtendedHousekeeping2::getPacket </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
