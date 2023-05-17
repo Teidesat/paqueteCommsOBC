@@ -20,13 +20,20 @@
  *    how to interpret the parameters field. The content of that
  *    data structure is the same information that a packet from
  *    ground station sends for defining an SID. See ECSS-E-70-41A.
+ *    Minimum capability doesn't include sending packets for
+ *    defining a new SID, so the SID must be defined on the code,
+ *    but I don't know what we need, so I just use it empty.
  * 
+ * The packet for definition of a SID includes the sampling period,
+ *    but it is not included in the data structure of the SID that
+ *    is static to this class.
  */
 
 #ifndef PACKET_EXTENDED_HOUSEKEEPING_H
 #define PACKET_EXTENDED_HOUSEKEEPING_H
 
 #include <vector>
+#include <unordered_map>
 
 #include "../packet.h"
 #include "packet_extended_basic.h"
@@ -40,7 +47,7 @@ public:
   };
 
   // Extraction of the samples in the parameters field is done here
-  PacketExtendedHousekeeping(const Packet& packet, int structureId,
+  PacketExtendedHousekeeping(const Packet& packet, uint16_t structureId,
       GenerationMode mode, const std::vector<std::byte>& parameters);
 
   ~PacketExtendedHousekeeping();
@@ -81,7 +88,7 @@ public:
   GenerationMode getGenerationMode();
 private:
   PacketExtendedBasic packetBasic_;
-  int structureId_;
+  uint16_t structureId_;
   GenerationMode mode_;
 
   /*
@@ -106,8 +113,9 @@ private:
    * 
    *  Thats why a a matrix of unsigned 8 bit integer follows.
    * 
+   *  Follows a map of SID to vector.
    */
-  static std::vector<std::vector<uint8_t>> structureIdDefinitions;
+  static std::unordered_map<uint16_t, std::vector<uint8_t>> structureIdDefinitions;
 };
 
 #endif

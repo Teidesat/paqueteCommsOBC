@@ -169,6 +169,11 @@ void Packet::pushData(const std::byte byteToPush) {
   ++appDataIndex_;
 }
 
+void Packet::pushData(const uint16_t bytesToPush) {
+  std::memcpy(&appData_[appDataIndex_], &bytesToPush, sizeof(bytesToPush));
+  appDataIndex_ += sizeof(bytesToPush);
+}
+
 void Packet::pushData(const std::array<std::byte, 2>& bytesToPush) {
   pushData(bytesToPush[0]);
   pushData(bytesToPush[1]);

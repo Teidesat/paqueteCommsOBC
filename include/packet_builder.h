@@ -147,10 +147,10 @@ public:
    *  So on filtered mode, if no parameter has changed beyond the threshold
    *  or no timeout has activated for that SID then no report is generated.
    * 
-   *  @param structureID int because I don't know how many we need.
+   *  @param structureID int16_t because I don't know how many we need.
    *  @param mode
    */
-  void addHousekeepingReportHeader(int structureId,
+  void addHousekeepingReportHeader(uint16_t structureId,
       PacketExtendedHousekeeping::GenerationMode mode,
       const std::vector<std::byte>& parameters);
 
