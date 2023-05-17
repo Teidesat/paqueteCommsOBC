@@ -4,8 +4,6 @@
 
 PacketBuilder::PacketBuilder() {}
 
-PacketBuilder::~PacketBuilder() {}
-
 Packet& PacketBuilder::getPacket() {
   return packet_;
 }

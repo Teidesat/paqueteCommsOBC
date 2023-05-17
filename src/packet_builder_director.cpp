@@ -3,7 +3,6 @@
 #include <cmath>
 
 PacketBuilderDirector::PacketBuilderDirector() {}
-PacketBuilderDirector::~PacketBuilderDirector() {}
 
 std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
     const std::vector<std::byte>& appData) {

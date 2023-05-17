@@ -13,16 +13,15 @@
 class PacketExtendedBasic {
 public:
   PacketExtendedBasic(const Packet& packet);
-  ~PacketExtendedBasic();
 
   /**
-   * @brief Get low level packet 
+   * @brief Get low level packet.
    * 
    * To avoid having to define all the getters here.
    * 
    * @return const Packet& 
    */
-  const Packet& getPacket();
+  Packet& getPacket();
 
   /**
    * @brief When replying to something, source becomes destination and viceversa.

@@ -58,8 +58,6 @@ Packet::Packet(const Packet& other) :
   packetErrorControl_(other.packetErrorControl_),
   appDataIndex_(other.appDataIndex_) {}
 
-Packet::~Packet() {}
-
 uint8_t Packet::getVersionNumber() const {
   return versionNumber_;
 }
@@ -175,8 +173,10 @@ void Packet::pushData(const uint16_t bytesToPush) {
 }
 
 void Packet::pushData(const std::array<std::byte, 2>& bytesToPush) {
-  pushData(bytesToPush[0]);
-  pushData(bytesToPush[1]);
+  appData_[appDataIndex_] = bytesToPush[0];
+  ++appDataIndex_;
+  appData_[appDataIndex_] = bytesToPush[1];
+  ++appDataIndex_;
 }
 
 void Packet::pushData(const std::vector<std::byte>& bytesToPush) {

@@ -28,7 +28,6 @@ public:
   using pairs_t = std::vector<std::pair<T1, T2>>;
 
   PacketBuilder();
-  ~PacketBuilder();
 
   /****** getters and setters ******/
 

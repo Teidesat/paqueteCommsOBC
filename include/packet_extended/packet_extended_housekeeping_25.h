@@ -45,34 +45,25 @@ public:
     FILTERED_TIMEOUT = 2,
   };
 
-  // Extraction of the samples in the parameters field is done here
+  // Extraction of the samples in the parameters input field is done here
   PacketExtendedHousekeeping25(const Packet& packet, uint16_t structureId,
       GenerationMode mode, const std::vector<std::byte>& parameters);
-
-  ~PacketExtendedHousekeeping25();
 
   /****** Methods from composited classes ******/
 
   /**
-   * @brief Calls the packet extended basic implementation of this method.
+   * @brief Calls the packet extended housekeeping implementation of this method.
    * 
    * @return const Packet& 
    */
-  const Packet& getPacket();
+  Packet& getPacket();
 
   /**
-   * @brief Calls the packet extended basic implementation of this method.
+   * @brief Calls the packet extended housekeeping implementation of this method.
    * 
    * @return PacketExtendedHousekeeping25 
    */
   PacketExtendedHousekeeping25 swapApplicationIdFields();
-
-  /**
-   * @brief Calls the packet extended basic implementation of this method.
-   * 
-   * @return std::vector<uint8_t> 
-   */
-  std::vector<uint8_t> getSampledParameters();
 
   /**
    * @brief Calls the packet extended housekeeping implementation of this
@@ -80,14 +71,23 @@ public:
    */
   uint16_t getStructureIdentifier();
 
+  /****** Methods from this class ******/
+
   /**
-   * @brief Calls the packet extended basic implementation of this method.
+   * @brief Calls the packet extended housekeeping implementation of this method.
+   * 
+   * @return std::vector<uint8_t> 
+   */
+  std::vector<uint8_t> getSampledParameters();
+  void setSampledParameters(const std::vector<uint8_t> newSampledParameters);
+
+  /**
+   * @brief Calls the packet extended housekeeping implementation of this method.
    * 
    * @return std::vector<std::vector<uint8_t>> 
    */
   std::vector<std::vector<uint8_t>> getSampledArrays();
-
-  /****** Methods from this class ******/
+  void setSampledArrays(const std::vector<std::vector<uint8_t>> newSampledArrays);
 
   /**
    * @brief 0 = periodic, 1 = filtered threshold, 2 = filtered timeout
@@ -113,6 +113,12 @@ private:
   */
   std::vector<uint8_t> sampledParameters_;
   std::vector<std::vector<uint8_t>> sampledArrays_;
+
+  /**
+   * @brief Auxiliary method of constructor. I type it here because i had
+   *    two constructors should do what this method does, to avoid duplication.
+   */
+  void interpretInputParameters(uint16_t structureId);
 };
 
 #endif

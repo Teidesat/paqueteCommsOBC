@@ -3,13 +3,13 @@ project(paqueteCnC VERSION 0.1.0)
 add_library(paqueteCnCLibrary
   src/packet.cpp
   src/packet_buffer_io.cpp
+  src/packet_builder.cpp
+  src/packet_builder_director.cpp
   src/packet_extended/packet_extended_basic.cpp
   src/packet_extended/packet_extended_verification.cpp
   src/packet_extended/packet_extended_housekeeping_2.cpp
   src/packet_extended/packet_extended_housekeeping_25.cpp
-  src/packet_extended/packet_extended_housekeeping_basic.cpp
-  src/packet_builder_director.cpp
-  src/packet_builder.cpp)
+  src/packet_extended/packet_extended_housekeeping_basic.cpp)
 
 add_executable(paqueteCnC src/main.cpp)
 target_link_libraries(paqueteCnC paqueteCnCLibrary)

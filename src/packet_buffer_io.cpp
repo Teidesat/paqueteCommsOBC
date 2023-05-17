@@ -6,8 +6,6 @@
 
 PacketBufferIO::PacketBufferIO() {}
 
-PacketBufferIO::~PacketBufferIO() {}
-
 Packet PacketBufferIO::readPacket(const std::byte* buffer, std::size_t size) {
   uint8_t versionNumber;
   bool dataFieldHeader;

@@ -23,7 +23,6 @@
 class PacketBuilderDirector {
 public:
   PacketBuilderDirector();
-  ~PacketBuilderDirector();
 
   /**
    * @brief A megapacket is a packet whose app data is bigger than

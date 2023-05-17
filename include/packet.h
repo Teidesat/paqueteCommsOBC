@@ -48,8 +48,6 @@ public:
   );
   Packet(const Packet& other);
 
-  ~Packet();
-
   uint8_t getVersionNumber() const;
   void setVersionNumber(const uint8_t versionNumber);
 

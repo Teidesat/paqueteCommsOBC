@@ -90,15 +90,14 @@ Public Member Functions</h2></td></tr>
 <a class="el" href="class_packet.html">Packet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPacket</b> ()</td></tr>
 <tr class="separator:a0f551d9e14436637627f797aa8bf293b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade886f473dde23673bc0091c93c15e5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#ade886f473dde23673bc0091c93c15e5c">newPacket</a> (const uint8_t versionNumber, const uint8_t appIdSource, const uint8_t appIdDestination, const Packet::SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount)</td></tr>
-<tr class="memdesc:ade886f473dde23673bc0091c93c15e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset current construction with a new fresh packet dataFieldHeader is true by default.  <br /></td></tr>
+<tr class="memdesc:ade886f473dde23673bc0091c93c15e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset current construction with a new fresh packet  <br /></td></tr>
 <tr class="separator:ade886f473dde23673bc0091c93c15e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58b89affb949fcfbd359f505bf6d66a2"><td class="memItemLeft" align="right" valign="top"><a id="a58b89affb949fcfbd359f505bf6d66a2" name="a58b89affb949fcfbd359f505bf6d66a2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const bool ack, const uint8_t serviceType, const uint8_t serviceSubtype)</td></tr>
 <tr class="separator:a58b89affb949fcfbd359f505bf6d66a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af189f401aa63a9ead3cc76c2535e8be0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#af189f401aa63a9ead3cc76c2535e8be0">addCommandVerificationHeader</a> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount)</td></tr>
 <tr class="separator:af189f401aa63a9ead3cc76c2535e8be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d951bafba64d430afddf5d65946319a"><td class="memItemLeft" align="right" valign="top"><a id="a6d951bafba64d430afddf5d65946319a" name="a6d951bafba64d430afddf5d65946319a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addCommandVerificationHeader</b> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount, const uint8_t code)</td></tr>
+<tr class="memitem:a6d951bafba64d430afddf5d65946319a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a6d951bafba64d430afddf5d65946319a">addCommandVerificationHeader</a> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount, const uint8_t code)</td></tr>
 <tr class="separator:a6d951bafba64d430afddf5d65946319a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d8359a90b87217c0b011d1c17462abf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a8d8359a90b87217c0b011d1c17462abf">addCommandVerificationHeader</a> (const uint8_t appIdSource, const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount, const uint8_t code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
 <tr class="separator:a8d8359a90b87217c0b011d1c17462abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,6 +108,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addCommandVerificatio
 <tr class="separator:ad5da96219297bfef34807c83d5b96e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af90cc89909a83e2a625800d43f4f7df7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#af90cc89909a83e2a625800d43f4f7df7">addCommandDistributionHeader</a> (const pairs_t&lt; int, std::byte &gt; &amp;lineIDAndDuration)</td></tr>
 <tr class="separator:af90cc89909a83e2a625800d43f4f7df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaebf1449616d61b8b5380e801ca11449"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#aaebf1449616d61b8b5380e801ca11449">addHousekeepingReportHeader</a> (uint16_t structureId, PacketExtendedHousekeeping25::GenerationMode mode, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
+<tr class="memdesc:aaebf1449616d61b8b5380e801ca11449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Housekeeping parameter report with an Structure Identifier (SID), a generation mode and then the content of the report.  <br /></td></tr>
+<tr class="separator:aaebf1449616d61b8b5380e801ca11449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="af90cc89909a83e2a625800d43f4f7df7" name="af90cc89909a83e2a625800d43f4f7df7"></a>
@@ -175,7 +177,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="af189f401aa63a9ead3cc76c2535e8be0" name="af189f401aa63a9ead3cc76c2535e8be0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af189f401aa63a9ead3cc76c2535e8be0">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af189f401aa63a9ead3cc76c2535e8be0">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -209,8 +211,57 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a6d951bafba64d430afddf5d65946319a" name="a6d951bafba64d430afddf5d65946319a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d951bafba64d430afddf5d65946319a">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PacketBuilder::addCommandVerificationHeader </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Packet::SequenceFlags&#160;</td>
+          <td class="paramname"><em>sequenceFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>sequenceCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>code</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">appIdSource</td><td></td></tr>
+    <tr><td class="paramname">sequenceFlags</td><td></td></tr>
+    <tr><td class="paramname">sequenceCount</td><td></td></tr>
+    <tr><td class="paramname">code</td><td>error code </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8d8359a90b87217c0b011d1c17462abf" name="a8d8359a90b87217c0b011d1c17462abf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d8359a90b87217c0b011d1c17462abf">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d8359a90b87217c0b011d1c17462abf">&#9670;&#160;</a></span>addCommandVerificationHeader() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -252,7 +303,60 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section pre"><dt>Precondition</dt><dd>addressAndDataPair.size() &lt;= Packet::APP_DATA_SIZE </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">appIdSource</td><td></td></tr>
+    <tr><td class="paramname">sequenceFlags</td><td></td></tr>
+    <tr><td class="paramname">sequenceCount</td><td></td></tr>
+    <tr><td class="paramname">code</td><td>error code </td></tr>
+    <tr><td class="paramname">parameters</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaebf1449616d61b8b5380e801ca11449" name="aaebf1449616d61b8b5380e801ca11449"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaebf1449616d61b8b5380e801ca11449">&#9670;&#160;</a></span>addHousekeepingReportHeader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PacketBuilder::addHousekeepingReportHeader </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>structureId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PacketExtendedHousekeeping25::GenerationMode&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::byte &gt; &amp;&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Housekeeping parameter report with an Structure Identifier (SID), a generation mode and then the content of the report. </p>
+<p>******** Housekeeping &amp; diagnostic data reporting service headers ******** </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">structureID</td><td>int16_t for not because I don't know how many we need. </td></tr>
+    <tr><td class="paramname">mode</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -300,7 +404,8 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>reset current construction with a new fresh packet dataFieldHeader is true by default. </p>
+<p>reset current construction with a new fresh packet </p>
+<p>dataFieldHeader is true by default.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">versionNumber</td><td></td></tr>

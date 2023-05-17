@@ -13,4 +13,19 @@ PacketExtendedHousekeeping2::PacketExtendedHousekeeping2(
       arrays_(arrays)
 {}
 
-PacketExtendedHousekeeping2::~PacketExtendedHousekeeping2() {}
+Packet& PacketExtendedHousekeeping2::getPacket() {
+  return packetHousekeepingBasic_.getPacket();
+}
+
+PacketExtendedHousekeeping2 PacketExtendedHousekeeping2::swapApplicationIdFields() {
+  PacketExtendedHousekeeping2 copy = *this;
+  copy.getPacket().setAppIdSource(
+      copy.getPacket().getAppIdDestination());
+  copy.getPacket().setAppIdDestination(
+      copy.getPacket().getAppIdSource());
+  return std::move(copy);
+}
+
+uint16_t PacketExtendedHousekeeping2::getStructureIdentifier() {
+  return packetHousekeepingBasic_.getStructureIdentifier();
+}

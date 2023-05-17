@@ -13,7 +13,6 @@
 class PacketBufferIO {
 public:
   PacketBufferIO();
-  ~PacketBufferIO();
 
   Packet readPacket(const std::byte* buffer, std::size_t size);
   void writePacket(std::byte* buffer, Packet& packet);

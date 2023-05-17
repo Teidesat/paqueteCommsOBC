@@ -50,24 +50,27 @@ public:
 
   PacketExtendedHousekeeping(const Packet& packet, uint16_t structureId);
 
-  ~PacketExtendedHousekeeping();
+  /****** Methods from composited classes ******/
 
   /**
-   * @brief Get low level packet 
+   * @brief Calls the packet extended housekeeping implementation of this
+   *    method.
    * 
    * To avoid having to define all the getters here.
    * 
    * @return const Packet& 
    */
-  const Packet& getPacket();
+  Packet& getPacket();
 
   /**
-   * @brief When replying to something, source becomes destination and
-   *    viceversa.
+   * @brief Calls the packet extended housekeeping implementation of this
+   *    method.
    * 
    * @return PacketExtendedHousekeeping 
    */
   PacketExtendedHousekeeping swapApplicationIdFields();
+
+  /****** Methods from this class ******/
 
   /**
    * @brief Get the Structure Identifier

@@ -16,13 +16,18 @@ PacketExtendedVerification::PacketExtendedVerification(const Packet& packet,
   parameters_(parameters)
 {}
 
-PacketExtendedVerification::~PacketExtendedVerification() {}
+// low level packet 
+Packet& PacketExtendedBasic::getPacket() {
+  return packet_;
+}
 
 PacketExtendedVerification PacketExtendedVerification::swapApplicationIdFields() {
-  Packet newPacket = packetBasic_.getPacket();
-  newPacket.setAppIdSource(packetBasic_.getPacket().getAppIdDestination());
-  newPacket.setAppIdDestination(packetBasic_.getPacket().getAppIdSource());
-  return PacketExtendedVerification(newPacket);
+  PacketExtendedVerification copy = *this;
+  copy.getPacket().setAppIdSource(
+      copy.getPacket().getAppIdDestination());
+  copy.getPacket().setAppIdDestination(
+      copy.getPacket().getAppIdSource());
+  return std::move(copy);
 }
 
 bool PacketExtendedVerification::hasErrorCode() {

@@ -3,16 +3,16 @@
 PacketExtendedBasic::PacketExtendedBasic(const Packet& packet) :
     packet_(packet) {}
 
-PacketExtendedBasic::~PacketExtendedBasic() {}
-
 // low level packet 
-const Packet& PacketExtendedBasic::getPacket() {
+Packet& PacketExtendedBasic::getPacket() {
   return packet_;
 }
 
 PacketExtendedBasic PacketExtendedBasic::swapApplicationIdFields() {
-  Packet newPacket = packet_;
-  newPacket.setAppIdSource(packet_.getAppIdDestination());
-  newPacket.setAppIdDestination(packet_.getAppIdSource());
-  return PacketExtendedBasic(newPacket);
+  PacketExtendedBasic copy = *this;
+  copy.getPacket().setAppIdSource(
+      copy.getPacket().getAppIdDestination());
+  copy.getPacket().setAppIdDestination(
+      copy.getPacket().getAppIdSource());
+  return std::move(copy);
 }

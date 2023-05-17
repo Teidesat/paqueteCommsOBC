@@ -5,6 +5,54 @@ PacketExtendedHousekeeping25::PacketExtendedHousekeeping25(
     GenerationMode mode, const std::vector<std::byte>& parameters) :
       packetHousekeepingBasic_(packet, structureId),
       mode_(mode) {
+  interpretInputParameters(structureId);
+}
+
+Packet& PacketExtendedHousekeeping25::getPacket() {
+  return packetHousekeepingBasic_.getPacket();
+}
+
+PacketExtendedHousekeeping25 PacketExtendedHousekeeping25::swapApplicationIdFields() {
+  PacketExtendedHousekeeping25 copy = *this;
+  copy.getPacket().setAppIdSource(
+      copy.getPacket().getAppIdDestination());
+  copy.getPacket().setAppIdDestination(
+      copy.getPacket().getAppIdSource());
+  return std::move(copy);
+}
+
+uint16_t PacketExtendedHousekeeping25::getStructureIdentifier() {
+  return packetHousekeepingBasic_.getStructureIdentifier();
+}
+
+std::vector<uint8_t> PacketExtendedHousekeeping25::getSampledParameters() {
+  return sampledParameters_;
+}
+
+void PacketExtendedHousekeeping25::setSampledParameters(
+   const std::vector<uint8_t> newSampledParameters) {
+  sampledParameters_ = newSampledParameters;
+}
+
+std::vector<std::vector<uint8_t>> PacketExtendedHousekeeping25::getSampledArrays() {
+  return sampledArrays_;
+}
+
+void PacketExtendedHousekeeping25::setSampledArrays(
+   const std::vector<std::vector<uint8_t>> newSampledArrays) {
+  sampledArrays_ = newSampledArrays;
+}
+
+PacketExtendedHousekeeping25::GenerationMode PacketExtendedHousekeeping25::getGenerationMode() {
+  return mode_;
+}
+
+void PacketExtendedHousekeeping25::setGenerationMode(const GenerationMode newMode) {
+  mode_ = newMode;
+}
+
+// used in constructor
+void PacketExtendedHousekeeping25::interpretInputParameters(uint16_t structureId) {
   const auto& relevantDefinition =
       PacketExtendedHousekeeping::structureIdDefinitions.find(structureId)->second;
 
@@ -31,18 +79,4 @@ PacketExtendedHousekeeping25::PacketExtendedHousekeeping25(
     sampledArrays_.push_back(arrayContent);
     currentPosition += currentPosition + sampleAmount * parameterAmount;
   }
-}
-
-PacketExtendedHousekeeping25::~PacketExtendedHousekeeping25() {}
-
-std::vector<uint8_t> PacketExtendedHousekeeping25::getSampledParameters() {
-  return sampledParameters_;
-}
-
-std::vector<std::vector<uint8_t>> PacketExtendedHousekeeping25::getSampledArrays() {
-  return sampledArrays_;
-}
-
-PacketExtendedHousekeeping25::GenerationMode PacketExtendedHousekeeping25::getGenerationMode() {
-  return mode_;
 }

@@ -44,8 +44,6 @@ public:
        // arrays are fixed-length, so leave the interpretation for later and
        // just receive a vector of bytes.
 
-  ~PacketExtendedHousekeeping2();
-
   /****** Methods from composited classes ******/
 
   /**
@@ -53,7 +51,7 @@ public:
    * 
    * @return const Packet& 
    */
-  const Packet& getPacket();
+  Packet& getPacket();
 
   /**
    * @brief Calls the packet extended basic implementation of this method.
@@ -92,6 +90,7 @@ public:
    * @param newSamples 
    */
   void setSamples(const std::vector<uint8_t>& newSamples);
+  void setSamples(std::vector<uint8_t>&& newSamples);
 
   uint8_t getAmountOfArrays();
 
@@ -110,6 +109,7 @@ public:
    *    be in an incorrect state and errors will follow.
    */
   void setArrays(const std::vector<uint8_t>& newArrays);
+  void setArrays(std::vector<uint8_t>&& newArrays);
 
 private:
   PacketExtendedHousekeeping packetHousekeepingBasic_;

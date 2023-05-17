@@ -19,23 +19,27 @@ public:
   PacketExtendedVerification(const Packet& packet, uint8_t errorCode,
       const std::vector<uint8_t>& parameters);
 
-  ~PacketExtendedVerification();
+  /****** Methods from composited classes ******/
 
   /**
-   * @brief Get low level packet 
+   * @brief Calls the packet extended basic implementation of this
+   *    method.
    * 
    * To avoid having to define all the getters here.
    * 
    * @return const Packet& 
    */
-  const Packet& getPacket();
+  Packet& getPacket();
 
   /**
-   * @brief When replying to something, source becomes destination and viceversa.
+   * @brief Calls the packet extended basic implementation of this
+   *    method.
    * 
    * @return PacketExtendedVerification 
    */
   PacketExtendedVerification swapApplicationIdFields();
+
+  /****** Methods from this class ******/
 
   // verification acceptance failure includes an error code
   bool hasErrorCode();

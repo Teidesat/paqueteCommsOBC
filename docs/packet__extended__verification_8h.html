@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>paqueteCnC: include/packet_builder.h File Reference</title>
+<title>paqueteCnC: include/packet_extended/packet_extended_verification.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,39 +69,32 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_7f203a8ee977fe143a8e941862d1a380.html">packet_extended</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
-  <div class="headertitle"><div class="title">packet_builder.h File Reference</div></div>
+  <div class="headertitle"><div class="title">packet_extended_verification.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Builder for different kinds of packets.  
+<p>Higher level packet for command verification service.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;array&gt;</code><br />
-<code>#include &quot;<a class="el" href="packet_8h_source.html">packet.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="packet__extended__housekeeping__basic_8h_source.html">packet_extended/packet_extended_housekeeping_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="packet__extended__housekeeping__25_8h_source.html">packet_extended/packet_extended_housekeeping_25.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="packet_8h_source.html">../packet.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="packet__extended__basic_8h_source.html">packet_extended_basic.h</a>&quot;</code><br />
 </div>
-<p><a href="packet__builder_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="packet__extended__verification_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html">PacketBuilder</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_extended_verification.html">PacketExtendedVerification</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Builder for different kinds of packets. </p>
-<dl class="section author"><dt>Author</dt><dd>Marcos Barrios </dd></dl>
-<p>A packet can be either:</p><ul>
-<li>main header only + app data</li>
-<li>main header + data field header + app data</li>
-</ul>
-<p>Then, the app data can contain many different units depending on the service. </p>
+<div class="textblock"><p>Higher level packet for command verification service. </p>
+<dl class="section author"><dt>Author</dt><dd>Marcos Barrios  </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
