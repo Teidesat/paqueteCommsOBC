@@ -3,14 +3,14 @@
 PacketExtendedVerification::PacketExtendedVerification(const Packet& packet) :
   packetBasic_(packet),
   errorCode_(0),
-  hasErrorCode_(false)
+  hasErrorCode_(Packet::Bool8Enum::FALSE)
 {}
 
 PacketExtendedVerification::PacketExtendedVerification(const Packet& packet,
     uint8_t errorCode, const std::vector<uint8_t>& parameters) :
   packetBasic_(packet),
   errorCode_(errorCode),
-  hasErrorCode_(true),
+  hasErrorCode_(Packet::Bool8Enum::FALSE),
   parameters_(parameters)
 {}
 
@@ -28,7 +28,7 @@ PacketExtendedVerification PacketExtendedVerification::swapApplicationIdFields()
   return std::move(copy);
 }
 
-bool PacketExtendedVerification::hasErrorCode() {
+Packet::Bool8Enum PacketExtendedVerification::hasErrorCode() {
   return hasErrorCode_;
 }
 

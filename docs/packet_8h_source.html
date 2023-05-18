@@ -97,100 +97,105 @@ $(function() {
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    STAND_ALONE = 0b11</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  };</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <a class="code hl_class" href="class_packet.html">Packet</a>();</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <a class="code hl_class" href="class_packet.html">Packet</a>(</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">const</span> uint8_t versionNumber,</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> dataFieldHeader,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">const</span> uint8_t appIdSource,</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">const</span> uint8_t appIdDestination,</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">const</span> SequenceFlags sequenceControlFlags,</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">const</span> uint16_t sequenceControlCount,</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">const</span> uint16_t length,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> ccsds,</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">const</span> uint8_t pusVersion,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> ack,</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">const</span> uint8_t serviceType,</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">const</span> uint8_t serviceSubtype,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">const</span> std::array&lt;std::byte, APP_DATA_SIZE&gt;&amp; appData,</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">const</span> std::array&lt;std::byte, 2&gt; packetErrorControl</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  );</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <a class="code hl_class" href="class_packet.html">Packet</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_packet.html">Packet</a>&amp; other);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  uint8_t getVersionNumber() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keywordtype">void</span> setVersionNumber(<span class="keyword">const</span> uint8_t versionNumber);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keywordtype">bool</span> getDataFieldHeader() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  <span class="keywordtype">void</span> setDataFieldHeader(<span class="keyword">const</span> <span class="keywordtype">bool</span> newValue);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  uint8_t getAppIdSource() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keywordtype">void</span> setAppIdSource(<span class="keyword">const</span> uint8_t newAddress);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  uint8_t getAppIdDestination() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="keywordtype">void</span> setAppIdDestination(<span class="keyword">const</span> uint8_t newAddress);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  SequenceFlags getSequenceControlFlags() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="keywordtype">void</span> setSequenceControlFlags(<span class="keyword">const</span> SequenceFlags newFlags);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  uint16_t getSequenceControlCount() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="keywordtype">void</span> setSequenceControlCount(<span class="keyword">const</span> uint16_t newCount);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  uint16_t getLength() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keywordtype">void</span> setLength(<span class="keyword">const</span> uint16_t amountOfBytes);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordtype">bool</span> getCCSDS() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keywordtype">void</span> setCCSDS(<span class="keyword">const</span> <span class="keywordtype">bool</span> ccsds);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  uint8_t getPUSVersion() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keywordtype">void</span> setPUSVersion(<span class="keyword">const</span> uint8_t pusVersion);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordtype">bool</span> getAck() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keywordtype">void</span> setACK(<span class="keyword">const</span> <span class="keywordtype">bool</span> newValue);</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  uint8_t getServiceType() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keywordtype">void</span> setServiceType(<span class="keyword">const</span> uint8_t typeId);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  uint8_t getServiceSubtype() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <span class="keywordtype">void</span> setServiceSubtype(<span class="keyword">const</span> uint8_t subtypeId);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  std::array&lt;std::byte, 2&gt; getPacketErrorControl() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <span class="keywordtype">void</span> setPacketErrorControl(<span class="keyword">const</span> std::array&lt;std::byte, 2&gt; crc);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  <span class="comment">// It sets the object pointed to by ptrAppData to the value of appData_ .</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="comment">// The receptor array must be of size APP_DATA_SIZE</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  std::array&lt;std::byte, APP_DATA_SIZE&gt; getAppData();</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <span class="keywordtype">void</span> setAppData(<span class="keyword">const</span> std::array&lt;std::byte, APP_DATA_SIZE&gt;&amp; ptrNewAppData);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keyword">enum class</span> Bool8Enum : uint8_t {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    TRUE  = 0b1,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    FALSE  = 0b0,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  };</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <a class="code hl_class" href="class_packet.html">Packet</a>();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <a class="code hl_class" href="class_packet.html">Packet</a>(</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">const</span> uint8_t versionNumber,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">const</span> Bool8Enum dataFieldHeader,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">const</span> uint8_t appIdSource,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">const</span> uint8_t appIdDestination,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">const</span> SequenceFlags sequenceControlFlags,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">const</span> uint16_t sequenceControlCount,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">const</span> uint16_t length,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">const</span> Bool8Enum ccsds,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">const</span> uint8_t pusVersion,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">const</span> Bool8Enum ack,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">const</span> uint8_t serviceType,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">const</span> uint8_t serviceSubtype,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">const</span> std::array&lt;std::byte, APP_DATA_SIZE&gt;&amp; appData,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keyword">const</span> std::array&lt;std::byte, 2&gt; packetErrorControl</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  );</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <a class="code hl_class" href="class_packet.html">Packet</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_packet.html">Packet</a>&amp; other);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  uint8_t getVersionNumber() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keywordtype">void</span> setVersionNumber(<span class="keyword">const</span> uint8_t versionNumber);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  Bool8Enum getDataFieldHeader() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keywordtype">void</span> setDataFieldHeader(<span class="keyword">const</span> Bool8Enum newValue);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  uint8_t getAppIdSource() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="keywordtype">void</span> setAppIdSource(<span class="keyword">const</span> uint8_t newAddress);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  uint8_t getAppIdDestination() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordtype">void</span> setAppIdDestination(<span class="keyword">const</span> uint8_t newAddress);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  SequenceFlags getSequenceControlFlags() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="keywordtype">void</span> setSequenceControlFlags(<span class="keyword">const</span> SequenceFlags newFlags);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  uint16_t getSequenceControlCount() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordtype">void</span> setSequenceControlCount(<span class="keyword">const</span> uint16_t newCount);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  uint16_t getLength() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keywordtype">void</span> setLength(<span class="keyword">const</span> uint16_t amountOfBytes);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  Bool8Enum getCCSDS() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordtype">void</span> setCCSDS(<span class="keyword">const</span> Bool8Enum ccsds);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  uint8_t getPUSVersion() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <span class="keywordtype">void</span> setPUSVersion(<span class="keyword">const</span> uint8_t pusVersion);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  Bool8Enum getAck() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <span class="keywordtype">void</span> setACK(<span class="keyword">const</span> Bool8Enum newValue);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  uint8_t getServiceType() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <span class="keywordtype">void</span> setServiceType(<span class="keyword">const</span> uint8_t typeId);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  uint8_t getServiceSubtype() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  <span class="keywordtype">void</span> setServiceSubtype(<span class="keyword">const</span> uint8_t subtypeId);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  std::array&lt;std::byte, 2&gt; getPacketErrorControl() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <span class="keywordtype">void</span> setPacketErrorControl(<span class="keyword">const</span> std::array&lt;std::byte, 2&gt; crc);</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="comment">// To avoid the client making copies of app data to substitute old app data.</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  <span class="comment">// It modifies the index for appending.</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::byte bytesToPush);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> uint16_t bytesToPush);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::array&lt;std::byte, 2&gt;&amp; bytesToPush);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::vector&lt;std::byte&gt;&amp; bytesToPush);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="comment">// main header</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  uint8_t versionNumber_;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keywordtype">bool</span> dataFieldHeader_;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  uint8_t appIdSource_;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  uint8_t appIdDestination_;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  SequenceFlags sequenceControlFlags_;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  uint16_t sequenceControlCount_;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  uint16_t length_; <span class="comment">// amount of octets within app. data</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="comment">// data field header (optional)</span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keywordtype">bool</span> ccsds_;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  uint8_t pusVersion_;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keywordtype">bool</span> ack_;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  uint8_t serviceType_;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  uint8_t serviceSubtype_;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  <span class="comment">// data</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  std::array&lt;std::byte, APP_DATA_SIZE&gt; appData_;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  uint8_t appDataIndex_; <span class="comment">// for app. data appending</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="comment">// special field at the end of the packet</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  std::array&lt;std::byte, 2&gt; packetErrorControl_;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>};</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="comment">// It sets the object pointed to by ptrAppData to the value of appData_ .</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  <span class="comment">// The receptor array must be of size APP_DATA_SIZE</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  std::array&lt;std::byte, APP_DATA_SIZE&gt; getAppData();</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="keywordtype">void</span> setAppData(<span class="keyword">const</span> std::array&lt;std::byte, APP_DATA_SIZE&gt;&amp; ptrNewAppData);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="comment">// To avoid the client making copies of app data to substitute old app data.</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="comment">// It modifies the index for appending.</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::byte bytesToPush);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> uint16_t bytesToPush);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::array&lt;std::byte, 2&gt;&amp; bytesToPush);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::vector&lt;std::byte&gt;&amp; bytesToPush);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="comment">// main header</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  uint8_t versionNumber_;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  Bool8Enum dataFieldHeader_;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  uint8_t appIdSource_;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  uint8_t appIdDestination_;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  SequenceFlags sequenceControlFlags_;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  uint16_t sequenceControlCount_;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  uint16_t length_; <span class="comment">// amount of octets within app. data</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  <span class="comment">// data field header (optional)</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  Bool8Enum ccsds_;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  uint8_t pusVersion_;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  Bool8Enum ack_;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  uint8_t serviceType_;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  uint8_t serviceSubtype_;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  <span class="comment">// data</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  std::array&lt;std::byte, APP_DATA_SIZE&gt; appData_;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  uint8_t appDataIndex_; <span class="comment">// for app. data appending</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  <span class="comment">// special field at the end of the packet</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  std::array&lt;std::byte, 2&gt; packetErrorControl_;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>};</div>
 <div class="ttc" id="aclass_packet_html"><div class="ttname"><a href="class_packet.html">Packet</a></div><div class="ttdef"><b>Definition:</b> packet.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

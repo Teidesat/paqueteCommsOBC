@@ -86,12 +86,16 @@ Public Types</h2></td></tr>
 , <b>STAND_ALONE</b> = 0b11
  }</td></tr>
 <tr class="separator:a42be6d91bca8e5312f86fdf37ec7ed8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab428e6ecb2c4341a1c3fd7775f451ca3"><td class="memItemLeft" align="right" valign="top"><a id="ab428e6ecb2c4341a1c3fd7775f451ca3" name="ab428e6ecb2c4341a1c3fd7775f451ca3"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Bool8Enum</b> : uint8_t { <b>TRUE</b> = 0b1
+, <b>FALSE</b> = 0b0
+ }</td></tr>
+<tr class="separator:ab428e6ecb2c4341a1c3fd7775f451ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aad301a439ddea576c95485d982ef6e1e"><td class="memItemLeft" align="right" valign="top"><a id="aad301a439ddea576c95485d982ef6e1e" name="aad301a439ddea576c95485d982ef6e1e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const uint8_t versionNumber, const bool dataFieldHeader, const uint8_t appIdSource, const uint8_t appIdDestination, const SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount, const uint16_t length, const bool ccsds, const uint8_t pusVersion, const bool ack, const uint8_t serviceType, const uint8_t serviceSubtype, const std::array&lt; std::byte, APP_DATA_SIZE &gt; &amp;appData, const std::array&lt; std::byte, 2 &gt; packetErrorControl)</td></tr>
-<tr class="separator:aad301a439ddea576c95485d982ef6e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6fb3b7c7e3e2f5482f6c63861d4de31"><td class="memItemLeft" align="right" valign="top"><a id="ac6fb3b7c7e3e2f5482f6c63861d4de31" name="ac6fb3b7c7e3e2f5482f6c63861d4de31"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const uint8_t versionNumber, const Bool8Enum dataFieldHeader, const uint8_t appIdSource, const uint8_t appIdDestination, const SequenceFlags sequenceControlFlags, const uint16_t sequenceControlCount, const uint16_t length, const Bool8Enum ccsds, const uint8_t pusVersion, const Bool8Enum ack, const uint8_t serviceType, const uint8_t serviceSubtype, const std::array&lt; std::byte, APP_DATA_SIZE &gt; &amp;appData, const std::array&lt; std::byte, 2 &gt; packetErrorControl)</td></tr>
+<tr class="separator:ac6fb3b7c7e3e2f5482f6c63861d4de31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d5dfea51fa7fe55e4705b176f326ec"><td class="memItemLeft" align="right" valign="top"><a id="ae8d5dfea51fa7fe55e4705b176f326ec" name="ae8d5dfea51fa7fe55e4705b176f326ec"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Packet</b> (const <a class="el" href="class_packet.html">Packet</a> &amp;other)</td></tr>
 <tr class="separator:ae8d5dfea51fa7fe55e4705b176f326ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,12 +105,12 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getVersionNumber</
 <tr class="memitem:af7f430a297d386294839f68c4ad27737"><td class="memItemLeft" align="right" valign="top"><a id="af7f430a297d386294839f68c4ad27737" name="af7f430a297d386294839f68c4ad27737"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setVersionNumber</b> (const uint8_t versionNumber)</td></tr>
 <tr class="separator:af7f430a297d386294839f68c4ad27737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a353d8d6c8dc9de716fccd7598b68ff3c"><td class="memItemLeft" align="right" valign="top"><a id="a353d8d6c8dc9de716fccd7598b68ff3c" name="a353d8d6c8dc9de716fccd7598b68ff3c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>getDataFieldHeader</b> () const</td></tr>
-<tr class="separator:a353d8d6c8dc9de716fccd7598b68ff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6769d03f83f2b0610f4ec39a909b25aa"><td class="memItemLeft" align="right" valign="top"><a id="a6769d03f83f2b0610f4ec39a909b25aa" name="a6769d03f83f2b0610f4ec39a909b25aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const bool newValue)</td></tr>
-<tr class="separator:a6769d03f83f2b0610f4ec39a909b25aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad4c8dc64c82de0fe25e7ad8fb1f4e09"><td class="memItemLeft" align="right" valign="top"><a id="aad4c8dc64c82de0fe25e7ad8fb1f4e09" name="aad4c8dc64c82de0fe25e7ad8fb1f4e09"></a>
+Bool8Enum&#160;</td><td class="memItemRight" valign="bottom"><b>getDataFieldHeader</b> () const</td></tr>
+<tr class="separator:aad4c8dc64c82de0fe25e7ad8fb1f4e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1bb4f5e90ce470f1deb852128202bf5"><td class="memItemLeft" align="right" valign="top"><a id="ad1bb4f5e90ce470f1deb852128202bf5" name="ad1bb4f5e90ce470f1deb852128202bf5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b> (const Bool8Enum newValue)</td></tr>
+<tr class="separator:ad1bb4f5e90ce470f1deb852128202bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4f9e7cc199315f20945766672a5d117"><td class="memItemLeft" align="right" valign="top"><a id="ab4f9e7cc199315f20945766672a5d117" name="ab4f9e7cc199315f20945766672a5d117"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getAppIdSource</b> () const</td></tr>
 <tr class="separator:ab4f9e7cc199315f20945766672a5d117"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,24 +141,24 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getLength</b> () 
 <tr class="memitem:acefed5e5d6e97fa75fe75b6d32096e43"><td class="memItemLeft" align="right" valign="top"><a id="acefed5e5d6e97fa75fe75b6d32096e43" name="acefed5e5d6e97fa75fe75b6d32096e43"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setLength</b> (const uint16_t amountOfBytes)</td></tr>
 <tr class="separator:acefed5e5d6e97fa75fe75b6d32096e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a932e5c99c4f99eaf5459c72f6e2c0aae"><td class="memItemLeft" align="right" valign="top"><a id="a932e5c99c4f99eaf5459c72f6e2c0aae" name="a932e5c99c4f99eaf5459c72f6e2c0aae"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>getCCSDS</b> () const</td></tr>
-<tr class="separator:a932e5c99c4f99eaf5459c72f6e2c0aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa34d73e020bbeba02eee8b7e57aa517e"><td class="memItemLeft" align="right" valign="top"><a id="aa34d73e020bbeba02eee8b7e57aa517e" name="aa34d73e020bbeba02eee8b7e57aa517e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCCSDS</b> (const bool ccsds)</td></tr>
-<tr class="separator:aa34d73e020bbeba02eee8b7e57aa517e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dd28781a2d4f71864e89f107fb5b712"><td class="memItemLeft" align="right" valign="top"><a id="a7dd28781a2d4f71864e89f107fb5b712" name="a7dd28781a2d4f71864e89f107fb5b712"></a>
+Bool8Enum&#160;</td><td class="memItemRight" valign="bottom"><b>getCCSDS</b> () const</td></tr>
+<tr class="separator:a7dd28781a2d4f71864e89f107fb5b712"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82d2dffb4e021ea5c192a1fb3d5c19bc"><td class="memItemLeft" align="right" valign="top"><a id="a82d2dffb4e021ea5c192a1fb3d5c19bc" name="a82d2dffb4e021ea5c192a1fb3d5c19bc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCCSDS</b> (const Bool8Enum ccsds)</td></tr>
+<tr class="separator:a82d2dffb4e021ea5c192a1fb3d5c19bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a749d41f1b668cf60bd2f88db2aaf4b5e"><td class="memItemLeft" align="right" valign="top"><a id="a749d41f1b668cf60bd2f88db2aaf4b5e" name="a749d41f1b668cf60bd2f88db2aaf4b5e"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getPUSVersion</b> () const</td></tr>
 <tr class="separator:a749d41f1b668cf60bd2f88db2aaf4b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d14bbd9d6f0761c91733ddc047b07e2"><td class="memItemLeft" align="right" valign="top"><a id="a9d14bbd9d6f0761c91733ddc047b07e2" name="a9d14bbd9d6f0761c91733ddc047b07e2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setPUSVersion</b> (const uint8_t pusVersion)</td></tr>
 <tr class="separator:a9d14bbd9d6f0761c91733ddc047b07e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb07f9d98ddbc7ea1eb2b46120db53e6"><td class="memItemLeft" align="right" valign="top"><a id="afb07f9d98ddbc7ea1eb2b46120db53e6" name="afb07f9d98ddbc7ea1eb2b46120db53e6"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>getAck</b> () const</td></tr>
-<tr class="separator:afb07f9d98ddbc7ea1eb2b46120db53e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d02486e5eab1dc2f1c0e366f3e8dad3"><td class="memItemLeft" align="right" valign="top"><a id="a6d02486e5eab1dc2f1c0e366f3e8dad3" name="a6d02486e5eab1dc2f1c0e366f3e8dad3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setACK</b> (const bool newValue)</td></tr>
-<tr class="separator:a6d02486e5eab1dc2f1c0e366f3e8dad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9172b5085c4c5e2a28687ae49a776fa3"><td class="memItemLeft" align="right" valign="top"><a id="a9172b5085c4c5e2a28687ae49a776fa3" name="a9172b5085c4c5e2a28687ae49a776fa3"></a>
+Bool8Enum&#160;</td><td class="memItemRight" valign="bottom"><b>getAck</b> () const</td></tr>
+<tr class="separator:a9172b5085c4c5e2a28687ae49a776fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48738dd4eb4f64469b16aa62cfc5af2f"><td class="memItemLeft" align="right" valign="top"><a id="a48738dd4eb4f64469b16aa62cfc5af2f" name="a48738dd4eb4f64469b16aa62cfc5af2f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setACK</b> (const Bool8Enum newValue)</td></tr>
+<tr class="separator:a48738dd4eb4f64469b16aa62cfc5af2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbdd9facf33fddaf5296e300a12b0e16"><td class="memItemLeft" align="right" valign="top"><a id="adbdd9facf33fddaf5296e300a12b0e16" name="adbdd9facf33fddaf5296e300a12b0e16"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getServiceType</b> () const</td></tr>
 <tr class="separator:adbdd9facf33fddaf5296e300a12b0e16"><td class="memSeparator" colspan="2">&#160;</td></tr>

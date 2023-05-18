@@ -52,7 +52,7 @@ public:
       const Packet::SequenceFlags sequenceControlFlags,
       const uint16_t sequenceControlCount);
 
-  void setDataFieldHeader(const bool ack, const uint8_t serviceType,
+  void setDataFieldHeader(const Packet::Bool8Enum ack, const uint8_t serviceType,
       const uint8_t serviceSubtype);
 
   /**

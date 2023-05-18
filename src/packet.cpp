@@ -10,15 +10,15 @@ Packet::Packet() :
 
 Packet::Packet(
   const uint8_t versionNumber,
-  const bool dataFieldHeader,
+  const Bool8Enum dataFieldHeader,
   const uint8_t appIdSource,
   const uint8_t appIdDestination,
   const SequenceFlags sequenceControlFlags,
   const uint16_t sequenceControlCount,
   const uint16_t length,
-  const bool ccsds,
+  const Bool8Enum ccsds,
   const uint8_t pusVersion,
-  const bool ack,
+  const Bool8Enum ack,
   const uint8_t serviceType,
   const uint8_t serviceSubtype,
   const std::array<std::byte, Packet::APP_DATA_SIZE>& appData,
@@ -66,11 +66,11 @@ void Packet::setVersionNumber(uint8_t versionNumber) {
   versionNumber_ = versionNumber;
 }
 
-bool Packet::getDataFieldHeader() const {
+Packet::Bool8Enum Packet::getDataFieldHeader() const {
   return dataFieldHeader_;
 }
 
-void Packet::setDataFieldHeader(const bool newValue) {
+void Packet::setDataFieldHeader(const Bool8Enum newValue) {
   dataFieldHeader_ = newValue;
 }
 
@@ -114,11 +114,11 @@ void Packet::setLength(const uint16_t amountOfBytes) {
   length_ = amountOfBytes;
 }
 
-bool Packet::getCCSDS() const {
+Packet::Bool8Enum Packet::getCCSDS() const {
   return ccsds_;
 }
 
-void Packet::setCCSDS(const bool ccsds) {
+void Packet::setCCSDS(const Bool8Enum ccsds) {
   ccsds_ = ccsds;
 }
 
@@ -130,11 +130,11 @@ void Packet::setPUSVersion(const uint8_t pusVersion) {
   pusVersion_ = pusVersion;
 }
 
-bool Packet::getAck() const {
+Packet::Bool8Enum Packet::getAck() const {
   return ack_;
 }
 
-void Packet::setACK(const bool newValue) {
+void Packet::setACK(const Bool8Enum newValue) {
   ack_ = newValue;
 }
 

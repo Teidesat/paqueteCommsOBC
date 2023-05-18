@@ -3,6 +3,10 @@
  * @author Marcos Barrios
  * @brief Higher level packet for command verification service. 
  * 
+ * In this case I used a single packet for both acceptance success
+ *    (subtype 1) and acceptance failure (subtype 2), which is the
+ *    minimum capability for the command verification service.
+ * 
  */
 
 #ifndef PACKET_EXTENDED_VERIFICATION_H
@@ -42,7 +46,7 @@ public:
   /****** Methods from this class ******/
 
   // verification acceptance failure includes an error code
-  bool hasErrorCode();
+  Packet::Bool8Enum hasErrorCode();
   int getErrorCode();
 
   // verification acceptance failure includes parameters
@@ -50,7 +54,7 @@ public:
 private:
   PacketExtendedBasic packetBasic_;
   uint8_t errorCode_;
-  bool hasErrorCode_; // if it has error code then this is a failure packet
+  Packet::Bool8Enum hasErrorCode_; // if it has error code then this is a failure packet
   std::vector<uint8_t> parameters_;
 };
 

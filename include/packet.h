@@ -29,18 +29,23 @@ public:
     STAND_ALONE = 0b11
   };
 
+  enum class Bool8Enum : uint8_t {
+    TRUE  = 0b1,
+    FALSE  = 0b0,
+  };
+
   Packet();
   Packet(
     const uint8_t versionNumber,
-    const bool dataFieldHeader,
+    const Bool8Enum dataFieldHeader,
     const uint8_t appIdSource,
     const uint8_t appIdDestination,
     const SequenceFlags sequenceControlFlags,
     const uint16_t sequenceControlCount,
     const uint16_t length,
-    const bool ccsds,
+    const Bool8Enum ccsds,
     const uint8_t pusVersion,
-    const bool ack,
+    const Bool8Enum ack,
     const uint8_t serviceType,
     const uint8_t serviceSubtype,
     const std::array<std::byte, APP_DATA_SIZE>& appData,
@@ -51,8 +56,8 @@ public:
   uint8_t getVersionNumber() const;
   void setVersionNumber(const uint8_t versionNumber);
 
-  bool getDataFieldHeader() const;
-  void setDataFieldHeader(const bool newValue);
+  Bool8Enum getDataFieldHeader() const;
+  void setDataFieldHeader(const Bool8Enum newValue);
 
   uint8_t getAppIdSource() const;
   void setAppIdSource(const uint8_t newAddress);
@@ -69,14 +74,14 @@ public:
   uint16_t getLength() const;
   void setLength(const uint16_t amountOfBytes);
 
-  bool getCCSDS() const;
-  void setCCSDS(const bool ccsds);
+  Bool8Enum getCCSDS() const;
+  void setCCSDS(const Bool8Enum ccsds);
 
   uint8_t getPUSVersion() const;
   void setPUSVersion(const uint8_t pusVersion);
 
-  bool getAck() const;
-  void setACK(const bool newValue);
+  Bool8Enum getAck() const;
+  void setACK(const Bool8Enum newValue);
 
   uint8_t getServiceType() const;
   void setServiceType(const uint8_t typeId);
@@ -102,7 +107,7 @@ public:
 private:
   // main header
   uint8_t versionNumber_;
-  bool dataFieldHeader_;
+  Bool8Enum dataFieldHeader_;
   uint8_t appIdSource_;
   uint8_t appIdDestination_;
   SequenceFlags sequenceControlFlags_;
@@ -110,9 +115,9 @@ private:
   uint16_t length_; // amount of octets within app. data
 
   // data field header (optional)
-  bool ccsds_;
+  Bool8Enum ccsds_;
   uint8_t pusVersion_;
-  bool ack_;
+  Bool8Enum ack_;
   uint8_t serviceType_;
   uint8_t serviceSubtype_;
 

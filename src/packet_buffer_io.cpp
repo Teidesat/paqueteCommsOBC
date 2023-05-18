@@ -8,16 +8,16 @@ PacketBufferIO::PacketBufferIO() {}
 
 Packet PacketBufferIO::readPacket(const std::byte* buffer, std::size_t size) {
   uint8_t versionNumber;
-  bool dataFieldHeader;
+  Packet::Bool8Enum dataFieldHeader;
   uint8_t appIdSource;
   uint8_t appIdDestination;
   Packet::SequenceFlags sequenceControlFlags;
   uint16_t sequenceControlCount;
   uint16_t length;
 
-  bool ccsds;
+  Packet::Bool8Enum ccsds;
   uint8_t pusVersion;
-  bool ack;
+  Packet::Bool8Enum ack;
   uint8_t serviceType;
   uint8_t serviceSubtype;
 
@@ -53,7 +53,7 @@ Packet PacketBufferIO::readPacket(const std::byte* buffer, std::size_t size) {
   buffer += sizeof(length);
   size -= sizeof(length);
   
-  if (dataFieldHeader) {
+  if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
     std::memcpy(&ccsds, buffer, sizeof(ccsds));
     buffer += sizeof(ccsds);
     size -= sizeof(ccsds);
@@ -75,9 +75,9 @@ Packet PacketBufferIO::readPacket(const std::byte* buffer, std::size_t size) {
     size -= sizeof(serviceSubtype);
   } else {
     // default values
-    ccsds = false;
+    ccsds = Packet::Bool8Enum::FALSE;
     pusVersion = 1;
-    ack = false;
+    ack = Packet::Bool8Enum::FALSE;
     serviceType = 0;
     serviceSubtype = 0;
   }
@@ -135,7 +135,7 @@ void PacketBufferIO::writePacket(std::byte* buffer, Packet& packet) {
   std::memcpy(buffer, &length, sizeof(length));
   buffer += sizeof(length);
   
-  if (dataFieldHeader) {
+  if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
     std::memcpy(buffer, &ccsds, sizeof(ccsds));
     buffer += sizeof(ccsds);
 
