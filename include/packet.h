@@ -1,24 +1,27 @@
 /**
  * @file packet.h
  * @author Marcos Barrios
+ * @brief High level packet representation; does not care as much about size.
  * 
- *  Packet representation, holds the data a packet has.
- * 
- *  Follows the ECSS-E-70-41A packet structure, but only one packet and some
- *  fields are not included.
+ * Based on ECSS-E-70-41A packet structure but with changes.
  *
+ * Source comes first before destination (from left to right looking at the
+ *    packet figure) on the app. id. field.
+ * 
+ * Length = Packet size (bytes) - 6 (packet header) - 1
+ *  Substract 1 because it can be a value between 0 to (2^16 - 1) and not
+ *  between 1 and 2^16.
  */
 
-#pragma once
+#ifndef Packet_H
+#define Packet_H
 
-#include <array>
-#include <bitset>
-#include <memory>
 #include <array>
 #include <vector>
 
 class Packet {
 public:
+
   // *** constants ***
   inline static constexpr uint16_t APP_DATA_SIZE = 256; // inline for appdata array size
 
@@ -29,9 +32,10 @@ public:
     STAND_ALONE = 0b11
   };
 
+  // Because bool can be 32 bits but i need it to always be 1 byte.
   enum class Bool8Enum : uint8_t {
-    TRUE  = 0b1,
-    FALSE  = 0b0,
+    TRUE = 1,
+    FALSE = 0
   };
 
   Packet();
@@ -128,3 +132,5 @@ private:
   // special field at the end of the packet
   std::array<std::byte, 2> packetErrorControl_;
 };
+
+#endif

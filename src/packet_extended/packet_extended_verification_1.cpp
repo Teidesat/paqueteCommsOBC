@@ -1,12 +1,12 @@
-#include "../../include/packet_extended/packet_extended_verification.h"
+#include "../../include/packet_extended/packet_extended_verification_1.h"
 
-PacketExtendedVerification::PacketExtendedVerification(const Packet& packet) :
+PacketExtendedVerification1::PacketExtendedVerification1(const Packet& packet) :
   packetBasic_(packet),
   errorCode_(0),
   hasErrorCode_(Packet::Bool8Enum::FALSE)
 {}
 
-PacketExtendedVerification::PacketExtendedVerification(const Packet& packet,
+PacketExtendedVerification1::PacketExtendedVerification1(const Packet& packet,
     uint8_t errorCode, const std::vector<uint8_t>& parameters) :
   packetBasic_(packet),
   errorCode_(errorCode),
@@ -15,12 +15,12 @@ PacketExtendedVerification::PacketExtendedVerification(const Packet& packet,
 {}
 
 // low level packet 
-Packet& PacketExtendedVerification::getPacket() {
+Packet& PacketExtendedVerification1::getPacket() {
   return packetBasic_.getPacket();
 }
 
-PacketExtendedVerification PacketExtendedVerification::swapApplicationIdFields() {
-  PacketExtendedVerification copy = *this;
+PacketExtendedVerification1 PacketExtendedVerification1::swapApplicationIdFields() {
+  PacketExtendedVerification1 copy = *this;
   copy.getPacket().setAppIdSource(
       copy.getPacket().getAppIdDestination());
   copy.getPacket().setAppIdDestination(
@@ -28,15 +28,15 @@ PacketExtendedVerification PacketExtendedVerification::swapApplicationIdFields()
   return std::move(copy);
 }
 
-Packet::Bool8Enum PacketExtendedVerification::hasErrorCode() {
+Packet::Bool8Enum PacketExtendedVerification1::hasErrorCode() {
   return hasErrorCode_;
 }
 
-int PacketExtendedVerification::getErrorCode() {
+int PacketExtendedVerification1::getErrorCode() {
   return errorCode_;
 }
 
-std::vector<uint8_t> PacketExtendedVerification::getParameters() {
+std::vector<uint8_t> PacketExtendedVerification1::getParameters() {
   return parameters_;
 }
 

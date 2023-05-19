@@ -18,7 +18,7 @@
 #include "packet.h"
 
 #include "../include/packet_builder.h"
-#include "packet_extended/packet_extended_verification.h"
+#include "packet_extended/packet_extended_verification_1.h"
 
 class PacketBuilderDirector {
 public:
@@ -40,18 +40,18 @@ public:
    * @param appIdSource 
    * @param appIdDestination 
    * @param sequenceCount Sequence control count
-   * @return PacketExtendedVerification 
+   * @return PacketExtendedVerification1 
    */
-  PacketExtendedVerification makeVerificationSuccess(
+  PacketExtendedVerification1 makeVerificationSuccess(
       const uint8_t appIdSource, const uint8_t appIdDestination,
       const uint16_t sequenceCount);
 
-  PacketExtendedVerification makeVerificationFailure(
+  PacketExtendedVerification1 makeVerificationFailure(
       const uint8_t appIdSource, const uint8_t appIdDestination,
       const uint16_t sequenceCount, const uint8_t code,
       const std::vector<std::byte>& parameters);
 
-  PacketExtendedVerification makeVerificationFailure(
+  PacketExtendedVerification1 makeVerificationFailure(
       const uint8_t appIdSource, const uint8_t appIdDestination,
       const uint16_t sequenceCount, const uint8_t code,
       std::vector<std::byte>&& parameters);

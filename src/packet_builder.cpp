@@ -1,6 +1,7 @@
 #include "../include/packet_builder.h"
 
 #include <array>
+#include <vector>
 
 PacketBuilder::PacketBuilder() {}
 

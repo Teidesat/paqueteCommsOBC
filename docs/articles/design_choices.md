@@ -6,21 +6,25 @@ Recopilation of design choices for the library.
 
 A buffer and a size was passed as argument to the packet constructor initially. But those are two responsibilities: buffer handling to get the information and then passing that information to the object, I don't want the packet to be related to the buffer.
 
-## Only one packet class for all packets
+## To create a new class or to extend the current class
 
-Since the packet may not have a data field header, two different classes for <code>Packet</code> were considered, with and without. But since the application data field has a fixed size anyways then it would not make much difference to have or not have some extra small fields.
+Sometimes I have very similar classes, like a Packet with or without data field header. That's when I have to decide If i want to create a new class for each variant or just have a single class with extra boolean flags.
+
+If I create a new class, it is organized better, but the amount of classes starts to grow fast, which makes the system harder to understand at a glance. But if I don't, then the logic gets more conditional overtime. 
+
+For example, I mentioned that the Packet class always contains the data field header, but I could two classes instead; one with and another without. ¿How often does a packet come with a data field header? If 90% of the time then it is probably better to have a single class, because the logic is easier and the amount of memory wasted is not much. If it was more like 50%, then it would probably make sense to have two different classes. And I believe 90% of time it has a data field header, so I stay at a single class.
+
+I'll the same class extended if it makes the logic simpler and the wasted memory is not much, otherwise a new class is probably better.
 
 ## About mega packets
 
-Sometimes I would want to separate app. data content into multiple packets. But how to implement it?
+Sometimes it is required fit a big app. array data into multiple packets rather than just one. How do I implement it?
 
 I could have the Packet or PacketExtended class do it; receive a bigger appData value as constructor and then somehow make it distribute the data into various instances. But it would probably be too much responsability for a Packet class that should only hold the data and it's setters/getters.
 
-An alternative is to have the builder or another class handle the packet generation for the different parts of the app. data. Since it is already in charge of configuring a single new packet, it makes sense that it provides a way to "configure" a packet and split it into different packets if the configuration is too big.
+An alternative is to have the builder or another class handle the packet generation for the different parts of the big app. data. Since it is already in charge of configuring a single new packet, it would make sense for it to provide a way to "configure" various packets and with different parts of a common app. data. because it adds headers to a current packet, which can result in a packet being too big, which follows a new packet call.
 
-At last, there is the builder director class, which knows the steps on how to build specific packets for specific services. It would know that to create two packets that belong to the same sequence you would have to configure them both the same, but distributing the same app. data between the two. In other words, **it tells the builder to build to specific packets that are related**.
-
-I go with that last alternative.
+Another way is by using the builder director class, which knows the steps on how to build specific packets for specific services. It would know that to create two packets that belong to the same transmission sequence you would have to configure them both the same, but distributing the same app. data between the two. In other words, **it tells the builder to build specific packets that are related**. I go with this alternative.
 
 ## Packet architecture
 
@@ -30,7 +34,9 @@ An alternative would be to have two independent classes, like now, but both havi
 
 The main reason I decided to have low level and high level is to avoid semantic errors like doing arithmetic on something that is not a number. But I have come to notice that most fields are actually numbers, and if I wanted to have a character then I could just use <code>char</code>. It would be simpler and thus most likely to have less bugs. So I now change the packet representation to use <code>uint8_t</code> rather than <code>std::byte</code> when the field is actually a number.
 
-Back to two representations; <code>std::byte</code> is the same as <code>uint8_t</code>, but it is not right to use one of those for a field that is only 1 bit. Also, the packet design talks about padding when not using types that are multiples of an octet, so it was designed to be able to bunch up some fields in a single octet. That's why I should have a std::byte representation BUT that represents more than one field, leaving the methods to handle the specific fields. This lower level class should be only used for transmissions, as it's size is smaller but there is overhead when calling it's methods. This is the approach I take with <code>Packet</code> being high level and <code>PacketRaw</code> being the low level.
+Back to two representations; <code>std::byte</code> is the same as <code>uint8_t</code>, but it is not right to use one of those types for a field that is only 1 bit. Also, the packet design mentions the concept of padding when sizing is not done in multiples of octets. That's why I should have a std::byte representation BUT that represents more than one field, leaving the methods to handle the specific fields. This lower level class should be only used for transmissions, as it's size is smaller but there is overhead when calling it's methods. This approach would end up with a <code>Packet</code> for high level and <code>PacketRaw</code> for low level.
+
+However, having a low level representation is redundant because it means having a class that has as member the fields with the exact size, which means using a single byte for more than one field. But why have a representation of packet with the split fields but no semantic? I would want both the split fields AND the semantic (numbers and maybe chars, not just std::bytes), otherwise I could just use an <code>std::array<std::byte></code> for my low level packet implementation. This is the approach I take; <code>Packet</code> for high level, <code>PacketBufferIO</code> for handling low level packets, which are <code>std::array<std::byte></code>, the best representation for memory efficient transmissions.
 
 ## Use of size_t for size and index representation
 

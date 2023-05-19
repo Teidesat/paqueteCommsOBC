@@ -1,24 +1,22 @@
 #include "../include/packet.h"
 
-#include <cassert>
-
 Packet::Packet() :
-  sequenceControlFlags_(SequenceFlags::STAND_ALONE), // standalone by default
+  sequenceControlFlags_(Packet::SequenceFlags::STAND_ALONE), // standalone by default
   pusVersion_(1), // currentStandard requires =1
   appDataIndex_(0)
 {}
 
 Packet::Packet(
   const uint8_t versionNumber,
-  const Bool8Enum dataFieldHeader,
+  const Packet::Bool8Enum dataFieldHeader,
   const uint8_t appIdSource,
   const uint8_t appIdDestination,
-  const SequenceFlags sequenceControlFlags,
+  const Packet::SequenceFlags sequenceControlFlags,
   const uint16_t sequenceControlCount,
   const uint16_t length,
-  const Bool8Enum ccsds,
+  const Packet::Bool8Enum ccsds,
   const uint8_t pusVersion,
-  const Bool8Enum ack,
+  const Packet::Bool8Enum ack,
   const uint8_t serviceType,
   const uint8_t serviceSubtype,
   const std::array<std::byte, Packet::APP_DATA_SIZE>& appData,
@@ -70,7 +68,7 @@ Packet::Bool8Enum Packet::getDataFieldHeader() const {
   return dataFieldHeader_;
 }
 
-void Packet::setDataFieldHeader(const Bool8Enum newValue) {
+void Packet::setDataFieldHeader(const Packet::Bool8Enum newValue) {
   dataFieldHeader_ = newValue;
 }
 
@@ -118,7 +116,7 @@ Packet::Bool8Enum Packet::getCCSDS() const {
   return ccsds_;
 }
 
-void Packet::setCCSDS(const Bool8Enum ccsds) {
+void Packet::setCCSDS(const Packet::Bool8Enum ccsds) {
   ccsds_ = ccsds;
 }
 
@@ -134,7 +132,7 @@ Packet::Bool8Enum Packet::getAck() const {
   return ack_;
 }
 
-void Packet::setACK(const Bool8Enum newValue) {
+void Packet::setACK(const Packet::Bool8Enum newValue) {
   ack_ = newValue;
 }
 
@@ -158,7 +156,8 @@ std::array<std::byte, Packet::APP_DATA_SIZE> Packet::getAppData() {
   return appData_;
 }
 
-void Packet::setAppData(const std::array<std::byte, APP_DATA_SIZE>& newAppData) {
+void Packet::setAppData(const std::array<std::byte,
+    Packet::APP_DATA_SIZE>& newAppData) {
   appData_ = newAppData;
 }
 
