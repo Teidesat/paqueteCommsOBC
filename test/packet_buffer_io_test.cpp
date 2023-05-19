@@ -5,7 +5,7 @@
 #include "../include/packet.h"
 #include "../include/packet_buffer_io.h"
 
-TEST(Packet, PacketBufferReadWorks) {
+TEST(PacketBufferIO, PacketBufferReadWorks) {
   /**
    * Define a packet of verification service acceptance success
    *    (subtype 1) that is as follows:
@@ -54,9 +54,4 @@ TEST(Packet, PacketBufferReadWorks) {
 
   EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0});
   EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0});
-}
-
-TEST(Packet, OtherTest) {
-  uint8_t arbitrary_uint8_t = 0b000;
-  EXPECT_EQ(arbitrary_uint8_t, 0);
 }

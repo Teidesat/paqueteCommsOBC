@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstring>
 #include <array>
+#include <cmath>
 
 PacketBufferIO::PacketBufferIO() {}
 
@@ -157,3 +158,8 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   ptrBuffer += sizeof(packetErrorControl);
 }
 
+template<typename T>
+T PacketBufferIO::extractFieldFrom(T inputWord, uint8_t startIndex,
+    size_t lengthOfField) {
+  return (inputWord >> (startIndex % 8)) & (std::pow(2, lengthOfField) - 1);
+}

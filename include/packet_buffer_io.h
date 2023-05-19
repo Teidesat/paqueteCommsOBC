@@ -14,9 +14,18 @@ class PacketBufferIO {
 public:
   PacketBufferIO();
 
-  Packet readPacket(const std::byte* buffer, std::size_t size);
+  Packet readPacket(const std::byte* buffer, size_t size);
   void writePacket(std::byte* buffer, Packet& packet);
 private:
+  /**
+   * @brief I need to separate a word that has different fields into
+   *    separate fields.
+   * 
+   * @param startIndex rightmost = 0
+   * @param lengthOfField
+   */
+  template<typename T>
+  T extractFieldFrom(T inputWord, uint8_t startIndex, size_t lengthOfField);
 };
 
 #endif
