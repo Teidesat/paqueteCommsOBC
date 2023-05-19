@@ -7,8 +7,28 @@
 
 PacketBufferIO::PacketBufferIO() {}
 
+/**
+ * Some bytes have multiple fields. Depending on if the word has multiple
+ *    fields or not I will increase or not the ptrBuffer.
+ * 
+ *  Map of byte to fields:
+ *  std::byte =  version, type, dfh, 0, source...
+ *  std::byte =  ...source, destination, length...
+ *  std::byte =  ...length...
+ *  std::byte =  ...length, seq. ctrl. flags...
+ *  std::byte =  ...seq. ctrl. flags, seq. ctrl. count...
+ *  std::byte =  ...seq. ctrl. count...
+ *  std::byte =  ...seq. ctrl. count, ccsds, pus, ack...
+ *  std::byte =  ...ack, type...
+ *  std::byte =  ...type, subtype...
+ *  std::byte =  ...subtype app data(...)
+ * 
+ * Note: extractFieldFrom() assumes that the rightmost bit is index 0 on
+ *    each byte.
+ */
 Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) {
-  uint8_t versionNumber;
+  const uint8_t versionNumber =
+    static_cast<uint8_t>((extractFieldFrom(ptrBuffer[0], 5, 3)));
   Packet::Bool8Enum dataFieldHeader;
   uint8_t appIdSource;
   uint8_t appIdDestination;
@@ -26,74 +46,74 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
 
   std::array<std::byte, 2> packetErrorControl;
 
-  std::memcpy(&versionNumber, ptrBuffer, sizeof(versionNumber));
-  ptrBuffer += sizeof(versionNumber);
-  size -= sizeof(versionNumber);
+  // std::memcpy(&versionNumber, ptrBuffer, sizeof(versionNumber));
+  // ptrBuffer += sizeof(versionNumber);
+  // size -= sizeof(versionNumber);
 
-  std::memcpy(&dataFieldHeader, ptrBuffer, sizeof(dataFieldHeader));
-  ptrBuffer += sizeof(dataFieldHeader);
-  size -= sizeof(dataFieldHeader);
+  // std::memcpy(&dataFieldHeader, ptrBuffer, sizeof(dataFieldHeader));
+  // ptrBuffer += sizeof(dataFieldHeader);
+  // size -= sizeof(dataFieldHeader);
 
-  std::memcpy(&appIdSource, ptrBuffer, sizeof(appIdSource));
-  ptrBuffer += sizeof(appIdSource);
-  size -= sizeof(appIdSource);
+  // std::memcpy(&appIdSource, ptrBuffer, sizeof(appIdSource));
+  // ptrBuffer += sizeof(appIdSource);
+  // size -= sizeof(appIdSource);
 
-  std::memcpy(&appIdDestination, ptrBuffer, sizeof(appIdDestination));
-  ptrBuffer += sizeof(appIdDestination);
-  size -= sizeof(appIdDestination);
+  // std::memcpy(&appIdDestination, ptrBuffer, sizeof(appIdDestination));
+  // ptrBuffer += sizeof(appIdDestination);
+  // size -= sizeof(appIdDestination);
 
-  std::memcpy(&sequenceControlFlags, ptrBuffer, sizeof(sequenceControlFlags));
-  ptrBuffer += sizeof(sequenceControlFlags);
-  size -= sizeof(sequenceControlFlags);
+  // std::memcpy(&sequenceControlFlags, ptrBuffer, sizeof(sequenceControlFlags));
+  // ptrBuffer += sizeof(sequenceControlFlags);
+  // size -= sizeof(sequenceControlFlags);
 
-  std::memcpy(&sequenceControlCount, ptrBuffer, sizeof(sequenceControlCount));
-  ptrBuffer += sizeof(sequenceControlCount);
-  size -= sizeof(sequenceControlCount);
+  // std::memcpy(&sequenceControlCount, ptrBuffer, sizeof(sequenceControlCount));
+  // ptrBuffer += sizeof(sequenceControlCount);
+  // size -= sizeof(sequenceControlCount);
 
-  std::memcpy(&length, ptrBuffer, sizeof(length));
-  ptrBuffer += sizeof(length);
-  size -= sizeof(length);
+  // std::memcpy(&length, ptrBuffer, sizeof(length));
+  // ptrBuffer += sizeof(length);
+  // size -= sizeof(length);
   
-  if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
-    std::memcpy(&ccsds, ptrBuffer, sizeof(ccsds));
-    ptrBuffer += sizeof(ccsds);
-    size -= sizeof(ccsds);
+  // if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
+  //   std::memcpy(&ccsds, ptrBuffer, sizeof(ccsds));
+  //   ptrBuffer += sizeof(ccsds);
+  //   size -= sizeof(ccsds);
 
-    std::memcpy(&pusVersion, ptrBuffer, sizeof(pusVersion));
-    ptrBuffer += sizeof(pusVersion);
-    size -= sizeof(pusVersion);
+  //   std::memcpy(&pusVersion, ptrBuffer, sizeof(pusVersion));
+  //   ptrBuffer += sizeof(pusVersion);
+  //   size -= sizeof(pusVersion);
 
-    std::memcpy(&ack, ptrBuffer, sizeof(ack));
-    ptrBuffer += sizeof(ack);
-    size -= sizeof(ack);
+  //   std::memcpy(&ack, ptrBuffer, sizeof(ack));
+  //   ptrBuffer += sizeof(ack);
+  //   size -= sizeof(ack);
 
-    std::memcpy(&serviceType, ptrBuffer, sizeof(serviceType));
-    ptrBuffer += sizeof(serviceType);
-    size -= sizeof(serviceType);
+  //   std::memcpy(&serviceType, ptrBuffer, sizeof(serviceType));
+  //   ptrBuffer += sizeof(serviceType);
+  //   size -= sizeof(serviceType);
 
-    std::memcpy(&serviceSubtype, ptrBuffer, sizeof(serviceSubtype));
-    ptrBuffer += sizeof(serviceSubtype);
-    size -= sizeof(serviceSubtype);
-  } else {
-    // default values
-    ccsds = Packet::Bool8Enum::FALSE;
-    pusVersion = 1;
-    ack = Packet::Bool8Enum::FALSE;
-    serviceType = 0;
-    serviceSubtype = 0;
-  }
+  //   std::memcpy(&serviceSubtype, ptrBuffer, sizeof(serviceSubtype));
+  //   ptrBuffer += sizeof(serviceSubtype);
+  //   size -= sizeof(serviceSubtype);
+  // } else {
+  //   // default values
+  //   ccsds = Packet::Bool8Enum::FALSE;
+  //   pusVersion = 1;
+  //   ack = Packet::Bool8Enum::FALSE;
+  //   serviceType = 0;
+  //   serviceSubtype = 0;
+  // }
 
-  std::memcpy(&appData, ptrBuffer, sizeof(appData));
-  ptrBuffer += sizeof(appData);
-  size -= sizeof(appData);
+  // std::memcpy(&appData, ptrBuffer, sizeof(appData));
+  // ptrBuffer += sizeof(appData);
+  // size -= sizeof(appData);
 
-  std::memcpy(&packetErrorControl, ptrBuffer, sizeof(packetErrorControl));
-  ptrBuffer += sizeof(packetErrorControl);
-  size -= sizeof(packetErrorControl);
+  // std::memcpy(&packetErrorControl, ptrBuffer, sizeof(packetErrorControl));
+  // ptrBuffer += sizeof(packetErrorControl);
+  // size -= sizeof(packetErrorControl);
 
-  return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
-      sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
-      ack, serviceType, serviceSubtype, appData, packetErrorControl);
+  // return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
+  //     sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
+  //     ack, serviceType, serviceSubtype, appData, packetErrorControl);
 }
 
 void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
@@ -114,6 +134,7 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   const auto& appData = packet.getAppData();
 
   const auto& packetErrorControl = packet.getPacketErrorControl();
+
 
   std::memcpy(ptrBuffer, &versionNumber, sizeof(versionNumber));
   ptrBuffer += sizeof(versionNumber);
@@ -158,8 +179,20 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   ptrBuffer += sizeof(packetErrorControl);
 }
 
-template<typename T>
-T PacketBufferIO::extractFieldFrom(T inputWord, uint8_t startIndex,
+template<IsOneByte T>
+std::byte PacketBufferIO::extractFieldFrom(T inputByte, uint8_t startIndex,
     size_t lengthOfField) {
-  return (inputWord >> (startIndex % 8)) & (std::pow(2, lengthOfField) - 1);
+  return (inputByte >> (startIndex % 8)) & (std::pow(2, lengthOfField) - 1);
 }
+
+template <typename Tout, typename Toutvector, typename Tin, typename Tinvector>
+  requires IsArrayOrVector<Tout, Toutvector> && IsArrayOrVector<Tin, Tinvector>
+Tout combineFields(const Tin* inputArray, size_t sizeOfArray) {
+  return Tout;
+}
+
+uint16_t combineFields(const uint8_t* inputArray, size_t sizeOfArray) {
+
+  return 0;
+}
+
