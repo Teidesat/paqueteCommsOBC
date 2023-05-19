@@ -2,12 +2,11 @@ cmake_minimum_required(VERSION 3.10.0)
 project(paqueteCnC VERSION 0.1.0)
 add_library(paqueteCnCLibrary
   src/packet.cpp
-  src/packet_raw.cpp
   src/packet_buffer_io.cpp
   src/packet_builder.cpp
   src/packet_builder_director.cpp
   src/packet_extended/packet_extended_basic.cpp
-  src/packet_extended/packet_extended_verification.cpp
+  src/packet_extended/packet_extended_verification_1.cpp
   src/packet_extended/packet_extended_housekeeping_2.cpp
   src/packet_extended/packet_extended_housekeeping_25.cpp
   src/packet_extended/packet_extended_housekeeping_basic.cpp
@@ -41,6 +40,7 @@ add_executable(
 )
 target_link_libraries(
   tests_paqueteCnC
+  paqueteCnCLibrary
   GTest::gtest_main
 )
 target_compile_features(tests_paqueteCnC PRIVATE cxx_std_20)

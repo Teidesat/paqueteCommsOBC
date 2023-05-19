@@ -57,3 +57,7 @@ I could define on <code>PacketBuilderDirector</code> (since packet wrapping is i
 ## Packet wrapping for subtypes
 
 I decided to implement a new class fore ach subtype packet of a service because the structure is different and it is simpler than having one class with all the methods.
+
+## Array representation order of the bytes
+
+Depending on the order of array storage, I could have at index 0 the bytes starting from version, or at index 0 the bytes starting from error control field. Both are equally valid, so I decide to have index 0 start from version. 

@@ -50,7 +50,7 @@ void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
       const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
       const uint8_t code, const std::vector<std::byte>& parameters) {
   this->addCommandVerificationHeader(appIdSource, sequenceFlags, sequenceCount, code);
-  for (uint8_t i = 0; i < parameters.size(); ++i) {
+  for (size_t i = 0; i < parameters.size(); ++i) {
     packet_.pushData(parameters[i]);
   }
 }
@@ -62,7 +62,7 @@ void PacketBuilder::addCommandDistributionHeader(
   if (addresses.size() > 1) {
     packet_.pushData(std::byte(addresses.size()));
   }
-  for (uint8_t i = 0; i < addresses.size(); ++i) {
+  for (size_t i = 0; i < addresses.size(); ++i) {
     packet_.pushData(std::byte(addresses[i]));
   }
 }
@@ -75,7 +75,7 @@ void PacketBuilder::addCommandDistributionHeader(
   if (addressAndData.size() > 1) {
     packet_.pushData(std::byte(addressAndData.size()));
   }
-  for (uint8_t i = 0; i < addressAndData.size(); ++i) {
+  for (size_t i = 0; i < addressAndData.size(); ++i) {
     packet_.pushData(addressAndData[i].first);
     packet_.pushData(addressAndData[i].second);
   }
@@ -83,7 +83,7 @@ void PacketBuilder::addCommandDistributionHeader(
 
 void PacketBuilder::addCommandDistributionHeader(
     const pairs_t<int, std::byte>& lineIDAndDuration) {
-  for (uint8_t i = 0; i < lineIDAndDuration.size(); ++i) {
+  for (size_t i = 0; i < lineIDAndDuration.size(); ++i) {
     packet_.pushData(std::byte(lineIDAndDuration[i].first));
     packet_.pushData(lineIDAndDuration[i].second);
   }

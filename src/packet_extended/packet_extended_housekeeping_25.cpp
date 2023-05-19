@@ -60,7 +60,7 @@ void PacketExtendedHousekeeping25::interpretInputParameters(uint16_t structureId
   // length first sequence, first sequence parameters, length second
   // sequence, second sequence arrays
   const uint8_t lengthFirstSequence = relevantDefinition[0];
-  for (uint8_t i = 1; i < 1 + lengthFirstSequence; ++i) {
+  for (size_t i = 1; i < 1 + lengthFirstSequence; ++i) {
     sampledParameters_.push_back(relevantDefinition[i]);
   }
   const uint8_t lengthSecondSequence =
@@ -68,11 +68,11 @@ void PacketExtendedHousekeeping25::interpretInputParameters(uint16_t structureId
 
   // For each array extract it's content and then update current position
   uint8_t currentPosition = 1 + lengthFirstSequence;
-  for (uint8_t i = 0; i < lengthSecondSequence; ++i) {
+  for (size_t i = 0; i < lengthSecondSequence; ++i) {
     std::vector<uint8_t> arrayContent;
     uint8_t sampleAmount = currentPosition;
     uint8_t parameterAmount = currentPosition + 1;
-    for (uint8_t j = currentPosition;
+    for (size_t j = currentPosition;
         j < currentPosition + sampleAmount * parameterAmount; ++j) {
       arrayContent.push_back(relevantDefinition[j]);
     }

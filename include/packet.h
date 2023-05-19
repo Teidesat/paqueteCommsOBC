@@ -5,12 +5,16 @@
  * 
  * Based on ECSS-E-70-41A packet structure but with changes.
  *
+ * The type field is not added because it will always be 0 because only one packet
+ *    is handled, so there is no point in having a member for it.
+ * 
  * Source comes first before destination (from left to right looking at the
  *    packet figure) on the app. id. field.
  * 
  * Length = Packet size (bytes) - 6 (packet header) - 1
  *  Substract 1 because it can be a value between 0 to (2^16 - 1) and not
  *  between 1 and 2^16.
+ * 
  */
 
 #ifndef Packet_H
@@ -24,6 +28,9 @@ public:
 
   // *** constants ***
   inline static constexpr uint16_t APP_DATA_SIZE = 256; // inline for appdata array size
+
+  // main header + data header + data + error control
+  inline static constexpr uint16_t PACKET_SIZE = 6 + 3 + 256 + 2;
 
   enum class SequenceFlags : uint8_t {
     INITIAL = 0b01,
