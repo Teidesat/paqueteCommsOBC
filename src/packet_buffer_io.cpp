@@ -103,8 +103,15 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
 
   std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
+  uint8_t amountOfInserted = 0;
   while (size > 2) {
     appData[packetIndex] = ptrBuffer[packetIndex];
+    ++packetIndex;
+    ++amountOfInserted;
+  }
+  // initialize remaining
+  for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfInserted; ++i) {
+    appData[packetIndex] = std::byte(0);
     ++packetIndex;
   }
 
@@ -119,66 +126,95 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
       ack, serviceType, serviceSubtype, appData, packetErrorControl);
 }
 
+/**
+ * See readPacket() for the structure.
+*/
 void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
-  const auto& versionNumber = packet.getVersionNumber();
-  const auto& dataFieldHeader = packet.getDataFieldHeader();
-  const auto& appIdSource = packet.getAppIdSource();
-  const auto& appIdDestination = packet.getAppIdDestination();
-  const auto& sequenceControlFlags = packet.getSequenceControlFlags();
-  const auto& sequenceControlCount = packet.getSequenceControlCount();
-  const auto& length = packet.getLength();
 
-  const auto& ccsds = packet.getCCSDS();
-  const auto& pusVersion = packet.getPUSVersion();
-  const auto& ack = packet.getAck();
-  const auto& serviceType = packet.getServiceType();
-  const auto& serviceSubtype = packet.getServiceSubtype();
+  // TODO: add a way of knowing how many app data bytes are relevant, to
+  // minimize the amount of bytes written by avoiding writing useless
+  // bytes. Because right now this is writing the whole high level
+  // packet's app data, which is mostly 0 typically.
 
-  const auto& appData = packet.getAppData();
+  //main header
+  // [0]
+  std::byte versionNumber = static_cast<std::byte>(packet.getVersionNumber() << 5);
 
-  const auto& packetErrorControl = packet.getPacketErrorControl();
+  // type is zero and app id has a 0 as first bit, so position
+  // dataFieldHeader's bit tactically so that the final OR leaves those 2 zeros.
 
-  std::memcpy(ptrBuffer, &versionNumber, sizeof(versionNumber));
-  ptrBuffer += sizeof(versionNumber);
+  std::byte dataFieldHeader =
+      static_cast<std::byte>(packet.getDataFieldHeader()) << 3;
+  std::byte source = static_cast<std::byte>(packet.getAppIdSource());
+  std::byte appIdSourceMostSignificantPartial = source >> 3;
 
-  std::memcpy(ptrBuffer, &dataFieldHeader, sizeof(dataFieldHeader));
-  ptrBuffer += sizeof(dataFieldHeader);
+  // [1]
+  std::byte appIdSourceLeastSignificantPartial =
+      static_cast<std::byte>(extractFieldFrom(source, 0, 3));
+  std::byte appIdDestination =
+      static_cast<std::byte>(packet.getAppIdDestination() << 4);
 
-  std::memcpy(ptrBuffer, &appIdSource, sizeof(appIdSource));
-  ptrBuffer += sizeof(appIdSource);
+  // [2]
+  std::byte lengthMostSignificant =
+      static_cast<std::byte>(packet.getLength() >> 8);
 
-  std::memcpy(ptrBuffer, &appIdDestination, sizeof(appIdDestination));
-  ptrBuffer += sizeof(appIdDestination);
+  // [3]
+  std::byte lengthLeastSignificant =
+      static_cast<std::byte>(packet.getLength());
 
-  std::memcpy(ptrBuffer, &sequenceControlFlags, sizeof(sequenceControlFlags));
-  ptrBuffer += sizeof(sequenceControlFlags);
-
-  std::memcpy(ptrBuffer, &sequenceControlCount, sizeof(sequenceControlCount));
-  ptrBuffer += sizeof(sequenceControlCount);
-
-  std::memcpy(ptrBuffer, &length, sizeof(length));
-  ptrBuffer += sizeof(length);
+  // [4]
+  std::byte sequenceControlFlags =
+      static_cast<std::byte>(packet.getSequenceControlFlags()) << 7;
+  std::byte sequenceControlCountMostSignificant =
+      static_cast<std::byte>(packet.getSequenceControlCount() >> 8);
   
-  if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
-    std::memcpy(ptrBuffer, &ccsds, sizeof(ccsds));
-    ptrBuffer += sizeof(ccsds);
+  // [5]
+  std::byte sequenceControlCountLeastSignificant =
+      static_cast<std::byte>(packet.getSequenceControlCount());
 
-    std::memcpy(ptrBuffer, &pusVersion, sizeof(pusVersion));
-    ptrBuffer += sizeof(pusVersion);
+  // write the main header bytes
+  ptrBuffer[0] = versionNumber | dataFieldHeader | appIdSourceMostSignificantPartial;
+  ptrBuffer[1] = appIdSourceLeastSignificantPartial | appIdDestination;
+  ptrBuffer[2] = lengthMostSignificant;
+  ptrBuffer[3] = lengthLeastSignificant;
+  ptrBuffer[4] = sequenceControlFlags | sequenceControlCountMostSignificant;
+  ptrBuffer[5] = sequenceControlCountLeastSignificant;
 
-    std::memcpy(ptrBuffer, &ack, sizeof(ack));
-    ptrBuffer += sizeof(ack);
+  if (dataFieldHeader == std::byte(1)) {
+    // data field header
+    // [6]
+    std::byte ccsds = static_cast<std::byte>(packet.getCCSDS()) << 7;
+    std::byte pusVersion = static_cast<std::byte>(packet.getPUSVersion()) << 4;
+    std::byte ack = static_cast<std::byte>(packet.getAck());
+    
+    // [7]
+    std::byte serviceType = static_cast<std::byte>(packet.getServiceType());
 
-    std::memcpy(ptrBuffer, &serviceType, sizeof(serviceType));
-    ptrBuffer += sizeof(serviceType);
+    // [8]
+    std::byte serviceSubtype = static_cast<std::byte>(packet.getServiceSubtype());
 
-    std::memcpy(ptrBuffer, &serviceSubtype, sizeof(serviceSubtype));
-    ptrBuffer += sizeof(serviceSubtype);
+    ptrBuffer[6] = ccsds | pusVersion | ack;
+    ptrBuffer[7] = serviceType;
+    ptrBuffer[8] = serviceSubtype;
+
+    const auto& appData = packet.getAppData();
+    ptrBuffer += 9;
+    std::copy(appData.begin(), appData.end(), ptrBuffer);
+
+    // last 2 bytes
+    auto packetErrorControl = packet.getPacketErrorControl();
+    // I assume previous that the std::copy has changed  ptrBuffer's address
+    std::memcpy(ptrBuffer, &packetErrorControl, sizeof(packetErrorControl));
+  } else {
+    const auto& appData = packet.getAppData();
+    ptrBuffer += 6; // after main header because there is no data field header
+    std::copy(appData.begin(), appData.end(), ptrBuffer);
+
+    // last 2 bytes
+    auto packetErrorControl = packet.getPacketErrorControl();
+    // I assume that the previous std::copy has changed  ptrBuffer's address
+    std::memcpy(ptrBuffer, &packetErrorControl, sizeof(packetErrorControl));
   }
-  std::copy(appData.begin(), appData.end(), ptrBuffer);
-
-  std::memcpy(ptrBuffer, &packetErrorControl, sizeof(packetErrorControl));
-  ptrBuffer += sizeof(packetErrorControl);
 }
 
 uint8_t PacketBufferIO::extractFieldFrom(std::byte inputByte, uint8_t startIndex,
@@ -186,14 +222,3 @@ uint8_t PacketBufferIO::extractFieldFrom(std::byte inputByte, uint8_t startIndex
   return static_cast<uint8_t>(
     (inputByte >> (startIndex % 8)) & std::byte((std::pow(2, lengthOfField) - 1)));
 }
-
-// std::array<std::byte, 2> PacketBufferIO::combineFields(const std::byte* inputArray,
-//     size_t sizeOfArray) {
-  
-// }
-
-// uint16_t combineFields(const uint8_t* inputArray, size_t sizeOfArray) {
-
-//   return 0;
-// }
-

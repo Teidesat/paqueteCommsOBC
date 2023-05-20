@@ -31,17 +31,6 @@ private:
    */
   uint8_t extractFieldFrom(std::byte inputByte, uint8_t startIndex,
       size_t lengthOfField);
-
-  /**
-   * @brief Because sometimes a field is split between different words,
-   *    it is necessary to have a mechanism to put them back together.
-   *
-   * For example, when a 16 bits field has 1 bit in a word, 8 in another
-   *    and 7 in the next. The result is 3 different bytes, but it should
-   *    be just 2.
-   * 
-   */
-  std::array<std::byte, 2> combineFields(const std::byte* inputArray, size_t sizeOfArray);
 };
 
 #endif
