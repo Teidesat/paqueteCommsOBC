@@ -156,8 +156,7 @@ std::array<std::byte, Packet::APP_DATA_SIZE> Packet::getAppData() {
   return appData_;
 }
 
-void Packet::setAppData(const std::array<std::byte,
-    Packet::APP_DATA_SIZE>& newAppData) {
+void Packet::setAppData(const std::array<std::byte, Packet::APP_DATA_SIZE>& newAppData) {
   appData_ = newAppData;
 }
 

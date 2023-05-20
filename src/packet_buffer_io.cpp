@@ -68,14 +68,17 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
   uint16_t sequenceControlCount =
       static_cast<uint16_t>(countMostSignificant << 8) | countLeastSignificant;
 
-  size -= 6;
-  size_t indexOfPacket;
+  // From here I do one thing or another depending on if there is data
+  // field header.
 
   Packet::Bool8Enum ccsds;
   uint8_t pusVersion;
   Packet::Bool8Enum ack;
   uint8_t serviceType;
   uint8_t serviceSubtype;
+
+  const size_t amountOfValidData = length - 3 - 2; // -dfg, -errorcontrol
+  size_t indexOfAppDataStart;
   if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
     if (extractFieldFrom(ptrBuffer[6], 7, 1) == 1) {
       ccsds = Packet::Bool8Enum::TRUE;
@@ -91,8 +94,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     serviceType = static_cast<uint8_t>(ptrBuffer[7]);
     serviceSubtype = static_cast<uint8_t>(ptrBuffer[8]);
 
-    size -= 3;
-    indexOfPacket = 9;
+    indexOfAppDataStart = 9; // 9 because main header + dataFieldHeader
   } else {
     ccsds = Packet::Bool8Enum::FALSE;
     pusVersion = 1;
@@ -100,34 +102,24 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     serviceType = 0;
     serviceSubtype = 0;
 
-    indexOfPacket = 6;
+    indexOfAppDataStart = 6; // 6 because only main header
   }
 
   std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
-  // TODO: Find a better way to insert only the necessary app data.
-
   // insert the app data of buffer into appData array.
-  size_t amountOfInserted = 0;
-  size_t appDataIndex = 0;
-  while (size > 2) { // > 2 due to error control field being last and 2 bytes
-    appData[appDataIndex] = ptrBuffer[indexOfPacket];
-    ++appDataIndex;
-    ++indexOfPacket;
-    ++amountOfInserted;
-    --size;
+  for (size_t i = 0; i < amountOfValidData; ++i) {
+    appData[i] = ptrBuffer[indexOfAppDataStart + i];
   }
 
-  // initialize the filler array bytes to 0
-  for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfInserted; ++i) {
-    appData[appDataIndex] = std::byte(0);
-    ++appDataIndex;
+  // initialize the filler app data array bytes to 0
+  for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfValidData; ++i) {
+    appData[amountOfValidData + i + 1] = std::byte(0);
   }
 
   std::array<std::byte, 2> packetErrorControl;
-  packetErrorControl[1] = ptrBuffer[indexOfPacket];
-  ++indexOfPacket;
-  packetErrorControl[0] = ptrBuffer[indexOfPacket];
+  packetErrorControl[1] = ptrBuffer[amountOfValidData + 1];
+  packetErrorControl[0] = ptrBuffer[amountOfValidData + 2];
 
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
       sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
@@ -158,9 +150,10 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
 
   // [1]
   std::byte appIdSourceLeastSignificantPartial =
-      static_cast<std::byte>(extractFieldFrom(source, 0, 3));
+      static_cast<std::byte>(extractFieldFrom(source, 0, 3) << 5);
+  std::byte destination = static_cast<std::byte>(packet.getAppIdDestination());
   std::byte appIdDestination =
-      static_cast<std::byte>(packet.getAppIdDestination() << 4);
+      static_cast<std::byte>(extractFieldFrom(destination, 0, 5));
 
   // [2]
   std::byte lengthMostSignificant =
@@ -172,7 +165,7 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
 
   // [4]
   std::byte sequenceControlFlags =
-      static_cast<std::byte>(packet.getSequenceControlFlags()) << 7;
+      static_cast<std::byte>(packet.getSequenceControlFlags()) << 6;
   std::byte sequenceControlCountMostSignificant =
       static_cast<std::byte>(packet.getSequenceControlCount() >> 8);
   
@@ -188,7 +181,7 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   ptrBuffer[4] = sequenceControlFlags | sequenceControlCountMostSignificant;
   ptrBuffer[5] = sequenceControlCountLeastSignificant;
 
-  if (dataFieldHeader == std::byte(1)) {
+  if (packet.getDataFieldHeader() == Packet::Bool8Enum::TRUE) {
     // data field header
     // [6]
     std::byte ccsds = static_cast<std::byte>(packet.getCCSDS()) << 7;
@@ -206,13 +199,17 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
     ptrBuffer[8] = serviceSubtype;
 
     const auto& appData = packet.getAppData();
-    ptrBuffer += 9;
-    std::copy(appData.begin(), appData.end(), ptrBuffer);
+    const auto amountOfValidData = packet.getAmountOfValidData();
+    size_t bufferIndex = 9;
+    for (int i = 0; i < amountOfValidData; ++i) {
+      ptrBuffer[bufferIndex] = appData[i];
+      ++bufferIndex;
+    }
 
     // last 2 bytes
     auto packetErrorControl = packet.getPacketErrorControl();
-    // I assume previous that the std::copy has changed  ptrBuffer's address
-    std::memcpy(ptrBuffer, &packetErrorControl, sizeof(packetErrorControl));
+    // I assume previous that the std::copy has changed ptrBuffer's address
+    std::memcpy(&ptrBuffer[bufferIndex], &packetErrorControl, sizeof(packetErrorControl));
   } else {
     const auto& appData = packet.getAppData();
     ptrBuffer += 6; // after main header because there is no data field header

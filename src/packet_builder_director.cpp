@@ -18,7 +18,7 @@ std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
         chunk.begin()
     );
     Packet newPacket;
-    newPacket.setAppData(chunk);
+    newPacket.setAppData(chunk, Packet::APP_DATA_SIZE);
     output.push_back(newPacket);
   }
 
@@ -32,7 +32,7 @@ std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
       appData.end(),
       chunk.begin()
     );
-    newPacket.setAppData(chunk);
+    newPacket.setAppData(chunk, Packet::APP_DATA_SIZE);
     output.push_back(newPacket);
   }
   return output;
