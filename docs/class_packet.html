@@ -86,8 +86,8 @@ Public Types</h2></td></tr>
 , <b>STAND_ALONE</b> = 0b11
  }</td></tr>
 <tr class="separator:a42be6d91bca8e5312f86fdf37ec7ed8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab428e6ecb2c4341a1c3fd7775f451ca3"><td class="memItemLeft" align="right" valign="top"><a id="ab428e6ecb2c4341a1c3fd7775f451ca3" name="ab428e6ecb2c4341a1c3fd7775f451ca3"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Bool8Enum</b> : uint8_t { <b>TRUE</b> = 0b1
-, <b>FALSE</b> = 0b0
+<tr class="memitem:ab428e6ecb2c4341a1c3fd7775f451ca3"><td class="memItemLeft" align="right" valign="top"><a id="ab428e6ecb2c4341a1c3fd7775f451ca3" name="ab428e6ecb2c4341a1c3fd7775f451ca3"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Bool8Enum</b> : uint8_t { <b>TRUE</b> = 1
+, <b>FALSE</b> = 0
  }</td></tr>
 <tr class="separator:ab428e6ecb2c4341a1c3fd7775f451ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -156,9 +156,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPUSVersion</b> (co
 <tr class="memitem:a9172b5085c4c5e2a28687ae49a776fa3"><td class="memItemLeft" align="right" valign="top"><a id="a9172b5085c4c5e2a28687ae49a776fa3" name="a9172b5085c4c5e2a28687ae49a776fa3"></a>
 Bool8Enum&#160;</td><td class="memItemRight" valign="bottom"><b>getAck</b> () const</td></tr>
 <tr class="separator:a9172b5085c4c5e2a28687ae49a776fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48738dd4eb4f64469b16aa62cfc5af2f"><td class="memItemLeft" align="right" valign="top"><a id="a48738dd4eb4f64469b16aa62cfc5af2f" name="a48738dd4eb4f64469b16aa62cfc5af2f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setACK</b> (const Bool8Enum newValue)</td></tr>
-<tr class="separator:a48738dd4eb4f64469b16aa62cfc5af2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed15d79a37134f360df855350fd3d0d4"><td class="memItemLeft" align="right" valign="top"><a id="aed15d79a37134f360df855350fd3d0d4" name="aed15d79a37134f360df855350fd3d0d4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setAck</b> (const Bool8Enum newValue)</td></tr>
+<tr class="separator:aed15d79a37134f360df855350fd3d0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbdd9facf33fddaf5296e300a12b0e16"><td class="memItemLeft" align="right" valign="top"><a id="adbdd9facf33fddaf5296e300a12b0e16" name="adbdd9facf33fddaf5296e300a12b0e16"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getServiceType</b> () const</td></tr>
 <tr class="separator:adbdd9facf33fddaf5296e300a12b0e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,9 +189,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>pushData</b> (const s
 <tr class="memitem:acc19b1f3ee0b9e4d13a644d23eff9dc5"><td class="memItemLeft" align="right" valign="top"><a id="acc19b1f3ee0b9e4d13a644d23eff9dc5" name="acc19b1f3ee0b9e4d13a644d23eff9dc5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>pushData</b> (const uint16_t bytesToPush)</td></tr>
 <tr class="separator:acc19b1f3ee0b9e4d13a644d23eff9dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed5ba5f9ea236de632f53c5a349d6455"><td class="memItemLeft" align="right" valign="top"><a id="aed5ba5f9ea236de632f53c5a349d6455" name="aed5ba5f9ea236de632f53c5a349d6455"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>pushData</b> (const std::array&lt; std::byte, 2 &gt; &amp;bytesToPush)</td></tr>
-<tr class="separator:aed5ba5f9ea236de632f53c5a349d6455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf846393c40375752ec1adde399ee853"><td class="memItemLeft" align="right" valign="top"><a id="aaf846393c40375752ec1adde399ee853" name="aaf846393c40375752ec1adde399ee853"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>pushData</b> (const std::array&lt; std::byte, 2 &gt; bytesToPush)</td></tr>
+<tr class="separator:aaf846393c40375752ec1adde399ee853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d02213229989f2c94244cec18e635a8"><td class="memItemLeft" align="right" valign="top"><a id="a9d02213229989f2c94244cec18e635a8" name="a9d02213229989f2c94244cec18e635a8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>pushData</b> (const std::vector&lt; std::byte &gt; &amp;bytesToPush)</td></tr>
 <tr class="separator:a9d02213229989f2c94244cec18e635a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,6 +201,9 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a7d92c4c68dd503e547a4957c817ef8e7"><td class="memItemLeft" align="right" valign="top"><a id="a7d92c4c68dd503e547a4957c817ef8e7" name="a7d92c4c68dd503e547a4957c817ef8e7"></a>
 static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>APP_DATA_SIZE</b> = 256</td></tr>
 <tr class="separator:a7d92c4c68dd503e547a4957c817ef8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff8b97b824e1fe763f0e963b13035a19"><td class="memItemLeft" align="right" valign="top"><a id="aff8b97b824e1fe763f0e963b13035a19" name="aff8b97b824e1fe763f0e963b13035a19"></a>
+static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>PACKET_SIZE</b> = 6 + 3 + 256 + 2</td></tr>
+<tr class="separator:aff8b97b824e1fe763f0e963b13035a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="packet_8h_source.html">packet.h</a></li>

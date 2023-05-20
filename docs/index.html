@@ -77,8 +77,9 @@ $(function() {
 Description</h1>
 <p><a class="el" href="class_packet.html">Packet</a> representation and buffer operations based on the ECSS-70-E-41A standard. See <a href="docs/packet_design_teidesat_I.pdf">the packet design document</a> pdf.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
-Important note on endianess</h1>
-<p>TEIDESAT-I'S OBC is based on an ARM cortex m7, and ARM typically provides a pin to select little-endian or big-endian. However, the library assumes it is little-endian, so it is important to make sure that the microcontroller is set to little-endian. Operations like int to std::byte array will fail otherwise because the order of the bytes for the same int is different depending on the endianess. </p>
+Little-endian is required</h1>
+<p>TEIDESAT-I'S OBC is based on an ARM cortex m7, and ARM typically provides a pin to select little-endian or big-endian. However, the library assumes it is little-endian, so it is important to make sure that the microcontroller is set to little-endian. This is due to the library sometimes converts two <code>uint8_t</code> into a <code>uint16_t</code> by assuming that [0] is the least significant part, while [1] is more signiticant, which is incorrect if the system is little endian.</p>
+<p>There are plans to make it endian independent. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

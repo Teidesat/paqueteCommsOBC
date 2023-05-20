@@ -16,7 +16,7 @@ class PacketBufferIO {
 public:
   PacketBufferIO();
 
-  Packet readPacket(const std::byte* buffer, size_t size);
+  Packet readPacket(const std::byte* buffer);
   void writePacket(std::byte* buffer, Packet& packet);
 private:
   /**

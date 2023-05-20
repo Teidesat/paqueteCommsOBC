@@ -92,7 +92,7 @@ public:
   void setPUSVersion(const uint8_t pusVersion);
 
   Bool8Enum getAck() const;
-  void setACK(const Bool8Enum newValue);
+  void setAck(const Bool8Enum newValue);
 
   uint8_t getServiceType() const;
   void setServiceType(const uint8_t typeId);
@@ -112,7 +112,7 @@ public:
   // It modifies the index for appending.
   void pushData(const std::byte bytesToPush);
   void pushData(const uint16_t bytesToPush);
-  void pushData(const std::array<std::byte, 2>& bytesToPush);
+  void pushData(const std::array<std::byte, 2> bytesToPush);
   void pushData(const std::vector<std::byte>& bytesToPush);
 
 private:

@@ -78,13 +78,65 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a972929c7df013f5a645c1ed8df2eed87"><td class="memItemLeft" align="right" valign="top"><a id="a972929c7df013f5a645c1ed8df2eed87" name="a972929c7df013f5a645c1ed8df2eed87"></a>
-<a class="el" href="class_packet.html">Packet</a>&#160;</td><td class="memItemRight" valign="bottom"><b>readPacket</b> (const std::byte *buffer, std::size_t size)</td></tr>
-<tr class="separator:a972929c7df013f5a645c1ed8df2eed87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2c62b83b480713ddc6cb6d1eecfcdb7"><td class="memItemLeft" align="right" valign="top"><a id="ad2c62b83b480713ddc6cb6d1eecfcdb7" name="ad2c62b83b480713ddc6cb6d1eecfcdb7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>writePacket</b> (std::byte *buffer, <a class="el" href="class_packet.html">Packet</a> &amp;packet)</td></tr>
+<tr class="memitem:a15b153795c3802f55c3003aa396ae3ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet.html">Packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_buffer_i_o.html#a15b153795c3802f55c3003aa396ae3ee">readPacket</a> (const std::byte *buffer)</td></tr>
+<tr class="separator:a15b153795c3802f55c3003aa396ae3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2c62b83b480713ddc6cb6d1eecfcdb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_buffer_i_o.html#ad2c62b83b480713ddc6cb6d1eecfcdb7">writePacket</a> (std::byte *buffer, <a class="el" href="class_packet.html">Packet</a> &amp;packet)</td></tr>
 <tr class="separator:ad2c62b83b480713ddc6cb6d1eecfcdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a15b153795c3802f55c3003aa396ae3ee" name="a15b153795c3802f55c3003aa396ae3ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15b153795c3802f55c3003aa396ae3ee">&#9670;&#160;</a></span>readPacket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_packet.html">Packet</a> PacketBufferIO::readPacket </td>
+          <td>(</td>
+          <td class="paramtype">const std::byte *&#160;</td>
+          <td class="paramname"><em>ptrBuffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Some bytes have multiple fields. Depending on if the word has multiple fields or not I will increase or not the ptrBuffer.</p>
+<p>Map of byte to fields: XXX X X 0 XX... | std::byte = version, type, dfh, 0, source... ...XXX XXXXX | std::byte = ...source, destination XX XXXXXX... | std::byte = seq_ctrl_flags, seq_ctrl_count... ...XXXXXXXX | std::byte = ...seq_ctrl_count XXXXXXXX... | std::byte = length... ...XXXXXXXX | std::byte = ...length X XXX XXXX | std::byte = ccsds, pus, ack XXXXXXXX | std::byte = type .XXXXXXX... | std::byte = subtype</p>
+<p>(...) | (application data)</p>
+<p>00000000... ! std::byte = error control... (all 0 this byte) XXXXXXXX ! std::byte = ...error control</p>
+<p>Note: extractFieldFrom() assumes that the rightmost bit is index 0 on each byte. </p>
+
+</div>
+</div>
+<a id="ad2c62b83b480713ddc6cb6d1eecfcdb7" name="ad2c62b83b480713ddc6cb6d1eecfcdb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2c62b83b480713ddc6cb6d1eecfcdb7">&#9670;&#160;</a></span>writePacket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PacketBufferIO::writePacket </td>
+          <td>(</td>
+          <td class="paramtype">std::byte *&#160;</td>
+          <td class="paramname"><em>ptrBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_packet.html">Packet</a> &amp;&#160;</td>
+          <td class="paramname"><em>packet</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>See <a class="el" href="class_packet_buffer_i_o.html#a15b153795c3802f55c3003aa396ae3ee">readPacket()</a> for the structure.</p>
+<p>I shift the words around so that a final OR results in the wanted byte. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="packet__buffer__io_8h_source.html">packet_buffer_io.h</a></li>
 <li>src/packet_buffer_io.cpp</li>

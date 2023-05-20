@@ -81,15 +81,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f0e4887422a57e0f6f50dab8f623ddc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_packet.html">Packet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#a1f0e4887422a57e0f6f50dab8f623ddc">makeMegaPacket</a> (const std::vector&lt; std::byte &gt; &amp;appData)</td></tr>
 <tr class="memdesc:a1f0e4887422a57e0f6f50dab8f623ddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A megapacket is a packet whose app data is bigger than Packet::APP_DATA_SIZE.  <br /></td></tr>
 <tr class="separator:a1f0e4887422a57e0f6f50dab8f623ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4701352ff22e84b6087699165c370369"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet_extended_verification.html">PacketExtendedVerification</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#a4701352ff22e84b6087699165c370369">makeVerificationSuccess</a> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount)</td></tr>
-<tr class="memdesc:a4701352ff22e84b6087699165c370369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make verification packet acceptance success.  <br /></td></tr>
-<tr class="separator:a4701352ff22e84b6087699165c370369"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7e42d3d508900ecd86c340ede88d093"><td class="memItemLeft" align="right" valign="top"><a id="ab7e42d3d508900ecd86c340ede88d093" name="ab7e42d3d508900ecd86c340ede88d093"></a>
-<a class="el" href="class_packet_extended_verification.html">PacketExtendedVerification</a>&#160;</td><td class="memItemRight" valign="bottom"><b>makeVerificationFailure</b> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
-<tr class="separator:ab7e42d3d508900ecd86c340ede88d093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72d6fe58f3e19af56479b724586a1004"><td class="memItemLeft" align="right" valign="top"><a id="a72d6fe58f3e19af56479b724586a1004" name="a72d6fe58f3e19af56479b724586a1004"></a>
-<a class="el" href="class_packet_extended_verification.html">PacketExtendedVerification</a>&#160;</td><td class="memItemRight" valign="bottom"><b>makeVerificationFailure</b> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, std::vector&lt; std::byte &gt; &amp;&amp;parameters)</td></tr>
-<tr class="separator:a72d6fe58f3e19af56479b724586a1004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d209479ec5d8dcb9868fd5a0b757b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#a98d209479ec5d8dcb9868fd5a0b757b9">makeVerificationSuccess</a> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount)</td></tr>
+<tr class="memdesc:a98d209479ec5d8dcb9868fd5a0b757b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make verification packet acceptance success.  <br /></td></tr>
+<tr class="separator:a98d209479ec5d8dcb9868fd5a0b757b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae78cbbaeb1f166109a59d56ab5edde61"><td class="memItemLeft" align="right" valign="top"><a id="ae78cbbaeb1f166109a59d56ab5edde61" name="ae78cbbaeb1f166109a59d56ab5edde61"></a>
+<a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><b>makeVerificationFailure</b> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
+<tr class="separator:ae78cbbaeb1f166109a59d56ab5edde61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1a85370a87a76ff580b695572622841"><td class="memItemLeft" align="right" valign="top"><a id="ad1a85370a87a76ff580b695572622841" name="ad1a85370a87a76ff580b695572622841"></a>
+<a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><b>makeVerificationFailure</b> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, std::vector&lt; std::byte &gt; &amp;&amp;parameters)</td></tr>
+<tr class="separator:ad1a85370a87a76ff580b695572622841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1f0e4887422a57e0f6f50dab8f623ddc" name="a1f0e4887422a57e0f6f50dab8f623ddc"></a>
@@ -119,14 +119,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4701352ff22e84b6087699165c370369" name="a4701352ff22e84b6087699165c370369"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4701352ff22e84b6087699165c370369">&#9670;&#160;</a></span>makeVerificationSuccess()</h2>
+<a id="a98d209479ec5d8dcb9868fd5a0b757b9" name="a98d209479ec5d8dcb9868fd5a0b757b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98d209479ec5d8dcb9868fd5a0b757b9">&#9670;&#160;</a></span>makeVerificationSuccess()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_packet_extended_verification.html">PacketExtendedVerification</a> PacketBuilderDirector::makeVerificationSuccess </td>
+          <td class="memname"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a> PacketBuilderDirector::makeVerificationSuccess </td>
           <td>(</td>
           <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>appIdSource</em>, </td>
@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_packet_extended_verification.html">PacketExtendedVerification</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a> </dd></dl>
 
 </div>
 </div>

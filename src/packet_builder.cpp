@@ -25,7 +25,7 @@ void PacketBuilder::newPacket(const uint8_t versionNumber, const uint8_t appIdSo
 void PacketBuilder::setDataFieldHeader(const Packet::Bool8Enum ack,
     const uint8_t serviceType, const uint8_t serviceSubtype) {
   packet_.setDataFieldHeader(Packet::Bool8Enum::TRUE);
-  packet_.setACK(ack);
+  packet_.setAck(ack);
   packet_.setServiceType(serviceType);
   packet_.setServiceSubtype(serviceSubtype);
 }
