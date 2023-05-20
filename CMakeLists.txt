@@ -38,6 +38,7 @@ add_executable(
   tests_paqueteCnC
   test/packet_buffer_io_test.cpp
   test/packet_test.cpp
+  test/packet_builder_test.cpp
 )
 target_link_libraries(
   tests_paqueteCnC
