@@ -12,7 +12,7 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
    *    (subtype 1) that is as follows:
    * 
    *  version type dfh   appid length sequence_control ccsds pus_version ack type subtype  error
-   *    0      0    1     1, 2    8      (0b11, 2)        0       1        0   13     1      0
+   *    0      0    1     1, 2    9      (0b11, 2)        0       1        0   13     1      0
    * 
    * length = 9 - 1 = (ccsds, pus, ack, type, subtype)(3 octet) +
    *  (app. id)(2 octets according to ECSS-70-E-41A) +
@@ -31,7 +31,7 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
   packetBuffer[0] = std::byte{0b00001000};	// XXX X X 0 XX... | std::byte = version, type, dfh, 0, source...
   packetBuffer[1] = std::byte{0b00100010};	// ...XXX XXXXX    | std::byte = ...source, destination
   packetBuffer[2] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
-  packetBuffer[3] = std::byte{0b00001000};	// ...XXXXXXXX     | std::byte = ...length
+  packetBuffer[3] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
   packetBuffer[4] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
   packetBuffer[5] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
   packetBuffer[6] = std::byte{0b00010000};	// X XXX XXXX      | std::byte = ccsds, pus, ack
@@ -61,7 +61,7 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
-  EXPECT_EQ(packet.getLength(), 8);
+  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
@@ -70,8 +70,8 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
   EXPECT_EQ(packet.getServiceType(), 13);
   EXPECT_EQ(packet.getServiceSubtype(), 1);
 
-  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00011010});
-  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00000011});
+  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00000011});
+  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00011010});
 }
 
 TEST(PacketBufferIO, PacketBufferWriteWorks) {
@@ -80,7 +80,7 @@ TEST(PacketBufferIO, PacketBufferWriteWorks) {
    *    (subtype 1) that is as follows:
    * 
    *  version type dfh   appid length sequence_control ccsds pus_version ack type subtype  error
-   *    0      0    1     1, 2    8      (0b11, 2)        0       1        0   13     1      0
+   *    0      0    1     1, 2    9      (0b11, 2)        0       1        0   13     1      0
    * 
    * length = 9 - 1 = (ccsds, pus, ack, type, subtype)(3 octet) +
    *  (app. id)(2 octets according to ECSS-70-E-41A) +
@@ -99,7 +99,7 @@ TEST(PacketBufferIO, PacketBufferWriteWorks) {
     packetBuffer[0] = std::byte{0b00001000};	// XXX X X 0 XX... | std::byte = version, type, dfh, 0, source...
     packetBuffer[1] = std::byte{0b00100010};	// ...XXX XXXXX    | std::byte = ...source, destination
     packetBuffer[2] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
-    packetBuffer[3] = std::byte{0b00001000};	// ...XXXXXXXX     | std::byte = ...length
+    packetBuffer[3] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
     packetBuffer[4] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
     packetBuffer[5] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
     packetBuffer[6] = std::byte{0b00010000};	// X XXX XXXX      | std::byte = ccsds, pus, ack
@@ -131,15 +131,10 @@ TEST(PacketBufferIO, PacketBufferWriteWorks) {
     packetBuffer2[i] = std::byte{0};
   }
   io.writePacket(packetBuffer2, packet);
-  EXPECT_EQ(packetBuffer2, packetBuffer);
+  
 
   std::cout << "packetBuffer2: " << std::endl;
   for (int i = 0; i < Packet::PACKET_SIZE; ++i) {
-    std::cout << static_cast<unsigned int>(packetBuffer2[i]) << " ";
-  };
-  std::cout << std::endl;
-  std::cout << "packetBuffer: " << std::endl;
-  for (int i = 0; i < Packet::PACKET_SIZE; ++i) {
-    std::cout << static_cast<unsigned int>(packetBuffer[i]) << " ";
+    EXPECT_EQ(packetBuffer2[i], packetBuffer[i]);
   };
 }

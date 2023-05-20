@@ -77,7 +77,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
   uint8_t serviceType;
   uint8_t serviceSubtype;
 
-  size_t amountOfValidData;
+  size_t amountOfDataInAppData;
   size_t indexOfAppDataStart;
   if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
     if (extractFieldFrom(ptrBuffer[6], 7, 1) == 1) {
@@ -94,7 +94,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     serviceType = static_cast<uint8_t>(ptrBuffer[7]);
     serviceSubtype = static_cast<uint8_t>(ptrBuffer[8]);
   
-    amountOfValidData = length - 2; // - errorcontrol
+    amountOfDataInAppData = length - 3 - 2; // - datafieldheader, - errorcontrol
     indexOfAppDataStart = 9; // 9 because main header + dataFieldHeader
   } else {
     ccsds = Packet::Bool8Enum::FALSE;
@@ -103,25 +103,25 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     serviceType = 0;
     serviceSubtype = 0;
 
-    amountOfValidData = length - 3 - 2; // -datafieldheader, - errorcontrol
+    amountOfDataInAppData = length - 2; // - errorcontrol
     indexOfAppDataStart = 6; // 6 because only main header
   }
 
   std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
   // insert the app data of buffer into appData array.
-  for (size_t i = 0; i < amountOfValidData; ++i) {
+  for (size_t i = 0; i < amountOfDataInAppData; ++i) {
     appData[i] = ptrBuffer[indexOfAppDataStart + i];
   }
 
   // initialize the filler app data array bytes to 0
-  for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfValidData; ++i) {
-    appData[amountOfValidData + i + 1] = std::byte(0);
+  for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfDataInAppData; ++i) {
+    appData[amountOfDataInAppData + i] = std::byte(0);
   }
 
   std::array<std::byte, 2> packetErrorControl;
-  packetErrorControl[1] = ptrBuffer[indexOfAppDataStart + amountOfValidData + 1];
-  packetErrorControl[0] = ptrBuffer[indexOfAppDataStart + amountOfValidData + 2];
+  packetErrorControl[1] = ptrBuffer[indexOfAppDataStart + amountOfDataInAppData];
+  packetErrorControl[0] = ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1];
 
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
       sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
@@ -130,13 +130,10 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
 
 /**
  * See readPacket() for the structure.
+ * 
+ * I shift the words around so that a final OR results in the wanted byte.
 */
 void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
-
-  // TODO: add a way of knowing how many app data bytes are relevant, to
-  // minimize the amount of bytes written by avoiding writing useless
-  // bytes. Because right now this is writing the whole high level
-  // packet's app data, which is mostly 0 typically.
 
   //main header
   // [0]
@@ -184,7 +181,7 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   ptrBuffer[5] = sequenceControlCountLeastSignificant;
 
   const auto& appData = packet.getAppData();
-  size_t amountOfValidData;
+  size_t amountOfDataInAppData;
   size_t indexOfAppDataStart;
   if (packet.getDataFieldHeader() == Packet::Bool8Enum::TRUE) {
     // data field header
@@ -203,20 +200,21 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
     ptrBuffer[7] = serviceType;
     ptrBuffer[8] = serviceSubtype;
 
-    amountOfValidData = packet.getLength() - 2; // - errorcontrol
+    amountOfDataInAppData = packet.getLength() - 3 - 2; // - datafieldheader, - errorcontrol
     indexOfAppDataStart = 9;
   } else {
-    amountOfValidData = packet.getLength() - 3 - 2; // - datafieldheader, - errorcontrol
+    amountOfDataInAppData = packet.getLength() - 2; // - errorcontrol
     indexOfAppDataStart = 6;
   }
 
-  for (int i = 0; i < amountOfValidData; ++i) {
+  // write app data to buffer
+  for (int i = 0; i < amountOfDataInAppData; ++i) {
     ptrBuffer[indexOfAppDataStart + i] = appData[i];
   }
 
   const auto packetErrorControl = packet.getPacketErrorControl();
-  ptrBuffer[indexOfAppDataStart + amountOfValidData + 1] = packetErrorControl[1];
-  ptrBuffer[indexOfAppDataStart + amountOfValidData + 2] = packetErrorControl[2];
+  ptrBuffer[indexOfAppDataStart + amountOfDataInAppData] = packetErrorControl[1];
+  ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1] = packetErrorControl[0];
 }
 
 uint8_t PacketBufferIO::extractFieldFrom(std::byte inputByte, uint8_t startIndex,
