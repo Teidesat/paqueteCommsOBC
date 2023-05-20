@@ -38,13 +38,9 @@ Back to two representations; <code>std::byte</code> is the same as <code>uint8_t
 
 However, having a low level representation is redundant because it means having a class that has as member the fields with the exact size, which means using a single byte for more than one field. But why have a representation of packet with the split fields but no semantic? I would want both the split fields AND the semantic (numbers and maybe chars, not just std::bytes), otherwise I could just use an <code>std::array<std::byte></code> for my low level packet implementation. This is the approach I take; <code>Packet</code> for high level, <code>PacketBufferIO</code> for handling low level packets, which are <code>std::array<std::byte></code>, the best representation for memory efficient transmissions.
 
-## Use of size_t for size and index representation
-
-I decided not so use size_t because it is not standarized and it's implementation depends on the different compilrs. It is true that it could avoid overflow errors but with more careful programming it should not be a problem.
-
 ## About coarcing everything into std::byte to push into Packet's App. data
 
-I decided to coarce everything to <code>std::byte</code> before pushing to app. data to keep the app data handling code as simple as possible. An alternative I thought of is using <code>std::variant</code>, but not knowing what's the type on compile time would bring some if else's that can be avoided by using type coercion.
+I decided to coarce everything to <code>std::byte</code> before pushing to app. data in <code>Packet</code> to keep the app data handling code as simple as possible. An alternative I thought of is using <code>std::variant</code>, but not knowing what's the type on compile time would bring some if else's that can be avoided by using type coercion.
 
 ## To implement Packet extended for handling packets of different services or not
 
