@@ -112,7 +112,7 @@ public:
   // It modifies the index for appending.
   void pushData(const std::byte bytesToPush);
   void pushData(const uint16_t bytesToPush);
-  void pushData(const std::array<std::byte, 2>& bytesToPush);
+  void pushData(const std::array<std::byte, 2> bytesToPush);
   void pushData(const std::vector<std::byte>& bytesToPush);
 
 private:

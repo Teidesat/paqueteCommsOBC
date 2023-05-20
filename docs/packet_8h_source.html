@@ -152,7 +152,7 @@ $(function() {
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="keywordtype">void</span> setPUSVersion(<span class="keyword">const</span> uint8_t pusVersion);</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  Bool8Enum getAck() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keywordtype">void</span> setACK(<span class="keyword">const</span> Bool8Enum newValue);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keywordtype">void</span> setAck(<span class="keyword">const</span> Bool8Enum newValue);</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  uint8_t getServiceType() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="keywordtype">void</span> setServiceType(<span class="keyword">const</span> uint8_t typeId);</div>
@@ -172,7 +172,7 @@ $(function() {
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="comment">// It modifies the index for appending.</span></div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::byte bytesToPush);</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> uint16_t bytesToPush);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::array&lt;std::byte, 2&gt;&amp; bytesToPush);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::array&lt;std::byte, 2&gt; bytesToPush);</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  <span class="keywordtype">void</span> pushData(<span class="keyword">const</span> std::vector&lt;std::byte&gt;&amp; bytesToPush);</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keyword">private</span>:</div>
