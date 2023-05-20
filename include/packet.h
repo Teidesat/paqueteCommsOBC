@@ -92,7 +92,7 @@ public:
   void setPUSVersion(const uint8_t pusVersion);
 
   Bool8Enum getAck() const;
-  void setACK(const Bool8Enum newValue);
+  void setAck(const Bool8Enum newValue);
 
   uint8_t getServiceType() const;
   void setServiceType(const uint8_t typeId);

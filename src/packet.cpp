@@ -132,7 +132,7 @@ Packet::Bool8Enum Packet::getAck() const {
   return ack_;
 }
 
-void Packet::setACK(const Packet::Bool8Enum newValue) {
+void Packet::setAck(const Packet::Bool8Enum newValue) {
   ack_ = newValue;
 }
 
