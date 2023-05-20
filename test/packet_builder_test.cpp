@@ -1,0 +1,82 @@
+#include <gtest/gtest.h>
+
+#include "../include/packet.h"
+#include "../include/packet_builder.h"
+
+TEST(PacketBuilder, NewPacketErasesPrevious) {
+  PacketBuilder builder;
+  builder.newPacket(
+    0,                                  // version
+    1,                                  // app id source
+    2,                                  // app id destination
+    Packet::SequenceFlags::STAND_ALONE, // seq. control flags
+    2                                   // seq. control count
+  );
+  Packet previousPacket = builder.getPacket();
+  builder.newPacket(
+    0,                                  // version
+    1,                                  // app id source
+    2,                                  // app id destination
+    Packet::SequenceFlags::STAND_ALONE, // seq. control flags
+    3                                   // seq. control count << Different
+  );
+  Packet finalPacket = builder.getPacket();
+  EXPECT_EQ(finalPacket.getSequenceControlCount(), 3);
+}
+
+TEST(PacketBuilder, CanGetPacketBeforeCallingNewPacket) {
+  PacketBuilder builder;
+  Packet initialPacket = builder.getPacket();
+  Packet defaultConstructorPacket;
+  EXPECT_EQ(initialPacket.getVersionNumber(), defaultConstructorPacket.getVersionNumber());
+  EXPECT_EQ(initialPacket.getDataFieldHeader(), defaultConstructorPacket.getDataFieldHeader());
+  EXPECT_EQ(initialPacket.getAppIdSource(), defaultConstructorPacket.getAppIdSource());
+  EXPECT_EQ(initialPacket.getAppIdDestination(), defaultConstructorPacket.getAppIdDestination());
+  EXPECT_EQ(initialPacket.getSequenceControlFlags(), defaultConstructorPacket.getSequenceControlFlags());
+  EXPECT_EQ(initialPacket.getSequenceControlCount(), defaultConstructorPacket.getSequenceControlCount());
+  EXPECT_EQ(initialPacket.getLength(), defaultConstructorPacket.getLength());
+  EXPECT_EQ(initialPacket.getCCSDS(), defaultConstructorPacket.getCCSDS());
+  EXPECT_EQ(initialPacket.getPUSVersion(), defaultConstructorPacket.getPUSVersion());
+  EXPECT_EQ(initialPacket.getAck(), defaultConstructorPacket.getAck());
+  EXPECT_EQ(initialPacket.getServiceType(), defaultConstructorPacket.getServiceType());
+  EXPECT_EQ(initialPacket.getServiceSubtype(), defaultConstructorPacket.getServiceSubtype());
+
+  // Compare app data
+  auto initialAppData = initialPacket.getAppData();
+  auto defaultAppData = defaultConstructorPacket.getAppData();
+  EXPECT_EQ(initialAppData, defaultAppData);
+
+  // Compare packet error control
+  auto initialPacketErrorControl = initialPacket.getPacketErrorControl();
+  auto defaultPacketErrorControl = defaultConstructorPacket.getPacketErrorControl();
+  EXPECT_EQ(initialPacketErrorControl, defaultPacketErrorControl);
+}
+
+TEST(PacketBuilder, DataFieldHeaderGetsAddedProperly) {
+  PacketBuilder builder;
+  builder.newPacket(
+    0,                                  // version
+    1,                                  // app id source
+    2,                                  // app id destination
+    Packet::SequenceFlags::STAND_ALONE, // seq. control flags
+    3                                   // seq. control count
+  );
+  auto packetWithout = builder.getPacket();
+
+  // check if data field header has default values
+  EXPECT_EQ(packetWithout.getDataFieldHeader(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packetWithout.getAck(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packetWithout.getServiceType(), 0);
+  EXPECT_EQ(packetWithout.getServiceSubtype(), 0);
+
+  builder.setDataFieldHeader(
+    Packet::Bool8Enum::TRUE,           // ACK
+    13,                                 // Service type
+    1                                   // Service subtype
+  );
+  auto packetWith = builder.getPacket();
+  EXPECT_EQ(packetWith.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packetWith.getAck(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packetWith.getServiceType(), 13);
+  EXPECT_EQ(packetWith.getServiceSubtype(), 1);
+}

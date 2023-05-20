@@ -1,8 +1,18 @@
 #include "../include/packet.h"
 
 Packet::Packet() :
-  sequenceControlFlags_(Packet::SequenceFlags::STAND_ALONE), // standalone by default
-  pusVersion_(1), // currentStandard requires =1
+  versionNumber_(0),
+  dataFieldHeader_(Bool8Enum::FALSE),
+  appIdSource_(0),
+  appIdDestination_(0),
+  sequenceControlFlags_(Packet::SequenceFlags::STAND_ALONE),
+  sequenceControlCount_(0),
+  length_(0),
+  ccsds_(Bool8Enum::FALSE),
+  pusVersion_(1), // ECSS-70-E-41A requires =1
+  ack_(Bool8Enum::FALSE),
+  serviceType_(0),
+  serviceSubtype_(0),
   appDataIndex_(0)
 {}
 
