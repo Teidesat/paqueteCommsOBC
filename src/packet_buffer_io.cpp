@@ -14,10 +14,10 @@ PacketBufferIO::PacketBufferIO() {}
  *  Map of byte to fields:
  * XXX X X 0 XX...	|  std::byte =  version, type, dfh, 0, source...
  * ...XXX XXXXX	    |  std::byte =  ...source, destination
- * XXXXXXXX...	    |  std::byte =  length...
- * ...XXXXXXXX	    |  std::byte =  ...length
  * XX XXXXXX...	    |  std::byte =  seq_ctrl_flags, seq_ctrl_count...
  * ...XXXXXXXX	    |  std::byte =  ...seq_ctrl_count
+ * XXXXXXXX...	    |  std::byte =  length...
+ * ...XXXXXXXX	    |  std::byte =  ...length
  * X XXX XXXX       |  std::byte =  ccsds, pus, ack
  * XXXXXXXX     	  |  std::byte =  type
  * .XXXXXXX...	    |  std::byte =  subtype
@@ -31,7 +31,6 @@ PacketBufferIO::PacketBufferIO() {}
  *    each byte.
  */
 Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
-
   // **** TODO: measure if coarcing to bitset<> is faster for bit indexing than current method.
 
   const uint8_t versionNumber = (static_cast<uint8_t>(ptrBuffer[0] >> 5));
@@ -54,19 +53,19 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
   // because length is 2 bytes and not 1 then calculate first least significant
   // and after that the more significant, then memcpy on the allocation.
 
-  // **** TODO: measure whether it is faster to cast or to use a pointer with memcpy.
-  uint16_t length =
-      (static_cast<uint16_t>(ptrBuffer[2]) << 8) |
-      static_cast<uint8_t>(ptrBuffer[3]);
-
-  uint8_t flags = static_cast<uint8_t>(ptrBuffer[4] >> 6);
+  uint8_t flags = static_cast<uint8_t>(ptrBuffer[2] >> 6);
   Packet::SequenceFlags sequenceControlFlags =
       static_cast<Packet::SequenceFlags>(flags);
   
-  uint8_t countMostSignificant = extractFieldFrom(ptrBuffer[4], 0, 6);
-  uint8_t countLeastSignificant = static_cast<uint8_t>(ptrBuffer[5]);
+  uint8_t countMostSignificant = extractFieldFrom(ptrBuffer[2], 0, 6);
+  uint8_t countLeastSignificant = static_cast<uint8_t>(ptrBuffer[3]);
   uint16_t sequenceControlCount =
       static_cast<uint16_t>(countMostSignificant << 8) | countLeastSignificant;
+
+  // **** TODO: measure whether it is faster to cast or to use a pointer with memcpy.
+  uint16_t length =
+      (static_cast<uint16_t>(ptrBuffer[4]) << 8) |
+      static_cast<uint8_t>(ptrBuffer[5]);
 
   // From here I do one thing or another depending on if there is data
   // field header.
@@ -155,30 +154,30 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
       static_cast<std::byte>(extractFieldFrom(destination, 0, 5));
 
   // [2]
-  std::byte lengthMostSignificant =
-      static_cast<std::byte>(packet.getLength() >> 8);
-
-  // [3]
-  std::byte lengthLeastSignificant =
-      static_cast<std::byte>(packet.getLength());
-
-  // [4]
   std::byte sequenceControlFlags =
       static_cast<std::byte>(packet.getSequenceControlFlags()) << 6;
   std::byte sequenceControlCountMostSignificant =
       static_cast<std::byte>(packet.getSequenceControlCount() >> 8);
   
-  // [5]
+  // [3]
   std::byte sequenceControlCountLeastSignificant =
       static_cast<std::byte>(packet.getSequenceControlCount());
+
+  // [4]
+  std::byte lengthMostSignificant =
+      static_cast<std::byte>(packet.getLength() >> 8);
+
+  // [5]
+  std::byte lengthLeastSignificant =
+      static_cast<std::byte>(packet.getLength());
 
   // write the main header bytes
   ptrBuffer[0] = versionNumber | dataFieldHeader | appIdSourceMostSignificantPartial;
   ptrBuffer[1] = appIdSourceLeastSignificantPartial | appIdDestination;
-  ptrBuffer[2] = lengthMostSignificant;
-  ptrBuffer[3] = lengthLeastSignificant;
-  ptrBuffer[4] = sequenceControlFlags | sequenceControlCountMostSignificant;
-  ptrBuffer[5] = sequenceControlCountLeastSignificant;
+  ptrBuffer[2] = sequenceControlFlags | sequenceControlCountMostSignificant;
+  ptrBuffer[3] = sequenceControlCountLeastSignificant;
+  ptrBuffer[4] = lengthMostSignificant;
+  ptrBuffer[5] = lengthLeastSignificant;
 
   const auto& appData = packet.getAppData();
   size_t amountOfDataInAppData;

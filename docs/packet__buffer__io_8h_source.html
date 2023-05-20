@@ -80,21 +80,27 @@ $(function() {
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef PACKET_BUFFER_IO_H</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define PACKET_BUFFER_IO_H</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="packet_8h.html">packet.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_packet_buffer_i_o.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="class_packet_buffer_i_o.html">PacketBufferIO</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <a class="code hl_class" href="class_packet_buffer_i_o.html">PacketBufferIO</a>();</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <a class="code hl_class" href="class_packet.html">Packet</a> readPacket(<span class="keyword">const</span> std::byte* buffer, std::size_t size);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keywordtype">void</span> writePacket(std::byte* buffer, <a class="code hl_class" href="class_packet.html">Packet</a>&amp; packet);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_packet_buffer_i_o_html"><div class="ttname"><a href="class_packet_buffer_i_o.html">PacketBufferIO</a></div><div class="ttdef"><b>Definition:</b> packet_buffer_io.h:13</div></div>
-<div class="ttc" id="aclass_packet_html"><div class="ttname"><a href="class_packet.html">Packet</a></div><div class="ttdef"><b>Definition:</b> packet.h:20</div></div>
-<div class="ttc" id="apacket_8h_html"><div class="ttname"><a href="packet_8h.html">packet.h</a></div></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="packet_8h.html">packet.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="class_packet_buffer_i_o.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="class_packet_buffer_i_o.html">PacketBufferIO</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <a class="code hl_class" href="class_packet_buffer_i_o.html">PacketBufferIO</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_class" href="class_packet.html">Packet</a> <a class="code hl_function" href="class_packet_buffer_i_o.html#a15b153795c3802f55c3003aa396ae3ee">readPacket</a>(<span class="keyword">const</span> std::byte* buffer);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="class_packet_buffer_i_o.html#ad2c62b83b480713ddc6cb6d1eecfcdb7">writePacket</a>(std::byte* buffer, <a class="code hl_class" href="class_packet.html">Packet</a>&amp; packet);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  uint8_t extractFieldFrom(std::byte inputByte, uint8_t startIndex,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      <span class="keywordtype">size_t</span> lengthOfField);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_packet_buffer_i_o_html"><div class="ttname"><a href="class_packet_buffer_i_o.html">PacketBufferIO</a></div><div class="ttdef"><b>Definition:</b> packet_buffer_io.h:15</div></div>
+<div class="ttc" id="aclass_packet_buffer_i_o_html_a15b153795c3802f55c3003aa396ae3ee"><div class="ttname"><a href="class_packet_buffer_i_o.html#a15b153795c3802f55c3003aa396ae3ee">PacketBufferIO::readPacket</a></div><div class="ttdeci">Packet readPacket(const std::byte *buffer)</div><div class="ttdef"><b>Definition:</b> packet_buffer_io.cpp:33</div></div>
+<div class="ttc" id="aclass_packet_buffer_i_o_html_ad2c62b83b480713ddc6cb6d1eecfcdb7"><div class="ttname"><a href="class_packet_buffer_i_o.html#ad2c62b83b480713ddc6cb6d1eecfcdb7">PacketBufferIO::writePacket</a></div><div class="ttdeci">void writePacket(std::byte *buffer, Packet &amp;packet)</div><div class="ttdef"><b>Definition:</b> packet_buffer_io.cpp:135</div></div>
+<div class="ttc" id="aclass_packet_html"><div class="ttname"><a href="class_packet.html">Packet</a></div><div class="ttdef"><b>Definition:</b> packet.h:26</div></div>
+<div class="ttc" id="apacket_8h_html"><div class="ttname"><a href="packet_8h.html">packet.h</a></div><div class="ttdoc">High level packet representation; does not care as much about size.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

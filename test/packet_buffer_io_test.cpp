@@ -14,8 +14,8 @@ protected:
      * Define a packet of verification service acceptance success
      *    (subtype 1) that is as follows:
      * 
-     *  version type dfh   appid length sequence_control ccsds pus_version ack type subtype  error
-     *    0      0    1     1, 2    9      (0b11, 2)        0       1        0   13     1     794 
+     *  version type dfh   appid sequence_control length  ccsds pus_version ack type subtype  error
+     *    0      0    1     1, 2    (0b11, 2)       9       0       1        0   13     1     794 
      * 
      * length = 9 - 1 = (ccsds, pus, ack, type, subtype)(3 octet) +
      *  (app. id)(2 octets according to ECSS-70-E-41A) +
@@ -32,10 +32,10 @@ protected:
     }
     packetBuffer[0] = std::byte{0b00001000};	// XXX X X 0 XX... | std::byte = version, type, dfh, 0, source...
     packetBuffer[1] = std::byte{0b00100010};	// ...XXX XXXXX    | std::byte = ...source, destination
-    packetBuffer[2] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
-    packetBuffer[3] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
-    packetBuffer[4] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
-    packetBuffer[5] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+    packetBuffer[2] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
+    packetBuffer[3] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+    packetBuffer[4] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
+    packetBuffer[5] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
     packetBuffer[6] = std::byte{0b00010000};	// X XXX XXXX      | std::byte = ccsds, pus, ack
     packetBuffer[7] = std::byte{0b00001101};	// XXXXXXXX        | std::byte = type
     packetBuffer[8] = std::byte{0b00000001};	// XXXXXXXX        | std::byte = subtype
@@ -74,9 +74,9 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperly) {
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
-  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
+  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
   EXPECT_EQ(packet.getPUSVersion(), 1);
   EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::FALSE);
@@ -97,9 +97,9 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKFALSE) {
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
-  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
+  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::TRUE); // changed
   EXPECT_EQ(packet.getPUSVersion(), 1);
   EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::FALSE);
@@ -118,9 +118,9 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKTRUE) {
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
-  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
+  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::TRUE); // changed
   EXPECT_EQ(packet.getPUSVersion(), 1);
   EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::TRUE); // changed
@@ -139,9 +139,9 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSFALSEACKTRUE) {
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
-  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
+  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
   EXPECT_EQ(packet.getPUSVersion(), 1);
   EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::TRUE); // changed
@@ -167,8 +167,8 @@ protected:
      * Define a packet of verification service acceptance success
      *    (subtype 1) that is as follows:
      * 
-     *  version type dfh   appid length sequence_control ccsds pus_version ack type subtype  error
-     *    0      0    1     1, 2    9      (0b11, 2)        0       1        0   13     1     794 
+     *  version type dfh   appid sequence_control length  ccsds pus_version ack type subtype  error
+     *    0      0    1     1, 2    (0b11, 2)       9       0       1        0   13     1     794 
      * 
      * length = 9 - 1 = (ccsds, pus, ack, type, subtype)(3 octet) +
      *  (app. id)(2 octets according to ECSS-70-E-41A) +
@@ -185,10 +185,10 @@ protected:
     }
     packetBuffer[0] = std::byte{0b00001000};	// XXX X X 0 XX... | std::byte = version, type, dfh, 0, source...
     packetBuffer[1] = std::byte{0b00100010};	// ...XXX XXXXX    | std::byte = ...source, destination
-    packetBuffer[2] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
-    packetBuffer[3] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
-    packetBuffer[4] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
-    packetBuffer[5] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+    packetBuffer[2] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
+    packetBuffer[3] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+    packetBuffer[4] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
+    packetBuffer[5] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
     packetBuffer[6] = GetParam();	            // X XXX XXXX      | std::byte = ccsds, pus, ack
     packetBuffer[7] = std::byte{0b00001101};	// XXXXXXXX        | std::byte = type
     packetBuffer[8] = std::byte{0b00000001};	// XXXXXXXX        | std::byte = subtype
@@ -248,8 +248,8 @@ protected:
      * Define a packet of verification service acceptance success
      *    (subtype 1) that is as follows:
      * 
-     *  version type dfh   appid length sequence_control error
-     *    0      0    0     1, 2    9      (0b11, 2)      794 
+     *  version type dfh   appid sequence_control length  error
+     *    0      0    0     1, 2    (0b11, 2)        9     794 
      * 
      * length = 9 - 1 = (ccsds, pus, ack, type, subtype)(3 octet) +
      *  (app. id)(2 octets according to ECSS-70-E-41A) +
@@ -266,10 +266,10 @@ protected:
     }
     packetBuffer[0] = std::byte{0b00001000};	// XXX X X 0 XX... | std::byte = version, type, dfh, 0, source...
     packetBuffer[1] = std::byte{0b00100010};	// ...XXX XXXXX    | std::byte = ...source, destination
-    packetBuffer[2] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
-    packetBuffer[3] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
-    packetBuffer[4] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
-    packetBuffer[5] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+    packetBuffer[2] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
+    packetBuffer[3] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+    packetBuffer[4] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
+    packetBuffer[5] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
 
     // app. id copy of the telecommand this packet is confirming as
     // acceptance success since this test is not precedent to a telecommand,
@@ -300,9 +300,9 @@ TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, ReadsCorrectly) {
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
-  EXPECT_EQ(packet.getLength(), 9);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
+  EXPECT_EQ(packet.getLength(), 9);
 
   // default values for data field header fields
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
