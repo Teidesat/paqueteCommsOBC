@@ -77,7 +77,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
   uint8_t serviceType;
   uint8_t serviceSubtype;
 
-  const size_t amountOfValidData = length - 3 - 2; // -dfg, -errorcontrol
+  size_t amountOfValidData;
   size_t indexOfAppDataStart;
   if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
     if (extractFieldFrom(ptrBuffer[6], 7, 1) == 1) {
@@ -93,7 +93,8 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     }
     serviceType = static_cast<uint8_t>(ptrBuffer[7]);
     serviceSubtype = static_cast<uint8_t>(ptrBuffer[8]);
-
+  
+    amountOfValidData = length - 2; // - errorcontrol
     indexOfAppDataStart = 9; // 9 because main header + dataFieldHeader
   } else {
     ccsds = Packet::Bool8Enum::FALSE;
@@ -102,6 +103,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     serviceType = 0;
     serviceSubtype = 0;
 
+    amountOfValidData = length - 3 - 2; // -datafieldheader, - errorcontrol
     indexOfAppDataStart = 6; // 6 because only main header
   }
 
@@ -118,8 +120,8 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
   }
 
   std::array<std::byte, 2> packetErrorControl;
-  packetErrorControl[1] = ptrBuffer[amountOfValidData + 1];
-  packetErrorControl[0] = ptrBuffer[amountOfValidData + 2];
+  packetErrorControl[1] = ptrBuffer[indexOfAppDataStart + amountOfValidData + 1];
+  packetErrorControl[0] = ptrBuffer[indexOfAppDataStart + amountOfValidData + 2];
 
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
       sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
@@ -181,6 +183,9 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   ptrBuffer[4] = sequenceControlFlags | sequenceControlCountMostSignificant;
   ptrBuffer[5] = sequenceControlCountLeastSignificant;
 
+  const auto& appData = packet.getAppData();
+  size_t amountOfValidData;
+  size_t indexOfAppDataStart;
   if (packet.getDataFieldHeader() == Packet::Bool8Enum::TRUE) {
     // data field header
     // [6]
@@ -198,28 +203,20 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
     ptrBuffer[7] = serviceType;
     ptrBuffer[8] = serviceSubtype;
 
-    const auto& appData = packet.getAppData();
-    const auto amountOfValidData = packet.getAmountOfValidData();
-    size_t bufferIndex = 9;
-    for (int i = 0; i < amountOfValidData; ++i) {
-      ptrBuffer[bufferIndex] = appData[i];
-      ++bufferIndex;
-    }
-
-    // last 2 bytes
-    auto packetErrorControl = packet.getPacketErrorControl();
-    // I assume previous that the std::copy has changed ptrBuffer's address
-    std::memcpy(&ptrBuffer[bufferIndex], &packetErrorControl, sizeof(packetErrorControl));
+    amountOfValidData = packet.getLength() - 2; // - errorcontrol
+    indexOfAppDataStart = 9;
   } else {
-    const auto& appData = packet.getAppData();
-    ptrBuffer += 6; // after main header because there is no data field header
-    std::copy(appData.begin(), appData.end(), ptrBuffer);
-
-    // last 2 bytes
-    auto packetErrorControl = packet.getPacketErrorControl();
-    // I assume that the previous std::copy has changed  ptrBuffer's address
-    std::memcpy(ptrBuffer, &packetErrorControl, sizeof(packetErrorControl));
+    amountOfValidData = packet.getLength() - 3 - 2; // - datafieldheader, - errorcontrol
+    indexOfAppDataStart = 6;
   }
+
+  for (int i = 0; i < amountOfValidData; ++i) {
+    ptrBuffer[indexOfAppDataStart + i] = appData[i];
+  }
+
+  const auto packetErrorControl = packet.getPacketErrorControl();
+  ptrBuffer[indexOfAppDataStart + amountOfValidData + 1] = packetErrorControl[1];
+  ptrBuffer[indexOfAppDataStart + amountOfValidData + 2] = packetErrorControl[2];
 }
 
 uint8_t PacketBufferIO::extractFieldFrom(std::byte inputByte, uint8_t startIndex,
