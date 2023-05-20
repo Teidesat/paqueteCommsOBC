@@ -30,7 +30,7 @@ PacketBufferIO::PacketBufferIO() {}
  * Note: extractFieldFrom() assumes that the rightmost bit is index 0 on
  *    each byte.
  */
-Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) {
+Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
 
   // **** TODO: measure if coarcing to bitset<> is faster for bit indexing than current method.
 

@@ -69,7 +69,7 @@ protected:
 // available on the test (packetBuffer):
 TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperly) {
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
@@ -92,7 +92,7 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperly) {
 TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKFALSE) {
   packetBuffer[6] = std::byte{0b10010000};
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
@@ -113,7 +113,7 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKFALSE) {
 TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKTRUE) {
   packetBuffer[6] = std::byte{0b10010001};
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
@@ -134,7 +134,7 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKTRUE) {
 TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSFALSEACKTRUE) {
   packetBuffer[6] = std::byte{0b00010001};
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
@@ -217,7 +217,7 @@ protected:
 
 TEST_P(PacketBufferIOWithDataFieldHeaderParametrizedTest, WritesCorrectly) {
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
 
   std::byte packetBuffer2[Packet::PACKET_SIZE];
   for (size_t i = 0; i < Packet::PACKET_SIZE; ++i) {
@@ -295,7 +295,7 @@ protected:
 
 TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, ReadsCorrectly) {
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
   EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
   EXPECT_EQ(packet.getAppIdSource(), 1);
@@ -317,7 +317,7 @@ TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, ReadsCorrectly) {
 
 TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, WritesCorrectly) {
   PacketBufferIO io;
-  Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
+  Packet packet = io.readPacket(packetBuffer);
 
   std::byte packetBuffer2[Packet::PACKET_SIZE];
   for (size_t i = 0; i < Packet::PACKET_SIZE; ++i) {
