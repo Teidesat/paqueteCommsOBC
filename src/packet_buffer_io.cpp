@@ -69,7 +69,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
       static_cast<uint16_t>(countMostSignificant << 8) | countLeastSignificant;
 
   size -= 6;
-  size_t packetIndex = 6;
+  size_t indexOfPacket;
 
   Packet::Bool8Enum ccsds;
   uint8_t pusVersion;
@@ -92,34 +92,42 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer, std::size_t size) 
     serviceSubtype = static_cast<uint8_t>(ptrBuffer[8]);
 
     size -= 3;
-    packetIndex = 9;
+    indexOfPacket = 9;
   } else {
     ccsds = Packet::Bool8Enum::FALSE;
     pusVersion = 1;
     ack = Packet::Bool8Enum::FALSE;
     serviceType = 0;
     serviceSubtype = 0;
+
+    indexOfPacket = 6;
   }
 
   std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
-  uint8_t amountOfInserted = 0;
-  while (size > 2) {
-    appData[packetIndex] = ptrBuffer[packetIndex];
-    ++packetIndex;
+  // TODO: Find a better way to insert only the necessary app data.
+
+  // insert the app data of buffer into appData array.
+  size_t amountOfInserted = 0;
+  size_t appDataIndex = 0;
+  while (size > 2) { // > 2 due to error control field being last and 2 bytes
+    appData[appDataIndex] = ptrBuffer[indexOfPacket];
+    ++appDataIndex;
+    ++indexOfPacket;
     ++amountOfInserted;
+    --size;
   }
-  // initialize remaining
+
+  // initialize the filler array bytes to 0
   for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfInserted; ++i) {
-    appData[packetIndex] = std::byte(0);
-    ++packetIndex;
+    appData[appDataIndex] = std::byte(0);
+    ++appDataIndex;
   }
 
   std::array<std::byte, 2> packetErrorControl;
-  packetErrorControl[0] = ptrBuffer[packetIndex];
-  ++packetIndex;
-  packetErrorControl[1] = ptrBuffer[packetIndex];
-  ++packetIndex;
+  packetErrorControl[1] = ptrBuffer[indexOfPacket];
+  ++indexOfPacket;
+  packetErrorControl[0] = ptrBuffer[indexOfPacket];
 
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
       sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,

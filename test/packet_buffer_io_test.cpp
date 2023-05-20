@@ -11,7 +11,7 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
    *    (subtype 1) that is as follows:
    * 
    *  version type dfh   appid length sequence_control ccsds pus_version ack type subtype  error
-   *    0      0    1     1, 2    8      (0b11, 1)        0       1        0   13     1      0
+   *    0      0    1     1, 2    8      (0b11, 2)        0       1        0   13     1      0
    * 
    * length = 9 - 1 = (ccsds, pus, ack, type, subtype)(3 octet) +
    *  (app. id)(2 octets according to ECSS-70-E-41A) +
@@ -27,16 +27,30 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
   for (size_t i = 0; i < Packet::PACKET_SIZE; ++i) {
     packetBuffer[i] = std::byte{0};
   }
-  packetBuffer[0] = std::byte{0b00110000}; // 001 0 1 000...    | version, type, dfh, 0, source...
-  packetBuffer[1] = std::byte{0b01000100}; // ...01 00010 0...  | ...source, destination, length...
-  packetBuffer[2] = std::byte{0b00000000}; // ...00000000...    | ...length...
-  packetBuffer[3] = std::byte{0b00010001}; // ...0001000 1...   | ...length, seq. ctrl. flags...
-  packetBuffer[4] = std::byte{0b10000000}; // ...1 0000000...   | ...seq. ctrl. flags, seq. ctrl. count...
-  packetBuffer[5] = std::byte{0b00000000}; // ...00000000...    | ...seq. ctrl. count...
-  packetBuffer[6] = std::byte{0b10001000}; // ...1 0 001 000... | ...seq. ctrl. count, ccsds, pus, ack...
-  packetBuffer[7] = std::byte{0b00000000}; // ...0 0000110...   | ...ack, type...
-  packetBuffer[8] = std::byte{0b10000000}; // ...1 0000000...   | ...type, subtype...
-  packetBuffer[9] = std::byte{0b10000000}; // ...1 0000000...   | ...subtype app data(...)
+  packetBuffer[0] = std::byte{0b00001000};	// XXX X X 0 XX... | std::byte = version, type, dfh, 0, source...
+  packetBuffer[1] = std::byte{0b00100010};	// ...XXX XXXXX    | std::byte = ...source, destination
+  packetBuffer[2] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
+  packetBuffer[3] = std::byte{0b00001000};	// ...XXXXXXXX     | std::byte = ...length
+  packetBuffer[4] = std::byte{0b11000000};	// XX XXXXXX...    | std::byte = seq_ctrl_flags, seq_ctrl_count...
+  packetBuffer[5] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
+  packetBuffer[6] = std::byte{0b00010000};	// X XXX XXXX      | std::byte = ccsds, pus, ack
+  packetBuffer[7] = std::byte{0b00001101};	// XXXXXXXX        | std::byte = type
+  packetBuffer[8] = std::byte{0b00000001};	// .XXXXXXX...     | std::byte = subtype
+
+  // app. id copy of the telecommand this packet is confirming as
+  // acceptance success since this test is not precedent to a telecommand,
+  // I will suppose the telecommand was from ground (app id 2) to an
+  // imaginary cubesat module of app id 1.
+  packetBuffer[9] = std::byte{0b00000000};	//
+  packetBuffer[10] = std::byte{0b01000001};	// copy of app. id. of telecommand
+
+  // sequence control copy of the telecommand this packet is confirming.
+  // I suppose it's standalone with a value of 1 for the telecommand
+  // being the first ever sent by this service, with this verification
+  // being the second ever.
+  packetBuffer[11] = std::byte{0b11000000}; //
+  packetBuffer[12] = std::byte{0b00000010}; // copy of count of telecommand
+
   PacketBufferIO io;
   Packet packet = io.readPacket(packetBuffer, Packet::PACKET_SIZE);
   EXPECT_EQ(packet.getVersionNumber(), 0);
@@ -45,7 +59,7 @@ TEST(PacketBufferIO, PacketBufferReadWorks) {
   EXPECT_EQ(packet.getAppIdDestination(), 2);
   EXPECT_EQ(packet.getLength(), 8);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
-  EXPECT_EQ(packet.getSequenceControlCount(), 1);
+  EXPECT_EQ(packet.getSequenceControlCount(), 2);
   EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
   EXPECT_EQ(packet.getPUSVersion(), 1);
   EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::FALSE);
