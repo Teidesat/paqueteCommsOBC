@@ -63,8 +63,6 @@ protected:
   std::byte packetBuffer[Packet::PACKET_SIZE];
 };
 
-// This is the test that will be created for each ack, ccsds combination
-// by using INSTANTIATE_TEST_SUITE_P()
 //
 // Because first argument is the fixture class, the protected members are
 // available on the test (packetBuffer):
