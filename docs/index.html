@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>paqueteCnC: cubesat TEIDESAT-I&#39;s packet library</title>
+<title>paqueteCnC: Design choices</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,17 +69,47 @@ $(function() {
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">cubesat TEIDESAT-I's packet library </div></div>
+  <div class="headertitle"><div class="title">Design choices </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> Marcos Barrios Lorenzo</p>
+<div class="textblock"><p><a class="anchor" id="md_docs_articles_design_choices"></a> Recopilation of design choices for the library.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
-Description</h1>
-<p><a class="el" href="class_packet.html">Packet</a> representation and buffer operations based on the ECSS-70-E-41A standard. See <a href="docs/packet_design_teidesat_I.pdf">the packet design document</a> pdf.</p>
+Construction of the packet</h1>
+<p>A buffer and a size was passed as argument to the packet constructor initially. But those are two responsibilities: buffer handling to get the information and then passing that information to the object, I don't want the packet to be related to the buffer.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
-Little-endian is required</h1>
-<p>TEIDESAT-I'S OBC is based on an ARM cortex m7, and ARM typically provides a pin to select little-endian or big-endian. However, the library assumes it is little-endian, so it is important to make sure that the microcontroller is set to little-endian. This is due to the library sometimes converts two <code>uint8_t</code> into a <code>uint16_t</code> by assuming that [0] is the least significant part, while [1] is more signiticant, which is incorrect if the system is little endian.</p>
-<p>There are plans to make it endian independent. </p>
+To create a new class or to extend the current class</h1>
+<p>Sometimes I have very similar classes, like a <a class="el" href="class_packet.html">Packet</a> with or without data field header. That's when I have to decide If i want to create a new class for each variant or just have a single class with extra boolean flags.</p>
+<p>If I create a new class, it is organized better, but the amount of classes starts to grow fast, which makes the system harder to understand at a glance. But if I don't, then the logic gets more conditional overtime.</p>
+<p>For example, I mentioned that the <a class="el" href="class_packet.html">Packet</a> class always contains the data field header, but I could two classes instead; one with and another without. ¿How often does a packet come with a data field header? If 90% of the time then it is probably better to have a single class, because the logic is easier and the amount of memory wasted is not much. If it was more like 50%, then it would probably make sense to have two different classes. And I believe 90% of time it has a data field header, so I stay at a single class.</p>
+<p>I'll the same class extended if it makes the logic simpler and the wasted memory is not much, otherwise a new class is probably better.</p>
+<h1><a class="anchor" id="autotoc_md3"></a>
+About mega packets</h1>
+<p>Sometimes it is required fit a big app. array data into multiple packets rather than just one. How do I implement it?</p>
+<p>I could have the <a class="el" href="class_packet.html">Packet</a> or PacketExtended class do it; receive a bigger appData value as constructor and then somehow make it distribute the data into various instances. But it would probably be too much responsability for a <a class="el" href="class_packet.html">Packet</a> class that should only hold the data and it's setters/getters.</p>
+<p>An alternative is to have the builder or another class handle the packet generation for the different parts of the big app. data. Since it is already in charge of configuring a single new packet, it would make sense for it to provide a way to "configure" various packets and with different parts of a common app. data. because it adds headers to a current packet, which can result in a packet being too big, which follows a new packet call.</p>
+<p>Another way is by using the builder director class, which knows the steps on how to build specific packets for specific services. It would know that to create two packets that belong to the same transmission sequence you would have to configure them both the same, but distributing the same app. data between the two. In other words, <b>it tells the builder to build specific packets that are related</b>. I go with this alternative.</p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Packet architecture</h1>
+<p>Initially I thought that having a low level packet included in a high level packet, and the later providing the operations that are most frequently used would be the best solution. But the problem it has is that the high level packet should have the high level data as a member so that it can be used without having to coarse the <code>std::byte</code> into <code>int</code> on each method call, which is what happens currently with the high level packet.</p>
+<p>An alternative would be to have two independent classes, like now, but both having all the fields, one on low level (<code>std::byte</code>) and the other on high level (<code>uint8_t</code>), but two representations is not be better because there is no difference in size between a <code>std::byte</code> and <code>uint8_t</code> so it makes no sense to have one for transmissions and the other for normal use.</p>
+<p>The main reason I decided to have low level and high level is to avoid semantic errors like doing arithmetic on something that is not a number. But I have come to notice that most fields are actually numbers, and if I wanted to have a character then I could just use <code>char</code>. It would be simpler and thus most likely to have less bugs. So I now change the packet representation to use <code>uint8_t</code> rather than <code>std::byte</code> when the field is actually a number.</p>
+<p>Back to two representations; <code>std::byte</code> is the same as <code>uint8_t</code>, but it is not right to use one of those types for a field that is only 1 bit. Also, the packet design mentions the concept of padding when sizing is not done in multiples of octets. That's why I should have a std::byte representation BUT that represents more than one field, leaving the methods to handle the specific fields. This lower level class should be only used for transmissions, as it's size is smaller but there is overhead when calling it's methods. This approach would end up with a <code><a class="el" href="class_packet.html">Packet</a></code> for high level and <code>PacketRaw</code> for low level.</p>
+<p>However, having a low level representation is redundant because it means having a class that has as member the fields with the exact size, which means using a single byte for more than one field. But why have a representation of packet with the split fields but no semantic? I would want both the split fields AND the semantic (numbers and maybe chars, not just std::bytes), otherwise I could just use an <code>std::array&lt;std::byte&gt;</code> for my low level packet implementation. This is the approach I take; <code><a class="el" href="class_packet.html">Packet</a></code> for high level, <code><a class="el" href="class_packet_buffer_i_o.html">PacketBufferIO</a></code> for handling low level packets, which are <code>std::array&lt;std::byte&gt;</code>, the best representation for memory efficient transmissions.</p>
+<h1><a class="anchor" id="autotoc_md5"></a>
+About coarcing everything into std::byte to push into Packet's App. data</h1>
+<p>I decided to coarce everything to <code>std::byte</code> before pushing to app. data in <code><a class="el" href="class_packet.html">Packet</a></code> to keep the app data handling code as simple as possible. An alternative I thought of is using <code>std::variant</code>, but not knowing what's the type on compile time would bring some if else's that can be avoided by using type coercion.</p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+To implement Packet extended for handling packets of different services or not</h1>
+<p>I can define one class for handling the fields of the packets of each different service, or I could leave that part for the services to handle the application data field on their own. Taking into account that the app. data field will typically be associated with only one service, then I can easily implement the first. In other words: a packet will not be multipurpose, to keep things simple. For example, If I wanted to send information about housekeeping but also about the command verification service, then two packets would have to be sent. Otherwise, the code would have to check the app. data. in detail and somehow try to split the fields depending on what service they are from. So having multiple classes for representing packets of different services is viable.</p>
+<h1><a class="anchor" id="autotoc_md7"></a>
+To implement a polymorph method for wrapping Packets on corresponding Packet Extended</h1>
+<p>I could define on <code><a class="el" href="class_packet_builder_director.html">PacketBuilderDirector</a></code> (since packet wrapping is it's responsibility) a method that returns at runtime the proper wrapper for the received <code><a class="el" href="class_packet.html">Packet</a></code>, but I'd rather not use dynamic memory since could be slower than the stack. Instead I will rely on giving the services the tools to instance the corresponding wrapper by defining a method for each wrapper.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Packet wrapping for subtypes</h1>
+<p>I decided to implement a new class fore ach subtype packet of a service because the structure is different and it is simpler than having one class with all the methods.</p>
+<h1><a class="anchor" id="autotoc_md9"></a>
+Array representation order of the bytes</h1>
+<p>Depending on the order of array storage, I could have at index 0 the bytes starting from version, or at index 0 the bytes starting from error control field. Both are equally valid, so I decide to have index 0 start from version. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

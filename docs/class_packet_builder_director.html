@@ -84,11 +84,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a98d209479ec5d8dcb9868fd5a0b757b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#a98d209479ec5d8dcb9868fd5a0b757b9">makeVerificationSuccess</a> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount)</td></tr>
 <tr class="memdesc:a98d209479ec5d8dcb9868fd5a0b757b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make verification packet acceptance success.  <br /></td></tr>
 <tr class="separator:a98d209479ec5d8dcb9868fd5a0b757b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae78cbbaeb1f166109a59d56ab5edde61"><td class="memItemLeft" align="right" valign="top"><a id="ae78cbbaeb1f166109a59d56ab5edde61" name="ae78cbbaeb1f166109a59d56ab5edde61"></a>
-<a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><b>makeVerificationFailure</b> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
+<tr class="memitem:ae78cbbaeb1f166109a59d56ab5edde61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#ae78cbbaeb1f166109a59d56ab5edde61">makeVerificationFailure</a> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
+<tr class="memdesc:ae78cbbaeb1f166109a59d56ab5edde61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make verification packet acceptance failure.  <br /></td></tr>
 <tr class="separator:ae78cbbaeb1f166109a59d56ab5edde61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1a85370a87a76ff580b695572622841"><td class="memItemLeft" align="right" valign="top"><a id="ad1a85370a87a76ff580b695572622841" name="ad1a85370a87a76ff580b695572622841"></a>
-<a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><b>makeVerificationFailure</b> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, std::vector&lt; std::byte &gt; &amp;&amp;parameters)</td></tr>
+<tr class="memitem:ad1a85370a87a76ff580b695572622841"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder_director.html#ad1a85370a87a76ff580b695572622841">makeVerificationFailure</a> (const uint8_t appIdSource, const uint8_t appIdDestination, const uint16_t sequenceCount, const uint8_t code, std::vector&lt; std::byte &gt; &amp;&amp;parameters)</td></tr>
+<tr class="memdesc:ad1a85370a87a76ff580b695572622841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make verification packet acceptance failure.  <br /></td></tr>
 <tr class="separator:ad1a85370a87a76ff580b695572622841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -116,6 +116,126 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>* std::vector&lt;Packet&gt; </dd></dl>
+
+</div>
+</div>
+<a id="ae78cbbaeb1f166109a59d56ab5edde61" name="ae78cbbaeb1f166109a59d56ab5edde61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae78cbbaeb1f166109a59d56ab5edde61">&#9670;&#160;</a></span>makeVerificationFailure() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a> PacketBuilderDirector::makeVerificationFailure </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>sequenceCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::byte &gt; &amp;&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Make verification packet acceptance failure. </p>
+<p>It swaps that source and destination by default on the app. Id. field that is going into the app data because this method assumes that the packet that is being created is a verification for a packet that was for the same module that is creating this verification packet.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">appIdSource</td><td></td></tr>
+    <tr><td class="paramname">appIdDestination</td><td></td></tr>
+    <tr><td class="paramname">sequenceCount</td><td></td></tr>
+    <tr><td class="paramname">code</td><td></td></tr>
+    <tr><td class="paramname">parameters</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a> </dd></dl>
+
+</div>
+</div>
+<a id="ad1a85370a87a76ff580b695572622841" name="ad1a85370a87a76ff580b695572622841"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1a85370a87a76ff580b695572622841">&#9670;&#160;</a></span>makeVerificationFailure() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a> PacketBuilderDirector::makeVerificationFailure </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>appIdDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>sequenceCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::byte &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Make verification packet acceptance failure. </p>
+<p>It swaps that source and destination by default on the app. Id. field that is going into the app data because this method assumes that the packet that is being created is a verification for a packet that was for the same module that is creating this verification packet.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">appIdSource</td><td></td></tr>
+    <tr><td class="paramname">appIdDestination</td><td></td></tr>
+    <tr><td class="paramname">sequenceCount</td><td></td></tr>
+    <tr><td class="paramname">code</td><td></td></tr>
+    <tr><td class="paramname">parameters</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_packet_extended_verification1.html">PacketExtendedVerification1</a> </dd></dl>
 
 </div>
 </div>
@@ -152,7 +272,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Make verification packet acceptance success. </p>
-<p>SequenceFlag is stand-alone by default</p>
+<p>It swaps that source and destination by default on the app. Id. field that is going into the app data because this method assumes that the packet that is being created is a verification for a packet that was for the same module that is creating this verification packet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">appIdSource</td><td></td></tr>

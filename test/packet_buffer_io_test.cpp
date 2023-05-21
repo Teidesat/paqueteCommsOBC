@@ -14,6 +14,7 @@ protected:
      * Define a packet of verification service acceptance success
      *    (subtype 1) that is as follows:
      * 
+     * (service type 13 is not verification service, but keep it for now)
      *  version type dfh   appid sequence_control length  ccsds pus_version ack type subtype  error
      *    0      0    1     1, 2    (0b11, 2)       9       0       1        0   13     1     794 
      * 
@@ -166,7 +167,8 @@ protected:
     /**
      * Define a packet of verification service acceptance success
      *    (subtype 1) that is as follows:
-     * 
+     *
+     * (service type 13 is not verification service, but keep it for now)
      *  version type dfh   appid sequence_control length  ccsds pus_version ack type subtype  error
      *    0      0    1     1, 2    (0b11, 2)       9       0       1        0   13     1     794 
      * 

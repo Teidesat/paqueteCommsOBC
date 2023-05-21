@@ -10,10 +10,9 @@ Packet& PacketBuilder::getPacket() {
 }
 
 void PacketBuilder::newPacket(const uint8_t versionNumber, const uint8_t appIdSource,
-      const uint8_t appIdDestination,
-      const Packet::SequenceFlags sequenceControlFlags,
-      const uint16_t sequenceControlCount
-) {
+    const uint8_t appIdDestination,
+    const Packet::SequenceFlags sequenceControlFlags,
+    const uint16_t sequenceControlCount) {
   packet_ = Packet();
   packet_.setVersionNumber(versionNumber);
   packet_.setAppIdSource(appIdSource);
@@ -30,34 +29,48 @@ void PacketBuilder::setDataFieldHeader(const Packet::Bool8Enum ack,
   packet_.setServiceSubtype(serviceSubtype);
 }
 
-void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
-      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount) {
+void PacketBuilder::addCommandVerificationAppData(const uint8_t appIdSource,
+    const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
+    const uint16_t sequenceCount) {
   packet_.pushData(std::byte(appIdSource));
+  packet_.pushData(std::byte(appIdDestination));
   packet_.pushData(std::byte(sequenceFlags));
   std::array<std::byte, 2> temp;
-  std::memcpy(&temp, &sequenceCount, sizeof(sequenceCount));
+  temp[0] = static_cast<std::byte>(sequenceCount >> 8);
+  temp[1] = static_cast<std::byte>(sequenceCount);
   packet_.pushData(temp);
 }
 
-void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
-      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
-      const uint8_t code) {
-  this->addCommandVerificationHeader(appIdSource, sequenceFlags, sequenceCount);
+void PacketBuilder::addCommandVerificationAppData(const uint8_t appIdSource,
+    const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
+    const uint16_t sequenceCount, const uint8_t code) {
+  packet_.pushData(std::byte(appIdSource));
+  packet_.pushData(std::byte(appIdDestination));
+  packet_.pushData(std::byte(sequenceFlags));
+  std::array<std::byte, 2> temp;
+  temp[0] = static_cast<std::byte>(sequenceCount >> 8);
+  temp[1] = static_cast<std::byte>(sequenceCount);
   packet_.pushData(std::byte(code));
 }
 
-void PacketBuilder::addCommandVerificationHeader(const uint8_t appIdSource,
-      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
-      const uint8_t code, const std::vector<std::byte>& parameters) {
-  this->addCommandVerificationHeader(appIdSource, sequenceFlags, sequenceCount, code);
-  for (size_t i = 0; i < parameters.size(); ++i) {
+void PacketBuilder::addCommandVerificationAppData(const uint8_t appIdSource,
+    const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
+    const uint16_t sequenceCount, const uint8_t code,
+    const std::vector<std::byte>& parameters) {
+  packet_.pushData(std::byte(appIdSource));
+  packet_.pushData(std::byte(appIdDestination));
+  packet_.pushData(std::byte(sequenceFlags));
+  std::array<std::byte, 2> temp;
+  temp[0] = static_cast<std::byte>(sequenceCount >> 8);
+  temp[1] = static_cast<std::byte>(sequenceCount);
+  packet_.pushData(std::byte(code));  for (size_t i = 0; i < parameters.size(); ++i) {
     packet_.pushData(parameters[i]);
   }
 }
 
 // first byte may be the amount of addresses
 // uint8_t because 5 bits are used for module addresses currently on the packet.
-void PacketBuilder::addCommandDistributionHeader(
+void PacketBuilder::addCommandDistributionAppData(
     const std::vector<uint8_t>& addresses) {
   if (addresses.size() > 1) {
     packet_.pushData(std::byte(addresses.size()));
@@ -67,21 +80,7 @@ void PacketBuilder::addCommandDistributionHeader(
   }
 }
 
-// first byte may be the amount of addresses
-template <typename T>
-void PacketBuilder::addCommandDistributionHeader(
-    const pairs_t<uint8_t, T>& addressAndData
-) {
-  if (addressAndData.size() > 1) {
-    packet_.pushData(std::byte(addressAndData.size()));
-  }
-  for (size_t i = 0; i < addressAndData.size(); ++i) {
-    packet_.pushData(addressAndData[i].first);
-    packet_.pushData(addressAndData[i].second);
-  }
-}
-
-void PacketBuilder::addCommandDistributionHeader(
+void PacketBuilder::addCommandDistributionAppData(
     const pairs_t<int, std::byte>& lineIDAndDuration) {
   for (size_t i = 0; i < lineIDAndDuration.size(); ++i) {
     packet_.pushData(std::byte(lineIDAndDuration[i].first));
@@ -89,7 +88,7 @@ void PacketBuilder::addCommandDistributionHeader(
   }
 }
 
-void PacketBuilder::addHousekeepingReportHeader(uint16_t structureId,
+void PacketBuilder::addHousekeepingReportAppData(uint16_t structureId,
     PacketExtendedHousekeeping25::GenerationMode mode,
     const std::vector<std::byte>& parameters) {
   packet_.pushData(structureId);

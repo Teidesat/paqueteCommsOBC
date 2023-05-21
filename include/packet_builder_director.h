@@ -8,6 +8,11 @@
  * It handles type conversion to std::byte. An exception is the
  * makeMegaPackete function. 
  * 
+ * I general, it allows creation of specific packets by passing less
+ *    arguments because it assumes for example, that version is 0,
+ *    that the packet is stand_alone and that it contains a
+ *    datafieldheader.
+ * 
  */
 
 #ifndef PACKET_BUILDER_DIRECTOR_H
@@ -35,7 +40,11 @@ public:
   /**
    * @brief Make verification packet acceptance success
    * 
-   * SequenceFlag is stand-alone by default
+   * It swaps that source and destination by default  on the
+   *    app. Id. field that is going into the app data because
+   *    this method assumes that the packet that is being created
+   *    is a verification for a packet that was for the same module
+   *    that is creating this verification packet.
    * 
    * @param appIdSource 
    * @param appIdDestination 
@@ -46,11 +55,43 @@ public:
       const uint8_t appIdSource, const uint8_t appIdDestination,
       const uint16_t sequenceCount);
 
+  /**
+   * @brief Make verification packet acceptance failure.
+   * 
+   * It swaps that source and destination by default  on the
+   *    app. Id. field that is going into the app data because
+   *    this method assumes that the packet that is being created
+   *    is a verification for a packet that was for the same module
+   *    that is creating this verification packet.
+   * 
+   * @param appIdSource 
+   * @param appIdDestination 
+   * @param sequenceCount 
+   * @param code 
+   * @param parameters 
+   * @return PacketExtendedVerification1 
+   */
   PacketExtendedVerification1 makeVerificationFailure(
       const uint8_t appIdSource, const uint8_t appIdDestination,
       const uint16_t sequenceCount, const uint8_t code,
       const std::vector<std::byte>& parameters);
 
+  /**
+   * @brief Make verification packet acceptance failure.
+   * 
+   * It swaps that source and destination by default  on the
+   *    app. Id. field that is going into the app data because
+   *    this method assumes that the packet that is being created
+   *    is a verification for a packet that was for the same module
+   *    that is creating this verification packet.
+   *
+   * @param appIdSource 
+   * @param appIdDestination 
+   * @param sequenceCount 
+   * @param code 
+   * @param parameters 
+   * @return PacketExtendedVerification1 
+   */
   PacketExtendedVerification1 makeVerificationFailure(
       const uint8_t appIdSource, const uint8_t appIdDestination,
       const uint16_t sequenceCount, const uint8_t code,
