@@ -43,7 +43,9 @@ PacketExtendedVerification1 PacketBuilderDirector::makeVerificationSuccess(
     const uint16_t sequenceCount) {
   builder_.newPacket(0, appIdSource, appIdDestination,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount);
-  builder_.addCommandVerificationHeader(appIdSource,
+  
+  // it swaps app id's
+  builder_.addCommandVerificationAppData(appIdDestination, appIdSource,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount);
   return PacketExtendedVerification1(builder_.getPacket());
 }
@@ -54,7 +56,9 @@ PacketExtendedVerification1 PacketBuilderDirector::makeVerificationFailure(
     const std::vector<std::byte>& parameters) {
   builder_.newPacket(0, appIdSource, appIdDestination,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount);
-  builder_.addCommandVerificationHeader(appIdSource,
+
+  // it swaps app id's
+  builder_.addCommandVerificationAppData(appIdDestination, appIdSource,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount, code, parameters);
   return PacketExtendedVerification1(builder_.getPacket());
 }
@@ -66,7 +70,9 @@ PacketExtendedVerification1 PacketBuilderDirector::makeVerificationFailure(
     std::vector<std::byte>&& parameters) {
   builder_.newPacket(0, appIdSource, appIdDestination,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount);
-  builder_.addCommandVerificationHeader(appIdSource,
+  
+  // it swaps app id's.
+  builder_.addCommandVerificationAppData(appIdDestination, appIdSource,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount, code,
       std::move(parameters));
   return PacketExtendedVerification1(builder_.getPacket());

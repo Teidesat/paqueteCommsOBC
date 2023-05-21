@@ -59,8 +59,9 @@ public:
    * ******** Telecommand Verification Service headers. ********
    *
   */
-  void addCommandVerificationHeader(const uint8_t appIdSource,
-      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount);
+  void addCommandVerificationAppData(const uint8_t appIdSource,
+      const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
+      const uint16_t sequenceCount);
 
   /**
    * @brief 
@@ -70,9 +71,9 @@ public:
    * @param sequenceCount 
    * @param code error code
    */
-  void addCommandVerificationHeader(const uint8_t appIdSource,
-      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
-      const uint8_t code);
+  void addCommandVerificationAppData(const uint8_t appIdSource,
+      const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
+      const uint16_t sequenceCount, const uint8_t code);
 
   /**
    * @brief 
@@ -83,9 +84,10 @@ public:
    * @param code error code
    * @param parameters
    */
-  void addCommandVerificationHeader(const uint8_t appIdSource,
-      const Packet::SequenceFlags sequenceFlags, const uint16_t sequenceCount,
-      const uint8_t code, const std::vector<std::byte>& parameters);
+  void addCommandVerificationAppData(const uint8_t appIdSource,
+      const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
+      const uint16_t sequenceCount, const uint8_t code,
+      const std::vector<std::byte>& parameters);
 
   /**
    * ******** Device command Distribution Service headers. ********
@@ -96,7 +98,7 @@ public:
    * on-off register
    *
    */
-  void addCommandDistributionHeader(const std::vector<uint8_t>& addresses);
+  void addCommandDistributionAppData(const std::vector<uint8_t>& addAppData);
 
   /** register load
    * It represents a setter; register[pair.first] = pair.second.
@@ -106,10 +108,10 @@ public:
    * exact types allowed, I set the type as std::byte but it may change after
    * I have read the clause 23.
    * 
-   * @pre addressAndData.size() <= Packet::APP_DATA_SIZE
+   * @pre addressAAppData.size() <= Packet::APP_DATA_SIZE
    */
   template<typename T>
-  void addCommandDistributionHeader(const pairs_t<uint8_t, T>& addressAndData);
+  void addCommandDistributionAppData(const pairs_t<uint8_t, T>& addressAAppData);
 
   /** CPDU
    * It represents a sequence of pulses on certain output line.
@@ -118,7 +120,7 @@ public:
    * 
    * @pre lineIDAndDuration.size() <= Packet::APP_DATA_SIZE
    */
-  void addCommandDistributionHeader(const pairs_t<int, std::byte>& lineIDAndDuration);
+  void addCommandDistributionAppData(const pairs_t<int, std::byte>& lineIDAndDuration);
 
   /**
    * ******** Housekeeping & diagnostic data reporting service headers ********
@@ -132,7 +134,7 @@ public:
    *  @param structureID int16_t for not because I don't know how many we need.
    *  @param mode
    */
-  void addHousekeepingReportHeader(uint16_t structureId,
+  void addHousekeepingReportAppData(uint16_t structureId,
       PacketExtendedHousekeeping25::GenerationMode mode,
       const std::vector<std::byte>& parameters);
 
