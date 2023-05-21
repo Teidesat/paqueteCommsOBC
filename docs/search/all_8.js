@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['writepacket_0',['writePacket',['../class_packet_buffer_i_o.html#ad2c62b83b480713ddc6cb6d1eecfcdb7',1,'PacketBufferIO']]]
+  ['readpacket_0',['readPacket',['../class_packet_buffer_i_o.html#a15b153795c3802f55c3003aa396ae3ee',1,'PacketBufferIO']]]
 ];
