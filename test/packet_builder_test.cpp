@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <vector>
+
 #include "../include/packet.h"
 #include "../include/packet_builder.h"
 
@@ -143,4 +145,112 @@ TEST_F(PacketBuilderTest, CanMakeVerificationAcceptanceSuccessTwice) {
   EXPECT_EQ(appData[7], std::byte(Packet::SequenceFlags::INITIAL));
   EXPECT_EQ(appData[8], std::byte(0x00));
   EXPECT_EQ(appData[9], std::byte(0x02));
+}
+
+// Register on/off
+
+TEST_F(PacketBuilderTest, CanMakeCommandDistributionOnOffFromScratch) {
+  std::vector<uint8_t> addresses;
+
+  // add 7 arbitrary addresses
+  for (size_t i = 0; i < 7; ++i) {
+    addresses.push_back(static_cast<uint8_t>(i + 1));
+  }
+  builder.addCommandDistributionAppData(addresses);
+  auto& packet = builder.getPacket();
+  const auto appData = packet.getAppData();
+  EXPECT_EQ(appData[0], std::byte(0x07)); // amount of addresses
+  EXPECT_EQ(appData[1], std::byte(0x01));
+  EXPECT_EQ(appData[2], std::byte(0x02));
+  EXPECT_EQ(appData[3], std::byte(0x03));
+  EXPECT_EQ(appData[4], std::byte(0x04));
+  EXPECT_EQ(appData[5], std::byte(0x05));
+  EXPECT_EQ(appData[6], std::byte(0x06));
+  EXPECT_EQ(appData[7], std::byte(0x07));
+}
+
+TEST_F(PacketBuilderTest, CanMakeCommandDistributionOnOffTwice) {
+  std::vector<uint8_t> addresses;
+
+  // add 7 arbitrary addresses
+  for (size_t i = 0; i < 7; ++i) {
+    addresses.push_back(static_cast<uint8_t>(i + 1));
+  }
+  builder.addCommandDistributionAppData(addresses);
+  builder.addCommandDistributionAppData(addresses);
+  auto& packet = builder.getPacket();
+  const auto appData = packet.getAppData();
+  EXPECT_EQ(appData[8], std::byte(0x07)); // amount of addresses
+  EXPECT_EQ(appData[9], std::byte(0x01));
+  EXPECT_EQ(appData[10], std::byte(0x02));
+  EXPECT_EQ(appData[11], std::byte(0x03));
+  EXPECT_EQ(appData[12], std::byte(0x04));
+  EXPECT_EQ(appData[13], std::byte(0x05));
+  EXPECT_EQ(appData[14], std::byte(0x06));
+  EXPECT_EQ(appData[15], std::byte(0x07));
+}
+
+// If only one address then a length byte should not be pushed because there
+// is no need for it.
+TEST_F(PacketBuilderTest, CanMakeCommandDistributionOneAddressDoesNotIncludeLengthByte) {
+  std::vector<uint8_t> addresses;
+  addresses.push_back(14);
+  builder.addCommandDistributionAppData(addresses);
+  auto& packet = builder.getPacket();
+  const auto appData = packet.getAppData();
+  EXPECT_EQ(appData[0], std::byte(0xE));
+}
+
+// Register load
+
+TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadFromScratch) {
+  std::vector<std::pair<uint8_t, uint8_t>> addressesAndDataToLoad;
+
+  // add 7 arbitrary addresses with 7 arbitrary datas
+  for (size_t i = 0; i < 2; ++i) {
+    addressesAndDataToLoad.push_back(std::pair<uint8_t, uint8_t>{i + 1, (7 - i + 1) + 3});
+  }
+  builder.addCommandDistributionAppData(addressesAndDataToLoad);
+  auto& packet = builder.getPacket();
+  const auto appData = packet.getAppData();
+  EXPECT_EQ(appData[0], std::byte(0x02)); // amount of addresses
+  EXPECT_EQ(appData[1], std::byte(0x01)); // address1
+  EXPECT_EQ(appData[2], std::byte(0x0B)); // data1
+  EXPECT_EQ(appData[3], std::byte(0x02)); // address2
+  EXPECT_EQ(appData[4], std::byte(0x0A)); // data2
+}
+
+TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadTwice) {
+  std::vector<std::pair<uint8_t, uint8_t>> addressesAndDataToLoad;
+
+  // add 7 arbitrary addresses with 7 arbitrary datas
+  for (size_t i = 0; i < 2; ++i) {
+    addressesAndDataToLoad.push_back(std::pair<uint8_t, uint8_t>{i + 1, (7 - i + 1) + 3});
+  }
+  builder.addCommandDistributionAppData(addressesAndDataToLoad);
+  builder.addCommandDistributionAppData(addressesAndDataToLoad);
+  auto& packet = builder.getPacket();
+  const auto appData = packet.getAppData();
+  EXPECT_EQ(appData[5], std::byte(0x02)); // amount of addresses
+  EXPECT_EQ(appData[6], std::byte(0x01)); // address1
+  EXPECT_EQ(appData[7], std::byte(0x0B)); // data1
+  EXPECT_EQ(appData[8], std::byte(0x02)); // address2
+  EXPECT_EQ(appData[9], std::byte(0x0A)); // data2
+}
+
+// If only one address then a length byte should not be pushed because there
+// is no need for it.
+TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadOneAdressDoesNotIncludeLengthByte) {
+  std::vector<std::pair<uint8_t, uint8_t>> addressesAndDataToLoad;
+
+  // add 7 arbitrary addresses with 7 arbitrary datas
+  for (size_t i = 0; i < 1; ++i) {
+    addressesAndDataToLoad.push_back(std::pair<uint8_t, uint8_t>{i + 1, (7 - i + 1) + 3});
+  }
+  builder.addCommandDistributionAppData(addressesAndDataToLoad);
+  auto& packet = builder.getPacket();
+  const auto appData = packet.getAppData();
+  EXPECT_EQ(appData[0], std::byte(0x01)); // address1
+  EXPECT_EQ(appData[1], std::byte(0x0B)); // data1
+  EXPECT_EQ(appData[2], std::byte(0x00)); // should be 0
 }

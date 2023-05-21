@@ -14,7 +14,13 @@ Packet::Packet() :
   serviceType_(0),
   serviceSubtype_(0),
   appDataIndex_(0)
-{}
+{
+  for (size_t i = 0; i < Packet::APP_DATA_SIZE; ++i) {
+    appData_[i] = std::byte(0);
+  }
+  packetErrorControl_[0] = std::byte(0);
+  packetErrorControl_[1] = std::byte(0);
+}
 
 Packet::Packet(
   const uint8_t versionNumber,

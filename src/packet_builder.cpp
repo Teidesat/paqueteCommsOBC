@@ -80,20 +80,6 @@ void PacketBuilder::addCommandDistributionAppData(
   }
 }
 
-// first byte may be the amount of addresses
-template <typename T>
-void PacketBuilder::addCommandDistributionAppData(
-    const pairs_t<uint8_t, T>& addressAndData
-) {
-  if (addressAndData.size() > 1) {
-    packet_.pushData(std::byte(addressAndData.size()));
-  }
-  for (size_t i = 0; i < addressAndData.size(); ++i) {
-    packet_.pushData(addressAndData[i].first);
-    packet_.pushData(addressAndData[i].second);
-  }
-}
-
 void PacketBuilder::addCommandDistributionAppData(
     const pairs_t<int, std::byte>& lineIDAndDuration) {
   for (size_t i = 0; i < lineIDAndDuration.size(); ++i) {

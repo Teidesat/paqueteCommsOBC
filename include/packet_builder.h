@@ -110,12 +110,15 @@ public:
    * 
    * @pre addressAAppData.size() <= Packet::APP_DATA_SIZE
    */
-  template<typename T>
-  void addCommandDistributionAppData(const pairs_t<uint8_t, T>& addressAAppData);
+  template <typename T>
+  void addCommandDistributionAppData(const pairs_t<uint8_t, T>& addressAndData);
 
   /** CPDU
    * It represents a sequence of pulses on certain output line.
-   *
+   * 
+   * Unline register load, this does not add a length as first byte if higher than
+   *    one, thus a it is different method than the register load one.
+   * 
    * I use int here because I am not sure about how many lines there will be
    * 
    * @pre lineIDAndDuration.size() <= Packet::APP_DATA_SIZE
@@ -141,5 +144,18 @@ public:
 private:
   Packet packet_;
 };
+
+// first byte may be the amount of addresses
+template <typename T>
+void PacketBuilder::addCommandDistributionAppData(
+    const pairs_t<uint8_t, T>& addressAndData) {
+  if (addressAndData.size() > 1) {
+    packet_.pushData(static_cast<std::byte>(addressAndData.size()));
+  }
+  for (size_t i = 0; i < addressAndData.size(); ++i) {
+    packet_.pushData(static_cast<std::byte>(addressAndData[i].first));
+    packet_.pushData(static_cast<std::byte>(addressAndData[i].second));
+  }
+}
 
 #endif
