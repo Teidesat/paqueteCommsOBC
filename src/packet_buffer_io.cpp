@@ -50,9 +50,6 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
 
   uint8_t appIdDestination = extractFieldFrom(ptrBuffer[1], 0, 5);
 
-  // because length is 2 bytes and not 1 then calculate first least significant
-  // and after that the more significant, then memcpy on the allocation.
-
   uint8_t flags = static_cast<uint8_t>(ptrBuffer[2] >> 6);
   Packet::SequenceFlags sequenceControlFlags =
       static_cast<Packet::SequenceFlags>(flags);
@@ -63,6 +60,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
       static_cast<uint16_t>(countMostSignificant << 8) | countLeastSignificant;
 
   // **** TODO: measure whether it is faster to cast or to use a pointer with memcpy.
+
   uint16_t length =
       (static_cast<uint16_t>(ptrBuffer[4]) << 8) |
       static_cast<uint8_t>(ptrBuffer[5]);

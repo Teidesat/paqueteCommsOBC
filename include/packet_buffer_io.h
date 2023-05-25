@@ -8,8 +8,6 @@
 #ifndef PACKET_BUFFER_IO_H
 #define PACKET_BUFFER_IO_H
 
-#include <type_traits>
-
 #include "packet.h"
 
 class PacketBufferIO {

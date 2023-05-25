@@ -103,9 +103,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b
 <tr class="separator:a5df67dec8275afe61300690bf29efe9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6066b3f032c8630ab6a9780b2a96dd0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a6066b3f032c8630ab6a9780b2a96dd0a">addCommandDistributionAppData</a> (const std::vector&lt; uint8_t &gt; &amp;addAppData)</td></tr>
 <tr class="separator:a6066b3f032c8630ab6a9780b2a96dd0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f172ba833eccdf110fcbc4db268602a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a6f172ba833eccdf110fcbc4db268602a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a6f172ba833eccdf110fcbc4db268602a">addCommandDistributionAppData</a> (const pairs_t&lt; uint8_t, T &gt; &amp;addressAAppData)</td></tr>
-<tr class="separator:a6f172ba833eccdf110fcbc4db268602a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d37f94f3336b53307f199aa68308e1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa7d37f94f3336b53307f199aa68308e1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#aa7d37f94f3336b53307f199aa68308e1">addCommandDistributionAppData</a> (const pairs_t&lt; uint8_t, T &gt; &amp;addressAndData)</td></tr>
+<tr class="separator:aa7d37f94f3336b53307f199aa68308e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05eed72245d32c9ddcf1cdbae2fa2947"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a05eed72245d32c9ddcf1cdbae2fa2947">addCommandDistributionAppData</a> (const pairs_t&lt; int, std::byte &gt; &amp;lineIDAndDuration)</td></tr>
 <tr class="separator:a05eed72245d32c9ddcf1cdbae2fa2947"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fbd1de3eb216556ec58b3a250287d2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_packet_builder.html#a9fbd1de3eb216556ec58b3a250287d2a">addHousekeepingReportAppData</a> (uint16_t structureId, PacketExtendedHousekeeping25::GenerationMode mode, const std::vector&lt; std::byte &gt; &amp;parameters)</td></tr>
@@ -129,13 +129,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataFieldHeader</b
       </table>
 </div><div class="memdoc">
 <p>CPDU It represents a sequence of pulses on certain output line.</p>
+<p>Unline register load, this does not add a length as first byte if higher than one, thus a it is different method than the register load one.</p>
 <p>I use int here because I am not sure about how many lines there will be</p>
 <dl class="section pre"><dt>Precondition</dt><dd>lineIDAndDuration.size() &lt;= Packet::APP_DATA_SIZE </dd></dl>
 
 </div>
 </div>
-<a id="a6f172ba833eccdf110fcbc4db268602a" name="a6f172ba833eccdf110fcbc4db268602a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f172ba833eccdf110fcbc4db268602a">&#9670;&#160;</a></span>addCommandDistributionAppData() <span class="overload">[2/3]</span></h2>
+<a id="aa7d37f94f3336b53307f199aa68308e1" name="aa7d37f94f3336b53307f199aa68308e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7d37f94f3336b53307f199aa68308e1">&#9670;&#160;</a></span>addCommandDistributionAppData() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,7 +147,7 @@ template&lt;typename T &gt; </div>
           <td class="memname">void PacketBuilder::addCommandDistributionAppData </td>
           <td>(</td>
           <td class="paramtype">const pairs_t&lt; uint8_t, T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>addressAAppData</em></td><td>)</td>
+          <td class="paramname"><em>addressAndData</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
