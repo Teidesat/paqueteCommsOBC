@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 
+// Call the default constructor in the class declaration
 PacketBuilder::PacketBuilder() {}
 
 Packet& PacketBuilder::getPacket() {
@@ -35,7 +36,7 @@ void PacketBuilder::addCommandVerificationAppData(const uint8_t appIdSource,
   packet_.pushData(std::byte(appIdSource));
   packet_.pushData(std::byte(appIdDestination));
   packet_.pushData(std::byte(sequenceFlags));
-  std::array<std::byte, 2> temp;
+  std::array<std::byte, 2> temp; // Initialize temp -> std::array<std::byte, 2> temp{};
   temp[0] = static_cast<std::byte>(sequenceCount >> 8);
   temp[1] = static_cast<std::byte>(sequenceCount);
   packet_.pushData(temp);
@@ -47,7 +48,8 @@ void PacketBuilder::addCommandVerificationAppData(const uint8_t appIdSource,
   packet_.pushData(std::byte(appIdSource));
   packet_.pushData(std::byte(appIdDestination));
   packet_.pushData(std::byte(sequenceFlags));
-  std::array<std::byte, 2> temp;
+  std::array<std::byte, 2> temp; // Initialize temp -> std::array<std::byte, 2> temp{};
+  // Also, temp is not really used here (?)
   temp[0] = static_cast<std::byte>(sequenceCount >> 8);
   temp[1] = static_cast<std::byte>(sequenceCount);
   packet_.pushData(std::byte(code));
@@ -60,10 +62,12 @@ void PacketBuilder::addCommandVerificationAppData(const uint8_t appIdSource,
   packet_.pushData(std::byte(appIdSource));
   packet_.pushData(std::byte(appIdDestination));
   packet_.pushData(std::byte(sequenceFlags));
-  std::array<std::byte, 2> temp;
+  std::array<std::byte, 2> temp; // Initialize temp -> std::array<std::byte, 2> temp{};
+  // Also, temp is not really used here (?)ª
   temp[0] = static_cast<std::byte>(sequenceCount >> 8);
   temp[1] = static_cast<std::byte>(sequenceCount);
-  packet_.pushData(std::byte(code));  for (size_t i = 0; i < parameters.size(); ++i) {
+  packet_.pushData(std::byte(code));
+  for (size_t i = 0; i < parameters.size(); ++i) {
     packet_.pushData(parameters[i]);
   }
 }

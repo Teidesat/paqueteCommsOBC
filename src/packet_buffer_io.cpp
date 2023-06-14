@@ -5,6 +5,7 @@
 #include <array>
 #include <cmath>
 
+// Instead, making an empty declaration, we can use the default construction. In the constructor -> PacketBufferIO() = default;
 PacketBufferIO::PacketBufferIO() {}
 
 /**
@@ -104,6 +105,7 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
     indexOfAppDataStart = 6; // 6 because only main header
   }
 
+  // Initialize data -> std::array<std::byte, Packet::APP_DATA_SIZE> appData{};
   std::array<std::byte, Packet::APP_DATA_SIZE> appData;
 
   // insert the app data of buffer into appData array.
@@ -116,10 +118,15 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
     appData[amountOfDataInAppData + i] = std::byte(0);
   }
 
+  // Initialize data -> std::array<std::byte, 2> packetErrorControl
   std::array<std::byte, 2> packetErrorControl;
   packetErrorControl[1] = ptrBuffer[indexOfAppDataStart + amountOfDataInAppData];
   packetErrorControl[0] = ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1];
 
+  // Use a brace initializer to initialize the packet:
+  // return  {versionNumber, dataFieldHeader, appIdSource, appIdDestination,
+  //          sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
+  //          ack, serviceType, serviceSubtype, appData, packetErrorControl};
   return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
       sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
       ack, serviceType, serviceSubtype, appData, packetErrorControl);

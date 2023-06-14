@@ -47,11 +47,13 @@ public:
    * @param sequenceControlFlags 
    * @param sequenceControlCount 
    */
+  // no need for const in these values (because they are copied)
   void newPacket(const uint8_t versionNumber, const uint8_t appIdSource,
       const uint8_t appIdDestination,
       const Packet::SequenceFlags sequenceControlFlags,
       const uint16_t sequenceControlCount);
 
+  // same here
   void setDataFieldHeader(const Packet::Bool8Enum ack, const uint8_t serviceType,
       const uint8_t serviceSubtype);
 
@@ -59,6 +61,7 @@ public:
    * ******** Telecommand Verification Service headers. ********
    *
   */
+  // same here
   void addCommandVerificationAppData(const uint8_t appIdSource,
       const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
       const uint16_t sequenceCount);
@@ -71,6 +74,7 @@ public:
    * @param sequenceCount 
    * @param code error code
    */
+  // same here
   void addCommandVerificationAppData(const uint8_t appIdSource,
       const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
       const uint16_t sequenceCount, const uint8_t code);
@@ -84,6 +88,7 @@ public:
    * @param code error code
    * @param parameters
    */
+  // same here (expect for parameters which is a reference)
   void addCommandVerificationAppData(const uint8_t appIdSource,
       const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
       const uint16_t sequenceCount, const uint8_t code,

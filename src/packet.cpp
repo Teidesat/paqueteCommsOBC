@@ -1,8 +1,9 @@
 #include "../include/packet.h"
 
+// Make sure all values are initialized here or in the class declaration
 Packet::Packet() :
   versionNumber_(0),
-  dataFieldHeader_(Bool8Enum::FALSE),
+  dataFieldHeader_(Bool8Enum::FALSE), // use "false" not Bool8enum::FALSE
   appIdSource_(0),
   appIdDestination_(0),
   sequenceControlFlags_(Packet::SequenceFlags::STAND_ALONE),
@@ -55,6 +56,8 @@ Packet::Packet(
   appDataIndex_(0)
 {}
 
+// This is the same as a trivial copy constructor. Just use Packet(const Packet& other) = default; in the constructor
+// and you can remove all this constructor
 Packet::Packet(const Packet& other) :
   versionNumber_(other.versionNumber_),
   dataFieldHeader_(other.dataFieldHeader_),

@@ -25,6 +25,7 @@
 #include "../include/packet_builder.h"
 #include "packet_extended/packet_extended_verification_1.h"
 
+// Remove extra const modifiers here
 class PacketBuilderDirector {
 public:
   PacketBuilderDirector();

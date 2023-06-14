@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+// Call the default constructor in the class declaration
 PacketBuilderDirector::PacketBuilderDirector() {}
 
 std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
@@ -11,7 +12,7 @@ std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
 
   // copy chunk into packet, push packet
   for (size_t i = 0; i < amountOfFullChunks; ++i) {
-    std::array<std::byte, Packet::APP_DATA_SIZE> chunk;
+    std::array<std::byte, Packet::APP_DATA_SIZE> chunk; // Initialize the variables -> std::array<std::byte, Packet::APP_DATA_SIZE> chunk{};
     std::copy(
         appData.begin() + (i * Packet::APP_DATA_SIZE),
         appData.begin() + ((i + 1) * Packet::APP_DATA_SIZE),
@@ -26,7 +27,7 @@ std::vector<Packet> PacketBuilderDirector::makeMegaPacket(
   const int amountOfBytesPending = appData.size() % Packet::APP_DATA_SIZE;
   if (amountOfBytesPending > 0) {
     Packet newPacket;
-    std::array<std::byte, Packet::APP_DATA_SIZE> chunk;
+    std::array<std::byte, Packet::APP_DATA_SIZE> chunk; // Initialize the variables -> std::array<std::byte, Packet::APP_DATA_SIZE> chunk{};
     std::copy(
       appData.end() - amountOfBytesPending - 1,
       appData.end(),
@@ -47,6 +48,7 @@ PacketExtendedVerification1 PacketBuilderDirector::makeVerificationSuccess(
   // it swaps app id's
   builder_.addCommandVerificationAppData(appIdDestination, appIdSource,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount);
+  // Use braced initializer here -> return { builder_.getPacket() };
   return PacketExtendedVerification1(builder_.getPacket());
 }
 
@@ -60,6 +62,7 @@ PacketExtendedVerification1 PacketBuilderDirector::makeVerificationFailure(
   // it swaps app id's
   builder_.addCommandVerificationAppData(appIdDestination, appIdSource,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount, code, parameters);
+  // Use braced initializer here -> return { builder_.getPacket() };
   return PacketExtendedVerification1(builder_.getPacket());
 }
 
@@ -74,6 +77,7 @@ PacketExtendedVerification1 PacketBuilderDirector::makeVerificationFailure(
   // it swaps app id's.
   builder_.addCommandVerificationAppData(appIdDestination, appIdSource,
       Packet::SequenceFlags::STAND_ALONE, sequenceCount, code,
-      std::move(parameters));
+      std::move(parameters)); // No need for std::move here since we are using a reference
+  // Use braced initializer here -> return { builder_.getPacket() };
   return PacketExtendedVerification1(builder_.getPacket());
 }

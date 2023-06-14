@@ -23,15 +23,25 @@
 #include <array>
 #include <vector>
 
+// Either use std::byte almost everywhere or uint8_t almost everywhere, but not both at like a 50/50 chance
+
 class Packet {
 public:
-
+  // There is no need for comments indicating these are constants or inline
+  // Also, datasize can be uint32_t instead of uint16_t since we are working with 32bit systems, it will cost the same
+  // or even be faster while being more flexible. (uint16_t -> uint32_t)
   // *** constants ***
   inline static constexpr uint16_t APP_DATA_SIZE = 256; // inline for appdata array size
 
-  // main header + data header + data + error control
-  inline static constexpr uint16_t PACKET_SIZE = 6 + 3 + 256 + 2;
+  // Make the comments in "code" instead of adding a comment, like this (same here, make them uint16_t -> uint32_t):
+  inline static constexpr uint16_t MAIN_HEADER_SIZE = 6;
+  inline static constexpr uint16_t DATA_HEADER_SIZE = 3;
+  inline static constexpr uint16_t DATA_SIZE = 256;
+  inline static constexpr uint16_t ERROR_CONTROL_SIZE = 2;
+  inline static constexpr uint16_t PACKET_SIZE = MAIN_HEADER_SIZE + DATA_HEADER_SIZE + DATA_SIZE + ERROR_CONTROL_SIZE;
 
+  // Here it's okay the uint8_t but often it's written like "IN_BETWEEN = 0x00" (hexadecimal) instead of "IN_BETWEEN = 0b00" (binary)
+  // Unless each flag is just a bit, then it's okay to use binary.
   enum class SequenceFlags : uint8_t {
     INITIAL = 0b01,
     INBETWEEN = 0b00,
@@ -39,6 +49,8 @@ public:
     STAND_ALONE = 0b11
   };
 
+  // There is no need for this class, compiler will just pick the correct number of bytes. Just use "true" or "false" to
+  // initialize e.g. dataFieldHeader_(false),
   // Because bool can be 32 bits but i need it to always be 1 byte.
   enum class Bool8Enum : uint8_t {
     TRUE = 1,
@@ -47,7 +59,9 @@ public:
 
   Packet();
   Packet(
+    // Unless some special use case, there is really no need for these values to be marked const, since they are not references
     const uint8_t versionNumber,
+    // use bool here -> bool dataFieldHeader,
     const Bool8Enum dataFieldHeader,
     const uint8_t appIdSource,
     const uint8_t appIdDestination,
@@ -60,11 +74,13 @@ public:
     const uint8_t serviceType,
     const uint8_t serviceSubtype,
     const std::array<std::byte, APP_DATA_SIZE>& appData,
-    const std::array<std::byte, 2> packetErrorControl
+    const std::array<std::byte, 2> packetErrorControl // This shouldnt be const as well
   );
   Packet(const Packet& other);
 
-  uint8_t getVersionNumber() const;
+  // We can add the label [[nodiscard]] in all these functions to make sure the return value is used
+  [[nodiscard]] uint8_t getVersionNumber() const;
+  // Same here, no need for const
   void setVersionNumber(const uint8_t versionNumber);
 
   Bool8Enum getDataFieldHeader() const;
