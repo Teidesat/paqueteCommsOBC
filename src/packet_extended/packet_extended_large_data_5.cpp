@@ -29,6 +29,6 @@ uint16_t PacketExtendedLargeData5::getSequenceNumber() {
   return sequenceNumber_;
 }
 
-void PacketExtendedLargeData5::setSequenceNumber(const uint16_t newSequenceNumber) {
+void PacketExtendedLargeData5::setSequenceNumber(uint16_t newSequenceNumber) {
   sequenceNumber_ = newSequenceNumber;
 }

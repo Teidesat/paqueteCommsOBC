@@ -55,8 +55,7 @@ public:
   /****** Methods from this class ******/
 
   uint16_t getSequenceNumber();
-  // No need for const
-  void setSequenceNumber(const uint16_t newSequenceNumber);
+  void setSequenceNumber(uint16_t newSequenceNumber);
 private:
   PacketExtendedBasic packetBasic_;
   uint8_t largeDataUnitId_;

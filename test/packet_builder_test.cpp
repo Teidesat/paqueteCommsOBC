@@ -66,19 +66,19 @@ TEST(PacketBuilder, DataFieldHeaderGetsAddedProperly) {
   auto packetWithout = builder.getPacket();
 
   // check if data field header has default values
-  EXPECT_EQ(packetWithout.getDataFieldHeader(), Packet::Bool8Enum::FALSE);
-  EXPECT_EQ(packetWithout.getAck(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packetWithout.getDataFieldHeader(), false);
+  EXPECT_EQ(packetWithout.getAck(), false);
   EXPECT_EQ(packetWithout.getServiceType(), 0);
   EXPECT_EQ(packetWithout.getServiceSubtype(), 0);
 
   builder.setDataFieldHeader(
-    Packet::Bool8Enum::TRUE,           // ACK
+    true,           // ACK
     13,                                 // Service type
     1                                   // Service subtype
   );
   auto packetWith = builder.getPacket();
-  EXPECT_EQ(packetWith.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
-  EXPECT_EQ(packetWith.getAck(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packetWith.getDataFieldHeader(), true);
+  EXPECT_EQ(packetWith.getAck(), true);
   EXPECT_EQ(packetWith.getServiceType(), 13);
   EXPECT_EQ(packetWith.getServiceSubtype(), 1);
 }
@@ -94,7 +94,7 @@ protected:
       1                                   // seq. control count
     );
     builder.setDataFieldHeader(
-      Packet::Bool8Enum::TRUE,            // ACK
+      true,                               // ACK
       1,                                  // Service type
       1                                   // Service subtype
     );
@@ -116,11 +116,11 @@ TEST_F(PacketBuilderTest, CanMakeVerificationAcceptanceSuccessFromScratch) {
   );
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[0], std::byte(0x02));
-  EXPECT_EQ(appData[1], std::byte(0x01));
-  EXPECT_EQ(appData[2], std::byte(Packet::SequenceFlags::STAND_ALONE));
-  EXPECT_EQ(appData[3], std::byte(0x00));
-  EXPECT_EQ(appData[4], std::byte(0x01));
+  EXPECT_EQ(appData[0], uint8_t(0x02));
+  EXPECT_EQ(appData[1], uint8_t(0x01));
+  EXPECT_EQ(appData[2], uint8_t(Packet::SequenceFlags::STAND_ALONE));
+  EXPECT_EQ(appData[3], uint8_t(0x00));
+  EXPECT_EQ(appData[4], uint8_t(0x01));
 }
 
 TEST_F(PacketBuilderTest, CanMakeVerificationAcceptanceSuccessTwice) {
@@ -140,11 +140,11 @@ TEST_F(PacketBuilderTest, CanMakeVerificationAcceptanceSuccessTwice) {
   );
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[5], std::byte(0x04));
-  EXPECT_EQ(appData[6], std::byte(0x08));
-  EXPECT_EQ(appData[7], std::byte(Packet::SequenceFlags::INITIAL));
-  EXPECT_EQ(appData[8], std::byte(0x00));
-  EXPECT_EQ(appData[9], std::byte(0x02));
+  EXPECT_EQ(appData[5], uint8_t(0x04));
+  EXPECT_EQ(appData[6], uint8_t(0x08));
+  EXPECT_EQ(appData[7], uint8_t(Packet::SequenceFlags::INITIAL));
+  EXPECT_EQ(appData[8], uint8_t(0x00));
+  EXPECT_EQ(appData[9], uint8_t(0x02));
 }
 
 // Register on/off
@@ -159,14 +159,14 @@ TEST_F(PacketBuilderTest, CanMakeCommandDistributionOnOffFromScratch) {
   builder.addCommandDistributionAppData(addresses);
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[0], std::byte(0x07)); // amount of addresses
-  EXPECT_EQ(appData[1], std::byte(0x01));
-  EXPECT_EQ(appData[2], std::byte(0x02));
-  EXPECT_EQ(appData[3], std::byte(0x03));
-  EXPECT_EQ(appData[4], std::byte(0x04));
-  EXPECT_EQ(appData[5], std::byte(0x05));
-  EXPECT_EQ(appData[6], std::byte(0x06));
-  EXPECT_EQ(appData[7], std::byte(0x07));
+  EXPECT_EQ(appData[0], uint8_t(0x07)); // amount of addresses
+  EXPECT_EQ(appData[1], uint8_t(0x01));
+  EXPECT_EQ(appData[2], uint8_t(0x02));
+  EXPECT_EQ(appData[3], uint8_t(0x03));
+  EXPECT_EQ(appData[4], uint8_t(0x04));
+  EXPECT_EQ(appData[5], uint8_t(0x05));
+  EXPECT_EQ(appData[6], uint8_t(0x06));
+  EXPECT_EQ(appData[7], uint8_t(0x07));
 }
 
 TEST_F(PacketBuilderTest, CanMakeCommandDistributionOnOffTwice) {
@@ -180,14 +180,14 @@ TEST_F(PacketBuilderTest, CanMakeCommandDistributionOnOffTwice) {
   builder.addCommandDistributionAppData(addresses);
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[8], std::byte(0x07)); // amount of addresses
-  EXPECT_EQ(appData[9], std::byte(0x01));
-  EXPECT_EQ(appData[10], std::byte(0x02));
-  EXPECT_EQ(appData[11], std::byte(0x03));
-  EXPECT_EQ(appData[12], std::byte(0x04));
-  EXPECT_EQ(appData[13], std::byte(0x05));
-  EXPECT_EQ(appData[14], std::byte(0x06));
-  EXPECT_EQ(appData[15], std::byte(0x07));
+  EXPECT_EQ(appData[8], uint8_t(0x07)); // amount of addresses
+  EXPECT_EQ(appData[9], uint8_t(0x01));
+  EXPECT_EQ(appData[10], uint8_t(0x02));
+  EXPECT_EQ(appData[11], uint8_t(0x03));
+  EXPECT_EQ(appData[12], uint8_t(0x04));
+  EXPECT_EQ(appData[13], uint8_t(0x05));
+  EXPECT_EQ(appData[14], uint8_t(0x06));
+  EXPECT_EQ(appData[15], uint8_t(0x07));
 }
 
 // If only one address then a length byte should not be pushed because there
@@ -198,7 +198,7 @@ TEST_F(PacketBuilderTest, CanMakeCommandDistributionOneAddressDoesNotIncludeLeng
   builder.addCommandDistributionAppData(addresses);
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[0], std::byte(0xE));
+  EXPECT_EQ(appData[0], uint8_t(0xE));
 }
 
 // Register load
@@ -213,11 +213,11 @@ TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadFromScratch) {
   builder.addCommandDistributionAppData(addressesAndDataToLoad);
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[0], std::byte(0x02)); // amount of addresses
-  EXPECT_EQ(appData[1], std::byte(0x01)); // address1
-  EXPECT_EQ(appData[2], std::byte(0x0B)); // data1
-  EXPECT_EQ(appData[3], std::byte(0x02)); // address2
-  EXPECT_EQ(appData[4], std::byte(0x0A)); // data2
+  EXPECT_EQ(appData[0], uint8_t(0x02)); // amount of addresses
+  EXPECT_EQ(appData[1], uint8_t(0x01)); // address1
+  EXPECT_EQ(appData[2], uint8_t(0x0B)); // data1
+  EXPECT_EQ(appData[3], uint8_t(0x02)); // address2
+  EXPECT_EQ(appData[4], uint8_t(0x0A)); // data2
 }
 
 TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadTwice) {
@@ -231,11 +231,11 @@ TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadTwice) {
   builder.addCommandDistributionAppData(addressesAndDataToLoad);
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[5], std::byte(0x02)); // amount of addresses
-  EXPECT_EQ(appData[6], std::byte(0x01)); // address1
-  EXPECT_EQ(appData[7], std::byte(0x0B)); // data1
-  EXPECT_EQ(appData[8], std::byte(0x02)); // address2
-  EXPECT_EQ(appData[9], std::byte(0x0A)); // data2
+  EXPECT_EQ(appData[5], uint8_t(0x02)); // amount of addresses
+  EXPECT_EQ(appData[6], uint8_t(0x01)); // address1
+  EXPECT_EQ(appData[7], uint8_t(0x0B)); // data1
+  EXPECT_EQ(appData[8], uint8_t(0x02)); // address2
+  EXPECT_EQ(appData[9], uint8_t(0x0A)); // data2
 }
 
 // If only one address then a length byte should not be pushed because there
@@ -250,7 +250,7 @@ TEST_F(PacketBuilderTest, CanMakeCommandDistributionLoadOneAdressDoesNotIncludeL
   builder.addCommandDistributionAppData(addressesAndDataToLoad);
   auto& packet = builder.getPacket();
   const auto appData = packet.getAppData();
-  EXPECT_EQ(appData[0], std::byte(0x01)); // address1
-  EXPECT_EQ(appData[1], std::byte(0x0B)); // data1
-  EXPECT_EQ(appData[2], std::byte(0x00)); // should be 0
+  EXPECT_EQ(appData[0], uint8_t(0x01)); // address1
+  EXPECT_EQ(appData[1], uint8_t(0x0B)); // data1
+  EXPECT_EQ(appData[2], uint8_t(0x00)); // should be 0
 }

@@ -70,20 +70,20 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperly) {
   PacketBufferIO io;
   Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
-  EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packet.getDataFieldHeader(), true);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
   EXPECT_EQ(packet.getLength(), 9);
-  EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packet.getCCSDS(), false);
   EXPECT_EQ(packet.getPUSVersion(), 1);
-  EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packet.getAck(), false);
   EXPECT_EQ(packet.getServiceType(), 13);
   EXPECT_EQ(packet.getServiceSubtype(), 1);
 
-  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00000011});
-  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00011010});
+  EXPECT_EQ(packet.getPacketErrorControl()[0], 0b00000011);
+  EXPECT_EQ(packet.getPacketErrorControl()[1], 0b00011010);
 }
 
  // other CCSDS, ACK variations:
@@ -93,20 +93,20 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKFALSE) {
   PacketBufferIO io;
   Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
-  EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packet.getDataFieldHeader(), true);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
   EXPECT_EQ(packet.getLength(), 9);
-  EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::TRUE); // changed
+  EXPECT_EQ(packet.getCCSDS(), true); // changed
   EXPECT_EQ(packet.getPUSVersion(), 1);
-  EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packet.getAck(), false);
   EXPECT_EQ(packet.getServiceType(), 13);
   EXPECT_EQ(packet.getServiceSubtype(), 1);
 
-  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00000011});
-  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00011010});
+  EXPECT_EQ(packet.getPacketErrorControl()[0], 0b00000011);
+  EXPECT_EQ(packet.getPacketErrorControl()[1], 0b00011010);
 }
 
 TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKTRUE) {
@@ -114,20 +114,20 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSTRUEACKTRUE) {
   PacketBufferIO io;
   Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
-  EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packet.getDataFieldHeader(), true);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
   EXPECT_EQ(packet.getLength(), 9);
-  EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::TRUE); // changed
+  EXPECT_EQ(packet.getCCSDS(), true); // changed
   EXPECT_EQ(packet.getPUSVersion(), 1);
-  EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::TRUE); // changed
+  EXPECT_EQ(packet.getAck(), true); // changed
   EXPECT_EQ(packet.getServiceType(), 13);
   EXPECT_EQ(packet.getServiceSubtype(), 1);
 
-  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00000011});
-  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00011010});
+  EXPECT_EQ(packet.getPacketErrorControl()[0], 0b00000011);
+  EXPECT_EQ(packet.getPacketErrorControl()[1], 0b00011010);
 }
 
 TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSFALSEACKTRUE) {
@@ -135,20 +135,20 @@ TEST_F(PacketBufferIOWithDataFieldHeaderTest, ReadsProperlyCCSDSFALSEACKTRUE) {
   PacketBufferIO io;
   Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
-  EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packet.getDataFieldHeader(), true);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
   EXPECT_EQ(packet.getSequenceControlCount(), 2);
   EXPECT_EQ(packet.getLength(), 9);
-  EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packet.getCCSDS(), false);
   EXPECT_EQ(packet.getPUSVersion(), 1);
-  EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::TRUE); // changed
+  EXPECT_EQ(packet.getAck(), true); // changed
   EXPECT_EQ(packet.getServiceType(), 13);
   EXPECT_EQ(packet.getServiceSubtype(), 1);
 
-  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00000011});
-  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00011010});
+  EXPECT_EQ(packet.getPacketErrorControl()[0], 0b00000011);
+  EXPECT_EQ(packet.getPacketErrorControl()[1], 0b00011010);
 }
 
 // I want to test the write correctly with different ack and ccsds parameters
@@ -189,7 +189,7 @@ protected:
     packetBuffer[3] = std::byte{0b00000010};	// ...XXXXXXXX     | std::byte = ...seq_ctrl_count
     packetBuffer[4] = std::byte{0b00000000};	// XXXXXXXX...     | std::byte = length...
     packetBuffer[5] = std::byte{0b00001001};	// ...XXXXXXXX     | std::byte = ...length
-    packetBuffer[6] = GetParam();	            // X XXX XXXX      | std::byte = ccsds, pus, ack
+    packetBuffer[6] = GetParam();	// X XXX XXXX      | std::byte = ccsds, pus, ack
     packetBuffer[7] = std::byte{0b00001101};	// XXXXXXXX        | std::byte = type
     packetBuffer[8] = std::byte{0b00000001};	// XXXXXXXX        | std::byte = subtype
 
@@ -233,10 +233,10 @@ TEST_P(PacketBufferIOWithDataFieldHeaderParametrizedTest, WritesCorrectly) {
 // WriteSuite is an arbitrary name, doesn't matter, the suit is not important.
 INSTANTIATE_TEST_SUITE_P(WriteSuite, PacketBufferIOWithDataFieldHeaderParametrizedTest,
     testing::Values(
-      std::byte{0b00010000}, // ccsds = FALSE, ack = FALSE
-      std::byte{0b00010001}, // ccsds = FALSE, ack = TRUE
-      std::byte{0b10010000}, // ccsds = TRUE, ack = FALSE
-      std::byte{0b00010001}  // ccsds = TRUE, ack = TRUE
+      0b00010000, // ccsds = FALSE, ack = FALSE
+      0b00010001, // ccsds = FALSE, ack = TRUE
+      0b10010000, // ccsds = TRUE, ack = FALSE
+      0b00010001  // ccsds = TRUE, ack = TRUE
     ));
 
 // *** Now testing without data field header ***
@@ -297,7 +297,7 @@ TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, ReadsCorrectly) {
   PacketBufferIO io;
   Packet packet = io.readPacket(packetBuffer);
   EXPECT_EQ(packet.getVersionNumber(), 0);
-  EXPECT_EQ(packet.getDataFieldHeader(), Packet::Bool8Enum::TRUE);
+  EXPECT_EQ(packet.getDataFieldHeader(), true);
   EXPECT_EQ(packet.getAppIdSource(), 1);
   EXPECT_EQ(packet.getAppIdDestination(), 2);
   EXPECT_EQ(packet.getSequenceControlFlags(), Packet::SequenceFlags::STAND_ALONE);
@@ -305,14 +305,14 @@ TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, ReadsCorrectly) {
   EXPECT_EQ(packet.getLength(), 9);
 
   // default values for data field header fields
-  EXPECT_EQ(packet.getCCSDS(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packet.getCCSDS(), false);
   EXPECT_EQ(packet.getPUSVersion(), 0);
-  EXPECT_EQ(packet.getAck(), Packet::Bool8Enum::FALSE);
+  EXPECT_EQ(packet.getAck(), false);
   EXPECT_EQ(packet.getServiceType(), 0);
   EXPECT_EQ(packet.getServiceSubtype(), 0);
 
-  EXPECT_EQ(packet.getPacketErrorControl()[0], std::byte{0b00000011});
-  EXPECT_EQ(packet.getPacketErrorControl()[1], std::byte{0b00011010});
+  EXPECT_EQ(packet.getPacketErrorControl()[0], 0b00000011);
+  EXPECT_EQ(packet.getPacketErrorControl()[1], 0b00011010);
 }
 
 TEST_F(PacketBufferIOWithoutDataFieldHeaderTest, WritesCorrectly) {

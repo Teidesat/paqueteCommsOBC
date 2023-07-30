@@ -2,7 +2,7 @@
 
 PacketExtendedHousekeeping25::PacketExtendedHousekeeping25(
     const Packet& packet, uint16_t structureId,
-    GenerationMode mode, const std::vector<std::byte>& parameters) :
+    GenerationMode mode, const std::vector<uint8_t>& parameters) :
       packetHousekeepingBasic_(packet, structureId),
       mode_(mode) {
   interpretInputParameters(structureId);

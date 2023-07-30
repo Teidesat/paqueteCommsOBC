@@ -14,7 +14,7 @@
  *    timeout period exists for that parameter, after which the
  *    parameter will be sampled even if it is filtered. Periodic is just
  *    periodically sending all of the SID's parameters. Each mode has
- *    a value associated, 0 being periodic. For filtered, 1 when a the
+ *    a value associated, 0 being periodic. For filtered, 1 when the
  *    filtered parameter exceeded threshold, 2 when the timeout took place.
  *    So on filtered mode, if no parameter has changed beyond the threshold
  *    or no timeout has activated for that SID then no report is generated.
@@ -47,7 +47,7 @@ public:
 
   // Extraction of the samples in the parameters input field is done here
   PacketExtendedHousekeeping25(const Packet& packet, uint16_t structureId,
-      GenerationMode mode, const std::vector<std::byte>& parameters);
+      GenerationMode mode, const std::vector<uint8_t>& parameters);
 
   /****** Methods from composited classes ******/
 

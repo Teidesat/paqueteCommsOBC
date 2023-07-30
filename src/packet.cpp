@@ -3,41 +3,41 @@
 // Make sure all values are initialized here or in the class declaration
 Packet::Packet() :
   versionNumber_(0),
-  dataFieldHeader_(Bool8Enum::FALSE), // use "false" not Bool8enum::FALSE
+  dataFieldHeader_(false),
   appIdSource_(0),
   appIdDestination_(0),
   sequenceControlFlags_(Packet::SequenceFlags::STAND_ALONE),
   sequenceControlCount_(0),
   length_(0),
-  ccsds_(Bool8Enum::FALSE),
+  ccsds_(false),
   pusVersion_(1), // ECSS-70-E-41A requires =1
-  ack_(Bool8Enum::FALSE),
+  ack_(false),
   serviceType_(0),
   serviceSubtype_(0),
   appDataIndex_(0)
 {
   for (size_t i = 0; i < Packet::APP_DATA_SIZE; ++i) {
-    appData_[i] = std::byte(0);
+    appData_[i] = 0b0;
   }
-  packetErrorControl_[0] = std::byte(0);
-  packetErrorControl_[1] = std::byte(0);
+  packetErrorControl_[0] = 0b0;
+  packetErrorControl_[1] = 0b0;
 }
 
 Packet::Packet(
-  const uint8_t versionNumber,
-  const Packet::Bool8Enum dataFieldHeader,
-  const uint8_t appIdSource,
-  const uint8_t appIdDestination,
-  const Packet::SequenceFlags sequenceControlFlags,
-  const uint16_t sequenceControlCount,
-  const uint16_t length,
-  const Packet::Bool8Enum ccsds,
-  const uint8_t pusVersion,
-  const Packet::Bool8Enum ack,
-  const uint8_t serviceType,
-  const uint8_t serviceSubtype,
-  const std::array<std::byte, Packet::APP_DATA_SIZE>& appData,
-  const std::array<std::byte, 2> packetErrorControl
+  uint8_t versionNumber,
+  bool dataFieldHeader,
+  uint8_t appIdSource,
+  uint8_t appIdDestination,
+  Packet::SequenceFlags sequenceControlFlags,
+  uint16_t sequenceControlCount,
+  uint16_t length,
+  bool ccsds,
+  uint8_t pusVersion,
+  bool ack,
+  uint8_t serviceType,
+  uint8_t serviceSubtype,
+  std::array<uint8_t, Packet::APP_DATA_SIZE>& appData,
+  std::array<uint8_t, 2> packetErrorControl
 ) :
   versionNumber_(versionNumber),
   dataFieldHeader_(dataFieldHeader),
@@ -56,26 +56,7 @@ Packet::Packet(
   appDataIndex_(0)
 {}
 
-// This is the same as a trivial copy constructor. Just use Packet(const Packet& other) = default; in the constructor
-// and you can remove all this constructor
-Packet::Packet(const Packet& other) :
-  versionNumber_(other.versionNumber_),
-  dataFieldHeader_(other.dataFieldHeader_),
-  appIdSource_(other.appIdSource_),
-  appIdDestination_(other.appIdDestination_),
-  sequenceControlFlags_(other.sequenceControlFlags_),
-  sequenceControlCount_(other.sequenceControlCount_),
-  length_(other.length_),
-  ccsds_(other.ccsds_),
-  pusVersion_(other.pusVersion_),
-  ack_(other.ack_),
-  serviceType_(other.serviceType_),
-  serviceSubtype_(other.serviceSubtype_),
-  appData_(other.appData_),
-  packetErrorControl_(other.packetErrorControl_),
-  appDataIndex_(other.appDataIndex_) {}
-
-uint8_t Packet::getVersionNumber() const {
+[[nodiscard]] uint8_t Packet::getVersionNumber() {
   return versionNumber_;
 }
 
@@ -83,15 +64,15 @@ void Packet::setVersionNumber(uint8_t versionNumber) {
   versionNumber_ = versionNumber;
 }
 
-Packet::Bool8Enum Packet::getDataFieldHeader() const {
+[[nodiscard]] bool Packet::getDataFieldHeader() {
   return dataFieldHeader_;
 }
 
-void Packet::setDataFieldHeader(const Packet::Bool8Enum newValue) {
+void Packet::setDataFieldHeader(bool newValue) {
   dataFieldHeader_ = newValue;
 }
 
-uint8_t Packet::getAppIdSource() const {
+[[nodiscard]] uint8_t Packet::getAppIdSource() {
   return appIdSource_;
 }
 
@@ -99,7 +80,7 @@ void Packet::setAppIdSource(uint8_t newAddress) {
   appIdSource_ = newAddress;
 }
 
-uint8_t Packet::getAppIdDestination() const {
+[[nodiscard]] uint8_t Packet::getAppIdDestination() {
   return appIdDestination_;
 }
 
@@ -107,105 +88,105 @@ void Packet::setAppIdDestination(uint8_t newAddress) {
   appIdDestination_ = newAddress;
 }
 
-Packet::SequenceFlags Packet::getSequenceControlFlags() const {
+[[nodiscard]] Packet::SequenceFlags Packet::getSequenceControlFlags() {
   return sequenceControlFlags_;
 }
 
-void Packet::setSequenceControlFlags(Packet::SequenceFlags const newFlags) {
+void Packet::setSequenceControlFlags(Packet::SequenceFlags newFlags) {
   sequenceControlFlags_ = newFlags;
 }
 
-uint16_t Packet::getSequenceControlCount() const {
+[[nodiscard]] uint16_t Packet::getSequenceControlCount() {
   return sequenceControlCount_;
 }
 
-void Packet::setSequenceControlCount(const uint16_t newCount) {
+void Packet::setSequenceControlCount(uint16_t newCount) {
   sequenceControlCount_ = newCount;
 }
 
-uint16_t Packet::getLength() const {
+[[nodiscard]] uint16_t Packet::getLength() {
   return length_;
 }
 
-void Packet::setLength(const uint16_t amountOfBytes) {
+void Packet::setLength(uint16_t amountOfBytes) {
   length_ = amountOfBytes;
 }
 
-Packet::Bool8Enum Packet::getCCSDS() const {
+[[nodiscard]] bool Packet::getCCSDS() {
   return ccsds_;
 }
 
-void Packet::setCCSDS(const Packet::Bool8Enum ccsds) {
+void Packet::setCCSDS(bool ccsds) {
   ccsds_ = ccsds;
 }
 
-uint8_t Packet::getPUSVersion() const {
+[[nodiscard]] uint8_t Packet::getPUSVersion() {
   return pusVersion_;
 }
 
-void Packet::setPUSVersion(const uint8_t pusVersion) {
+void Packet::setPUSVersion(uint8_t pusVersion) {
   pusVersion_ = pusVersion;
 }
 
-Packet::Bool8Enum Packet::getAck() const {
+[[nodiscard]] bool Packet::getAck() {
   return ack_;
 }
 
-void Packet::setAck(const Packet::Bool8Enum newValue) {
+void Packet::setAck(bool newValue) {
   ack_ = newValue;
 }
 
-uint8_t Packet::getServiceType() const {
+[[nodiscard]] uint8_t Packet::getServiceType() {
   return serviceType_;
 }
 
-void Packet::setServiceType(const uint8_t typeId) {
+void Packet::setServiceType(uint8_t typeId) {
   serviceType_ = typeId;
 }
 
-uint8_t Packet::getServiceSubtype() const {
+[[nodiscard]] uint8_t Packet::getServiceSubtype() {
   return serviceSubtype_;
 }
 
-void Packet::setServiceSubtype(const uint8_t subtypeId) {
+void Packet::setServiceSubtype(uint8_t subtypeId) {
   serviceSubtype_ = subtypeId;
 }
 
-std::array<std::byte, Packet::APP_DATA_SIZE> Packet::getAppData() {
+[[nodiscard]] std::array<uint8_t, Packet::APP_DATA_SIZE> Packet::getAppData() {
   return appData_;
 }
 
-void Packet::setAppData(const std::array<std::byte, Packet::APP_DATA_SIZE>& newAppData) {
+void Packet::setAppData(std::array<uint8_t, Packet::APP_DATA_SIZE> newAppData) {
   appData_ = newAppData;
 }
 
-void Packet::pushData(const std::byte byteToPush) {
+void Packet::pushData(uint8_t byteToPush) {
   appData_[appDataIndex_] = byteToPush;
   ++appDataIndex_;
 }
 
-void Packet::pushData(const uint16_t bytesToPush) {
-  appData_[appDataIndex_] = std::byte(bytesToPush >> 8);
-  appData_[appDataIndex_ + 1] = std::byte(bytesToPush);
+void Packet::pushData(uint16_t bytesToPush) {
+  appData_[appDataIndex_] = static_cast<uint8_t>(bytesToPush >> 8);
+  appData_[appDataIndex_ + 1] = static_cast<uint8_t>(bytesToPush);
   appDataIndex_ += sizeof(bytesToPush);
 }
 
-void Packet::pushData(const std::array<std::byte, 2> bytesToPush) {
+void Packet::pushData(std::array<uint8_t, 2> bytesToPush) {
   appData_[appDataIndex_] = bytesToPush[0];
   ++appDataIndex_;
   appData_[appDataIndex_] = bytesToPush[1];
   ++appDataIndex_;
 }
 
-void Packet::pushData(const std::vector<std::byte>& bytesToPush) {
+void Packet::pushData(std::vector<uint8_t> bytesToPush) {
   std::copy(bytesToPush.begin(), bytesToPush.end(), appData_.begin() + appDataIndex_);
   appDataIndex_ += bytesToPush.size();
 }
 
-std::array<std::byte, 2> Packet::getPacketErrorControl() const {
+[[nodiscard]] std::array<uint8_t, 2> Packet::getPacketErrorControl() {
   return packetErrorControl_;
 }
 
-void Packet::setPacketErrorControl(std::array<std::byte, 2> crc) {
+void Packet::setPacketErrorControl(std::array<uint8_t, 2> crc) {
   packetErrorControl_ = crc;
 }

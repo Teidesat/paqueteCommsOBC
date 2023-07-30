@@ -10,12 +10,14 @@
  * An app. id. is the first field in the app. data part, but since
  *  that is information that is already in the packet because it
  *  has both the app id. for source and for destination, then no
- *  member is declared for it in this class. It does get included
- *  at transmission level, but since an address is only 5 bits, then
- *  out of the 11 that an app. id. field is made of, only 5 bits will
+ *  member is declared for it in this class, because it can be accessed
+ *  from the low level Packet class that this class has as member. It does
+ *  get included when transmiting it, but since an address is only 5 bits,
+ *  then out of the 11 that an app. id. field is made of, only 5 bits will
  *  be used, leaving the rest of bits at a 0 value.
  * 
- * The same for the sequence control field.
+ * The same for the sequence control field; it is included in the Packet
+ *    class.
  * 
  */
 
@@ -56,7 +58,7 @@ public:
   /****** Methods from this class ******/
 
   // verification acceptance failure includes an error code
-  Packet::Bool8Enum hasErrorCode();
+  bool hasErrorCode();
   int getErrorCode();
 
   // verification acceptance failure includes parameters
@@ -64,7 +66,7 @@ public:
 private:
   PacketExtendedBasic packetBasic_;
   uint8_t errorCode_;
-  Packet::Bool8Enum hasErrorCode_; // if it has error code then this is a failure packet
+  bool hasErrorCode_; // if it has error code then this is a failure packet
   std::vector<uint8_t> parameters_;
 };
 

@@ -2,7 +2,7 @@
 
 PacketExtendedLargeData1::PacketExtendedLargeData1(const Packet& packet,
       uint8_t largeDataUnitId, uint16_t sequenceNumber,
-      const std::vector<std::byte>& data) :
+      const std::vector<uint8_t>& data) :
   packetBasic_(packet),
   largeDataUnitId_(largeDataUnitId),
   sequenceNumber_(sequenceNumber),
@@ -11,7 +11,7 @@ PacketExtendedLargeData1::PacketExtendedLargeData1(const Packet& packet,
 
 PacketExtendedLargeData1::PacketExtendedLargeData1(const Packet& packet,
       uint8_t largeDataUnitId, uint16_t sequenceNumber,
-      std::vector<std::byte>&& data) :
+      std::vector<uint8_t>&& data) :
   packetBasic_(packet),
   largeDataUnitId_(largeDataUnitId),
   sequenceNumber_(sequenceNumber),
@@ -44,14 +44,14 @@ void PacketExtendedLargeData1::setSequenceNumber(const uint16_t newSequenceNumbe
   sequenceNumber_ = newSequenceNumber;
 }
 
-std::vector<std::byte>& PacketExtendedLargeData1::getData() {
+std::vector<uint8_t>& PacketExtendedLargeData1::getData() {
   return data_;
 }
 
-void PacketExtendedLargeData1::setData(const std::vector<std::byte>& newData) {
+void PacketExtendedLargeData1::setData(const std::vector<uint8_t>& newData) {
   data_ = newData;
 }
 
-void PacketExtendedLargeData1::setData(std::vector<std::byte>&& newData) {
+void PacketExtendedLargeData1::setData(std::vector<uint8_t>&& newData) {
   data_ = std::move(newData);
 }

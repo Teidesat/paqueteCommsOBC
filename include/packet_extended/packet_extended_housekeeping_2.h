@@ -14,14 +14,16 @@
  * The collection interval defines how many <DIAG_MIN_INTERV> to wait
  *    before sampling again, which is the time it takes to sample a
  *    parameter. So if I understood it properly, if it is 1 then the
- *    parameter will me continuously sampled. It can be sistematically
+ *    parameter will be continuously sampled. It can be sistematically
  *    skipped but I decided it is better to keep it around as I am
  *    not sure whether we will actually need it or not.
  * 
  * The fixed-length arrays have the amount of samples per parameter
  *    and the amount of parameters, so it will contain a sequence of
- *    samples per parameter. By using the amount of samples per
- *    parameter one can know which sample belongs to what parameter.
+ *    samples per parameter. Follows the sequence of identifiers in the
+ *    array just like in standalone parameter sampling. By using the
+ *    amount of samples per parameter one can know which sample belongs
+ *    to what parameter.
  * 
  */
 

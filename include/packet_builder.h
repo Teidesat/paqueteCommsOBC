@@ -27,7 +27,7 @@ public:
   template<typename T1, typename T2>
   using pairs_t = std::vector<std::pair<T1, T2>>;
 
-  PacketBuilder();
+  PacketBuilder() = default;
 
   /****** getters and setters ******/
 
@@ -47,24 +47,22 @@ public:
    * @param sequenceControlFlags 
    * @param sequenceControlCount 
    */
-  // no need for const in these values (because they are copied)
-  void newPacket(const uint8_t versionNumber, const uint8_t appIdSource,
-      const uint8_t appIdDestination,
-      const Packet::SequenceFlags sequenceControlFlags,
-      const uint16_t sequenceControlCount);
 
-  // same here
-  void setDataFieldHeader(const Packet::Bool8Enum ack, const uint8_t serviceType,
-      const uint8_t serviceSubtype);
+  void newPacket(uint8_t versionNumber, uint8_t appIdSource,
+      uint8_t appIdDestination,
+      Packet::SequenceFlags sequenceControlFlags,
+      uint16_t sequenceControlCount);
+
+  void setDataFieldHeader(bool ack, uint8_t serviceType,
+      uint8_t serviceSubtype);
 
   /**
    * ******** Telecommand Verification Service headers. ********
    *
   */
-  // same here
-  void addCommandVerificationAppData(const uint8_t appIdSource,
-      const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
-      const uint16_t sequenceCount);
+  void addCommandVerificationAppData(uint8_t appIdSource,
+      uint8_t appIdDestination, Packet::SequenceFlags sequenceFlags,
+      uint16_t sequenceCount);
 
   /**
    * @brief 
@@ -74,10 +72,9 @@ public:
    * @param sequenceCount 
    * @param code error code
    */
-  // same here
-  void addCommandVerificationAppData(const uint8_t appIdSource,
-      const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
-      const uint16_t sequenceCount, const uint8_t code);
+  void addCommandVerificationAppData(uint8_t appIdSource,
+      uint8_t appIdDestination, Packet::SequenceFlags sequenceFlags,
+      uint16_t sequenceCount, uint8_t code);
 
   /**
    * @brief 
@@ -88,11 +85,10 @@ public:
    * @param code error code
    * @param parameters
    */
-  // same here (expect for parameters which is a reference)
-  void addCommandVerificationAppData(const uint8_t appIdSource,
-      const uint8_t appIdDestination, const Packet::SequenceFlags sequenceFlags,
-      const uint16_t sequenceCount, const uint8_t code,
-      const std::vector<std::byte>& parameters);
+  void addCommandVerificationAppData(uint8_t appIdSource,
+      uint8_t appIdDestination, Packet::SequenceFlags sequenceFlags,
+      uint16_t sequenceCount, uint8_t code,
+      const std::vector<uint8_t>& parameters);
 
   /**
    * ******** Device command Distribution Service headers. ********
@@ -110,7 +106,7 @@ public:
    *
    * Note: In the ECSS-70-E-41A standard, register load data has as type "any"
    * (as long as it is defined in clause 23), But because I have not read the
-   * exact types allowed, I set the type as std::byte but it may change after
+   * exact types allowed, I set the type as uint8_t but it may change after
    * I have read the clause 23.
    * 
    * @pre addressAAppData.size() <= Packet::APP_DATA_SIZE
@@ -124,11 +120,11 @@ public:
    * Unline register load, this does not add a length as first byte if higher than
    *    one, thus a it is different method than the register load one.
    * 
-   * I use int here because I am not sure about how many lines there will be
+   * I use uint8_t temporally because I am not sure about how many lines there will be
    * 
    * @pre lineIDAndDuration.size() <= Packet::APP_DATA_SIZE
    */
-  void addCommandDistributionAppData(const pairs_t<int, std::byte>& lineIDAndDuration);
+  void addCommandDistributionAppData(const pairs_t<uint8_t, uint8_t>& lineIDAndDuration);
 
   /**
    * ******** Housekeeping & diagnostic data reporting service headers ********
@@ -144,7 +140,7 @@ public:
    */
   void addHousekeepingReportAppData(uint16_t structureId,
       PacketExtendedHousekeeping25::GenerationMode mode,
-      const std::vector<std::byte>& parameters);
+      const std::vector<uint8_t>& parameters);
 
 private:
   Packet packet_;
@@ -155,11 +151,11 @@ template <typename T>
 void PacketBuilder::addCommandDistributionAppData(
     const pairs_t<uint8_t, T>& addressAndData) {
   if (addressAndData.size() > 1) {
-    packet_.pushData(static_cast<std::byte>(addressAndData.size()));
+    packet_.pushData(static_cast<uint8_t>(addressAndData.size()));
   }
   for (size_t i = 0; i < addressAndData.size(); ++i) {
-    packet_.pushData(static_cast<std::byte>(addressAndData[i].first));
-    packet_.pushData(static_cast<std::byte>(addressAndData[i].second));
+    packet_.pushData(static_cast<uint8_t>(addressAndData[i].first));
+    packet_.pushData(static_cast<uint8_t>(addressAndData[i].second));
   }
 }
 

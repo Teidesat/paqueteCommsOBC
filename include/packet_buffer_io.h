@@ -12,7 +12,7 @@
 
 class PacketBufferIO {
 public:
-  PacketBufferIO(); // make it a default constructor -> PacketBufferIO() = default;
+  PacketBufferIO() = default;
 
   Packet readPacket(const std::byte* buffer);
   void writePacket(std::byte* buffer, Packet& packet);

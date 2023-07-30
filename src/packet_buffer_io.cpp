@@ -5,9 +5,6 @@
 #include <array>
 #include <cmath>
 
-// Instead, making an empty declaration, we can use the default construction. In the constructor -> PacketBufferIO() = default;
-PacketBufferIO::PacketBufferIO() {}
-
 /**
  * Some bytes have multiple fields. Depending on if the word has multiple
  *    fields or not I will increase or not the ptrBuffer.
@@ -36,12 +33,12 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
 
   const uint8_t versionNumber = (static_cast<uint8_t>(ptrBuffer[0] >> 5));
 
-  Packet::Bool8Enum dataFieldHeader;
+  bool dataFieldHeader;
 
   if (extractFieldFrom(ptrBuffer[0], 3, 1) == 1) {
-    dataFieldHeader = Packet::Bool8Enum::TRUE;
+    dataFieldHeader = true;
   } else {
-    dataFieldHeader = Packet::Bool8Enum::FALSE;
+    dataFieldHeader = false;
   }
 
   // 000000XX, 00000XXX -> 000XX000, 00000XXX -> do OR.
@@ -69,25 +66,25 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
   // From here I do one thing or another depending on if there is data
   // field header.
 
-  Packet::Bool8Enum ccsds;
+  bool ccsds;
   uint8_t pusVersion;
-  Packet::Bool8Enum ack;
+  bool ack;
   uint8_t serviceType;
   uint8_t serviceSubtype;
 
   size_t amountOfDataInAppData;
   size_t indexOfAppDataStart;
-  if (dataFieldHeader == Packet::Bool8Enum::TRUE) {
+  if (dataFieldHeader == true) {
     if (extractFieldFrom(ptrBuffer[6], 7, 1) == 1) {
-      ccsds = Packet::Bool8Enum::TRUE;
+      ccsds = true;
     } else {
-      ccsds = Packet::Bool8Enum::FALSE;
+      ccsds = false;
     }
     pusVersion = extractFieldFrom(ptrBuffer[6], 4, 3);
     if (extractFieldFrom(ptrBuffer[6], 0, 4) == 1) {
-      ack = Packet::Bool8Enum::TRUE;
+      ack = true;
     } else {
-      ack = Packet::Bool8Enum::FALSE;
+      ack = false;
     }
     serviceType = static_cast<uint8_t>(ptrBuffer[7]);
     serviceSubtype = static_cast<uint8_t>(ptrBuffer[8]);
@@ -95,9 +92,9 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
     amountOfDataInAppData = length - 3 - 2; // - datafieldheader, - errorcontrol
     indexOfAppDataStart = 9; // 9 because main header + dataFieldHeader
   } else {
-    ccsds = Packet::Bool8Enum::FALSE;
+    ccsds = false;
     pusVersion = 1;
-    ack = Packet::Bool8Enum::FALSE;
+    ack = false;
     serviceType = 0;
     serviceSubtype = 0;
 
@@ -105,31 +102,25 @@ Packet PacketBufferIO::readPacket(const std::byte* ptrBuffer) {
     indexOfAppDataStart = 6; // 6 because only main header
   }
 
-  // Initialize data -> std::array<std::byte, Packet::APP_DATA_SIZE> appData{};
-  std::array<std::byte, Packet::APP_DATA_SIZE> appData;
+  std::array<uint8_t, Packet::APP_DATA_SIZE> appData{};
 
   // insert the app data of buffer into appData array.
   for (size_t i = 0; i < amountOfDataInAppData; ++i) {
-    appData[i] = ptrBuffer[indexOfAppDataStart + i];
+    appData[i] = static_cast<uint8_t>(ptrBuffer[indexOfAppDataStart + i]);
   }
 
   // initialize the filler app data array bytes to 0
   for (size_t i = 0; i < Packet::APP_DATA_SIZE - amountOfDataInAppData; ++i) {
-    appData[amountOfDataInAppData + i] = std::byte(0);
+    appData[amountOfDataInAppData + i] = static_cast<uint8_t>(0);
   }
 
-  // Initialize data -> std::array<std::byte, 2> packetErrorControl
-  std::array<std::byte, 2> packetErrorControl;
-  packetErrorControl[1] = ptrBuffer[indexOfAppDataStart + amountOfDataInAppData];
-  packetErrorControl[0] = ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1];
+  std::array<uint8_t, 2> packetErrorControl{};
+  packetErrorControl[1] = static_cast<uint8_t>(ptrBuffer[indexOfAppDataStart + amountOfDataInAppData]);
+  packetErrorControl[0] = static_cast<uint8_t>(ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1]);
 
-  // Use a brace initializer to initialize the packet:
-  // return  {versionNumber, dataFieldHeader, appIdSource, appIdDestination,
-  //          sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
-  //          ack, serviceType, serviceSubtype, appData, packetErrorControl};
-  return Packet(versionNumber, dataFieldHeader, appIdSource, appIdDestination,
-      sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
-      ack, serviceType, serviceSubtype, appData, packetErrorControl);
+  return {versionNumber, dataFieldHeader, appIdSource, appIdDestination,
+          sequenceControlFlags, sequenceControlCount, length, ccsds, pusVersion,
+          ack, serviceType, serviceSubtype, appData, packetErrorControl};
 }
 
 /**
@@ -187,7 +178,7 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   const auto& appData = packet.getAppData();
   size_t amountOfDataInAppData;
   size_t indexOfAppDataStart;
-  if (packet.getDataFieldHeader() == Packet::Bool8Enum::TRUE) {
+  if (packet.getDataFieldHeader() == true) {
     // data field header
     // [6]
     std::byte ccsds = static_cast<std::byte>(packet.getCCSDS()) << 7;
@@ -213,12 +204,12 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
 
   // write app data to buffer
   for (int i = 0; i < amountOfDataInAppData; ++i) {
-    ptrBuffer[indexOfAppDataStart + i] = appData[i];
+    ptrBuffer[indexOfAppDataStart + i] = std::byte(appData[i]);
   }
 
   const auto packetErrorControl = packet.getPacketErrorControl();
-  ptrBuffer[indexOfAppDataStart + amountOfDataInAppData] = packetErrorControl[1];
-  ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1] = packetErrorControl[0];
+  ptrBuffer[indexOfAppDataStart + amountOfDataInAppData] = std::byte(packetErrorControl[1]);
+  ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1] = std::byte(packetErrorControl[0]);
 }
 
 uint8_t PacketBufferIO::extractFieldFrom(std::byte inputByte, uint8_t startIndex,

@@ -2,9 +2,23 @@
  * @file packet_extended_large_data_1.h
  * @author Marcos Barrios
  * @brief Higher level packet for large data transfer service.
- * 
+ * @class PacketExtendedLargeData1
+ *
  * This class can be used for the following subtypes:
  *    1, 2, 3, 7, 9, 10, 11, 12
+ * 
+ * Some packets have different meaning depending on
+ * if it is being received on the ground station (donwlink) or if it
+ * is being sent on the cubesat (downlink), but the packet structure
+ * is the same for both.
+ *
+ * Subtypes 1, 2, 3 define the first, intermediate and last packets to
+ * be transfered. 7 is used when re-transfering a packet.
+ * 
+ * 1 and 9 packet structures are the same, but 1 is sent-by-sender(downlink
+ *    from now on) while 9 is interpreted on the ground station as 
+ * 
+ * 
  * 
  */
 
@@ -22,9 +36,9 @@ public:
   // sequence control field. This one is relative to the large data unit,
   // so it starts from 1 for this large data transfer.
   PacketExtendedLargeData1(const Packet& packet, uint8_t largeDataUnitId,
-      uint16_t sequenceNumber, const std::vector<std::byte>& data);
+      uint16_t sequenceNumber, const std::vector<uint8_t>& data);
   PacketExtendedLargeData1(const Packet& packet, uint8_t largeDataUnitId,
-      uint16_t sequenceNumber, std::vector<std::byte>&& data);
+      uint16_t sequenceNumber, std::vector<uint8_t>&& data);
 
   /****** Methods from composited classes ******/
 
@@ -59,14 +73,14 @@ public:
   uint16_t getSequenceNumber();
   void setSequenceNumber(const uint16_t newSequenceNumber);
 
-  std::vector<std::byte>& getData();
-  void setData(const std::vector<std::byte>& newData);
-  void setData(std::vector<std::byte>&& newData);
+  std::vector<uint8_t>& getData();
+  void setData(const std::vector<uint8_t>& newData);
+  void setData(std::vector<uint8_t>&& newData);
 private:
   PacketExtendedBasic packetBasic_;
   uint8_t largeDataUnitId_;
   uint16_t sequenceNumber_;
-  std::vector<std::byte> data_;
+  std::vector<uint8_t> data_;
 };
 
 #endif
