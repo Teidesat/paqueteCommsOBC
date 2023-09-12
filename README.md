@@ -2,7 +2,7 @@
 
 ## Description
 
-Packet representation and buffer operations based on the ECSS-70-E-41A standard. See [the packet design document](docs/packet_design_teidesat_I.pdf) pdf.
+Packet representation and buffer operations based on the ECSS-70-E-41A standard. Check the [packet design document](docs/articles/PaqueteRF_TEIDESAT_I-2.pdf) for the packet's design history.
 
 ## Big-endian is required
 
