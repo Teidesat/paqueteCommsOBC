@@ -12,5 +12,5 @@ There are plans to make it endian independent.
 
 ## References
 
- - Tésis de Upsat [https://nchronas.github.io/upsat_msc_thesis/](https://nchronas.github.io/upsat_msc_thesis/) 
+ - Tesis de Upsat [https://nchronas.github.io/upsat_msc_thesis/](https://nchronas.github.io/upsat_msc_thesis/) 
  - ECSS-70-E-41A [https://ecss.nl/standard/ecss-e-70-41a-ground-systems-and-operations-telemetry-and-telecommand-packet-utilization/](https://ecss.nl/standard/ecss-e-70-41a-ground-systems-and-operations-telemetry-and-telecommand-packet-utilization/)
