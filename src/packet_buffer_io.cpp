@@ -4,6 +4,7 @@
 #include <cstring>
 #include <array>
 #include <cmath>
+#include <cstddef>
 
 /**
  * Some bytes have multiple fields. Depending on if the word has multiple
