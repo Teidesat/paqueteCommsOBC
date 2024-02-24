@@ -8,8 +8,6 @@ Packet representation and buffer operations based on the ECSS-70-E-41A standard.
 
 TEIDESAT-I'S OBC is based on an ARM cortex m7, and ARM typically provides a pin to select little-endian or big-endian. However, the library assumes it is big-endian, so it is important to make sure that the microcontroller is set to big-endian. This is due to the library sometimes converting two <code>uint8_t</code> into a <code>uint16_t</code> when reading a packet from buffer by assuming that [0] is the most significant part, while [1] is less significant, which is incorrect if the system is little endian.
 
-There are plans to make it endian independent.
-
 ## References
 
  - Tesis de Upsat [https://nchronas.github.io/upsat_msc_thesis/](https://nchronas.github.io/upsat_msc_thesis/) 

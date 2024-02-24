@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <array>
+#include <cstdint>
 
 #include "packet.h"
 #include "packet_extended/packet_extended_housekeeping_basic.h"

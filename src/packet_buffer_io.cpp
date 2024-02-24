@@ -212,6 +212,10 @@ void PacketBufferIO::writePacket(std::byte* ptrBuffer, Packet& packet) {
   ptrBuffer[indexOfAppDataStart + amountOfDataInAppData + 1] = std::byte(packetErrorControl[0]);
 }
 
+// Example for extractFieldFrom(0b00101000, 3, 3):
+//   1.- 0b110101000 >> 3 = 0b00110101
+//   2.- std:pow(2, 3) = 0b00001000, 0b00001000 - 1 = 0b00000111
+//   3.- 0b00110101 & 0b00000111 = 0b00000101     <- returns that
 uint8_t PacketBufferIO::extractFieldFrom(std::byte inputByte, uint8_t startIndex,
     size_t lengthOfField) {
   return static_cast<uint8_t>(

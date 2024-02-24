@@ -8,6 +8,8 @@
 #ifndef PACKET_BUFFER_IO_H
 #define PACKET_BUFFER_IO_H
 
+#include <cstdint>
+
 #include "packet.h"
 
 class PacketBufferIO {

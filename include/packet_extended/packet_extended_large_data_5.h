@@ -12,6 +12,7 @@
 #define PACKET_EXTENDED_LARGE_DATA_5_H
 
 #include <vector>
+#include <cstdint>
 
 #include "../packet.h"
 #include "packet_extended_basic.h"

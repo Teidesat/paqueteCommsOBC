@@ -19,6 +19,7 @@
 #define PACKET_BUILDER_DIRECTOR_H
 
 #include <vector>
+#include <cstdint>
 
 #include "packet.h"
 

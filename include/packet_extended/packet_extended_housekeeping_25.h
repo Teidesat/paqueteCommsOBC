@@ -32,6 +32,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <cstdint>
 
 #include "../packet.h"
 #include "packet_extended_basic.h"

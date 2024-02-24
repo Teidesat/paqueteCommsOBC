@@ -12,9 +12,11 @@
 #define PACKET_EXTENDED_LARGE_DATA_4_H
 
 #include <vector>
+#include <cstdint>
 
 #include "../packet.h"
 #include "packet_extended_basic.h"
+
 
 class PacketExtendedLargeData4 {
 public:

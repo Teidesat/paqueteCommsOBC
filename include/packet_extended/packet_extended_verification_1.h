@@ -25,6 +25,7 @@
 #define PACKET_EXTENDED_VERIFICATION_1_H
 
 #include <vector>
+#include <cstdint>
 
 #include "../packet.h"
 #include "packet_extended_basic.h"
