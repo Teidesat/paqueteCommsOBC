@@ -1,6 +1,7 @@
 #include "../include/packet.h"
 
-// Make sure all values are initialized here or in the class declaration
+#include <cmath>
+
 Packet::Packet() :
   versionNumber_(0),
   dataFieldHeader_(false),
@@ -158,17 +159,21 @@ void Packet::setServiceSubtype(uint8_t subtypeId) {
 
 void Packet::setAppData(std::array<uint8_t, Packet::APP_DATA_SIZE> newAppData) {
   appData_ = newAppData;
+  length_ = newAppData.size() + Packet::DATA_HEADER_SIZE -
+      Packet::MAIN_HEADER_SIZE - 1;
 }
 
 void Packet::pushData(uint8_t byteToPush) {
   appData_[appDataIndex_] = byteToPush;
   ++appDataIndex_;
+  ++length_;
 }
 
 void Packet::pushData(uint16_t bytesToPush) {
   appData_[appDataIndex_] = static_cast<uint8_t>(bytesToPush >> 8);
   appData_[appDataIndex_ + 1] = static_cast<uint8_t>(bytesToPush);
   appDataIndex_ += sizeof(bytesToPush);
+  length_ += 2;
 }
 
 void Packet::pushData(std::array<uint8_t, 2> bytesToPush) {
@@ -176,11 +181,14 @@ void Packet::pushData(std::array<uint8_t, 2> bytesToPush) {
   ++appDataIndex_;
   appData_[appDataIndex_] = bytesToPush[1];
   ++appDataIndex_;
+  length_ += 2;
 }
 
 void Packet::pushData(std::vector<uint8_t> bytesToPush) {
   std::copy(bytesToPush.begin(), bytesToPush.end(), appData_.begin() + appDataIndex_);
   appDataIndex_ += bytesToPush.size();
+  length_ = bytesToPush.size() + Packet::DATA_HEADER_SIZE -
+      Packet::MAIN_HEADER_SIZE - 1;
 }
 
 [[nodiscard]] std::array<uint8_t, 2> Packet::getPacketErrorControl() {
